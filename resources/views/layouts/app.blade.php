@@ -31,6 +31,54 @@
                 <li class="{{ Request::is('switch_layre/area_b_demolitions') ? 'active' : '' }}">
                     <a href="/switch_layre/{{'area_b_demolitions'}}">Area B Demolitions</a>
                 </li>
+
+                <li class="{{ Request::is('switch_layre/area_b_demolitions') ? 'active' : '' }}">
+                    <a href="/switch_layre/{{'area_b_demolitions'}}">Area A&B Combined</a>
+                </li>
+
+                <li class="{{ Request::is('switch_layre/area_b_demolitions') ? 'active' : '' }}">
+                    <a href="/switch_layre/{{'area_b_demolitions'}}">A Area B Naturereserve</a>
+                </li>
+
+                <li class="{{ Request::is('switch_layre/area_b_demolitions') ? 'active' : '' }}">
+                    <a href="/switch_layre/{{'area_b_demolitions'}}">Area A Poly</a>
+                </li>
+
+                <li class="{{ Request::is('switch_layre/area_b_demolitions') ? 'active' : '' }}">
+                    <a href="/switch_layre/{{'area_b_demolitions'}}">Area B Poly</a>
+                </li>
+
+                <li class="{{ Request::is('switch_layre/area_b_demolitions') ? 'active' : '' }}">
+                    <a href="/switch_layre/{{'area_b_demolitions'}}">Area B Tranining</a>
+                </li>
+
+                <li class="{{ Request::is('switch_layre/area_b_demolitions') ? 'active' : '' }}">
+                    <a href="/switch_layre/{{'area_b_demolitions'}}">Demolitions Orders</a>
+                </li>
+
+                <li class="{{ Request::is('switch_layre/area_b_demolitions') ? 'active' : '' }}">
+                    <a href="/switch_layre/{{'area_b_demolitions'}}">Expropriation Orders</a>
+                </li>
+
+                <li class="{{ Request::is('switch_layre/area_b_demolitions') ? 'active' : '' }}">
+                    <a href="/switch_layre/{{'area_b_demolitions'}}">Expropriation Orders AB</a>
+                </li>
+
+                <li class="{{ Request::is('switch_layre/area_b_demolitions') ? 'active' : '' }}">
+                    <a href="/switch_layre/{{'area_b_demolitions'}}">Expropriation Orders Not AB</a>
+                </li>
+
+                <li class="{{ Request::is('switch_layre/area_b_demolitions') ? 'active' : '' }}">
+                    <a href="/switch_layre/{{'area_b_demolitions'}}">Security Orders</a>
+                </li>
+
+                <li class="{{ Request::is('switch_layre/area_b_demolitions') ? 'active' : '' }}">
+                    <a href="/switch_layre/{{'area_b_demolitions'}}">Seizure AB</a>
+                </li>
+
+                <li class="{{ Request::is('switch_layre/area_b_demolitions') ? 'active' : '' }}">
+                    <a href="/switch_layre/{{'area_b_demolitions'}}">Seizure All</a>
+                </li>
                
             </ul>
 
