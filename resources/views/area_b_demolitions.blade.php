@@ -24,6 +24,8 @@
 
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
   <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+  <link rel="stylesheet" href="{{URL::asset('draw/leaflet.draw.css')}}"/>
+    <script src="{{URL::asset('draw/leaflet.draw-custom.js')}}"></script>
   
       
 
@@ -169,9 +171,38 @@
             var map = L.map('map').setView([31.807491554, 35.341034188], 8);
    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
+       var drawnItems = L.featureGroup().addTo(map);
+        redliningDrawControl = new L.Control.Draw({
+            position: 'topleft',
+            draw: {
+                circle: false,
+                rectangle: false,
+                polyline: false,
+                polygon: false,
+                marker: true,
+                circlemarker: false
+
+            },
+            edit: {featureGroup: drawnItems, edit: true}
+        }).addTo(map);
+
     setTimeout(function(){ 
         // console.log(gm)
-        L.geoJSON(JSON.parse(gm)).addTo(this.map);
+        //L.geoJSON(JSON.parse(gm)).addTo(this.map);
+
+        L.geoJSON(JSON.parse(gm), {
+                onEachFeature: function (feature, layer) {
+                    layer.on('click', function (e) {
+                        drawnItems.addLayer(layer);
+                        // var tbl= '<table class="table_draw" id="tbl_Info"></table>' +
+                        //     '<table><tr><td></td><td></td><td></td><td></table>';
+                        // layer.bindPopup(tbl, {
+                        //     minWidth : 300
+                        // });
+                    });
+                }
+            }).addTo(this.map);
+
 
     //     L.geoJson(gm, {
     //     style: function(feature) {
