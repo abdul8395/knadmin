@@ -12,9 +12,9 @@
 
                             @else
                             <ul id="login_li">
-                            <i class="fas fa-sign-out-alt" style="font-size:24px; color:#fd7e14;"></i>
+                            <i class="fas fa-sign-out-alt" style="font-size:24px; color:#ffc107;"></i>
                                 <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();" style="text-align:center; font-size:24px; color:#ff8824">Logout</a>
+                                                     document.getElementById('logout-form').submit();" style="text-align:center; font-size:24px; color:#ffc107">Logout</a>
                             </ul>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf

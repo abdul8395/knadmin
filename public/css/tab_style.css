@@ -50,13 +50,13 @@ body {
 
 .tabset > label:hover,
 .tabset > input:focus + label {
-  color: #06c;
+  color: #9db034;
 }
 
 .tabset > label:hover::after,
 .tabset > input:focus + label::after,
 .tabset > input:checked + label::after {
-  background: #06c;
+  background: #9db034;
 }
 
 .tabset > input:checked + label {

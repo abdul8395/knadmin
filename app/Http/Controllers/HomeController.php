@@ -32,7 +32,7 @@ class HomeController extends Controller
             }elseif($name=='kn2'){
                 return view('kn2');
             }else{
-                return view('auth.login');
+                return view('kn_new');
             }
         }
         

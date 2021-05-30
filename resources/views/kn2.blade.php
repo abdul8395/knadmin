@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Welcome To KN2 </div>
+                <div class="card-header">Welcome </div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -14,7 +14,7 @@
                         </div>
                     @endif
 
-                    <h1 style="text-align:center; color:#9db034">Coming Soon!..........</h1>
+                    <h1 style="text-align:center; color:#9db034">KN2 Coming Soon......</h1>
 <br/>
 <br/>
                         @guest
@@ -26,8 +26,10 @@
 
                             @else
                             <ul id="login_li">
+                            <h3>
                                 <a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">Logout</a>
+                                                     </h3>
                             </ul>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf

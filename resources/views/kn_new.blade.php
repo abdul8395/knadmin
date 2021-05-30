@@ -16,6 +16,7 @@
 
                     <h1 style="text-align:center; color:#9db034">Your request Recieved.......</h1>
 <br/>
+<h3 style="text-align:center; color:#9db034">Pending For Approval</h3>
 <br/>
                         @guest
                             @if (Route::has('login'))
@@ -26,8 +27,10 @@
 
                             @else
                             <ul id="login_li">
+                            <h3>
                                 <a href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">Logout</a>
+                                                     </h3>
                             </ul>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
