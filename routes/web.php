@@ -24,14 +24,23 @@ Route::get('/', function () {
 // Route::get('/kn22' , [kn1::class,'index']);
 
 
-Route::get('/switch_layre/{name}' , [kn1::class,'switch_layre']);
-Route::get('/switch_layre/switch_layre/loadtbledata' , [kn1::class,'loadtbledata']);
-Route::get('/switch_layre/switch_layre/deletedata/{id}' , [kn1::class,'deletedata']);
-Route::get('/switch_layre/switch_layre/editdata/{id}' , [kn1::class,'editdata']);
-Route::get('/switch_layre/switch_layre/updatedata/{data}' , [kn1::class,'updatedata']);
-Route::get('/switch_layre/switch_layre/savedata/{data}' , [kn1::class,'savedata']);
+
+Route::get('/shaperead' , [kn1::class,'shaperead']);
+
+
 Auth::routes();
 // ------------kn1 rooutes----------------
+Route::get('/switch_layre/{name}' , [kn1::class,'switch_layre'])->name('switch_layre');
+Route::get('/switch_layre/switch_layre/deletebtn_tbl_area_b_demolitions/{id}' , [kn1::class,'deletebtn_tbl_area_b_demolitions']);
+Route::get('/switch_layre/switch_layre/editbtn_tbl_area_b_demolitions/{id}' , [kn1::class,'editbtn_tbl_area_b_demolitions']);
+Route::get('/switch_layre/switch_layre/update_tbl_area_b_demolitions/{data}' , [kn1::class,'update_tbl_area_b_demolitions']);
+
+Route::get('/switch_layre/switch_layre/deletebtn_tbl_area_b_nature_reserve/{id}' , [kn1::class,'deletebtn_tbl_area_b_nature_reserve']);
+Route::get('/switch_layre/switch_layre/editbtn_tbl_area_b_nature_reserve/{id}' , [kn1::class,'editbtn_tbl_area_b_nature_reserve']);
+Route::get('/switch_layre/switch_layre/updat_tbl_area_b_nature_reserve/{data}' , [kn1::class,'updat_tbl_area_b_nature_reserve']);
+
+Route::get('/switch_layre/switch_layre/savedata/{data}' , [kn1::class,'savedata']);
+
 
 
 // Route::match(['get','post'], '/kn1', [kn1::class, 'index'])->name('kn1')->middleware('kn1');
