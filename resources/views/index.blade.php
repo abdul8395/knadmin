@@ -10,25 +10,22 @@
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
         
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   
 
       <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
 
-<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+
 
 
       <link rel="stylesheet" href="{{URL::asset('/css/kn1style.css')}}">
 
       <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
-  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
-
+  
   <link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
 
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-  <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
   <link rel="stylesheet" href="{{URL::asset('draw/leaflet.draw.css')}}"/>
-    <script src="{{URL::asset('draw/leaflet.draw-custom.js')}}"></script>
+
   
       
 
@@ -107,6 +104,16 @@
     </div>
     </body>
 </html>
+<script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+<script src="{{URL::asset('draw/leaflet.draw-custom.js')}}"></script>
+<script src="{{URL::asset('shapefilelib/shp.js')}}"></script>
+<script src="{{URL::asset('shapefilelib/leaflet.shpfile.js')}}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+      <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+      
+
 
 <script>
    
@@ -121,7 +128,7 @@
                 circle: false,
                 rectangle: false,
                 polyline: false,
-                polygon: false,
+                polygon: true,
                 marker: true,
                 circlemarker: false
 
@@ -145,34 +152,8 @@
                     });
                 }
             }).addTo(this.map);
-
-
-    //     L.geoJson(gm, {
-    //     style: function(feature) {
-    //       return {
-    //         color: '#0515B5'
-    //       };
-    //     },
-    //     pointToLayer: function(feature, latlng) {
-    //       return new L.CircleMarker(latlng, {
-    //         radius: 6,
-    //         fillOpacity: 0.85
-    //       });
-    //     },
-    //     onEachFeature: function(feature, layer) {
-    //         feature.bindPopup("Name: " + feature.properties.name);
-    //       document.getElementById("sname").innerHTML = feature.properties.name;
-    //       feature.on({
-    //         click: showData
-    //       });
-
-    //     }
-    //   }).addTo(map)
     }, 2000);
-   
-    // function showData(e) {
-    //     $("#featureModel").modal("show");
-    // }
+
 
     $(document).ready(function () {
         
@@ -184,7 +165,16 @@
             $('#sidebar').toggleClass('active');
         });
 
-        $("#tbl").DataTable();
+        $('#tbl').DataTable( {
+        "lengthMenu": [[2, 10, 25, -1], [2, 10, 25, "All"]]
+        } );
+
+        $("#shp").on("change", function (e) {
+                var file = $(this)[0].files[0];
+                addShapefile(file);
+                this.value = null;
+            });
+
 
        
     });
@@ -381,8 +371,41 @@
 
     
 
+        function addShapefile(file){
 
-  
+        var reader = new FileReader();
+        reader.readAsArrayBuffer(file);
+        reader.onload = function (event) {
+            var data = reader.result;
+            myLayers[file.name] = new L.Shapefile(data);
+            var mp_array=[];
+            setTimeout(function(){
+                var pToMultiP=myLayers[file.name].toGeoJSON();
+                for(var i=0;i<pToMultiP.features.length;i++){
+                    if(pToMultiP.features[i].geometry.coordinates.length==3) {
+                        pToMultiP.features[i].geometry.coordinates.pop();
+                    }
+                    mp_array.push(pToMultiP.features[i].geometry.coordinates)
+
+                }
+
+                var mp_geoJson={
+                    "TYPE": "MultiPoint",
+                    "coordinates": mp_array
+                }
+                var mp_str=JSON.stringify(mp_geoJson);
+                // $("#kmlf").val(mp_str);
+                
+            },3000)
+
+            map.addLayer(myLayers[file.name]);
+
+                    setTimeout(function(){
+                        map.fitBounds(myLayers[file.name].getBounds());
+                
+                    },300)
+                }
+            }
 
 
     toastr.options = {

@@ -23,7 +23,7 @@ Route::get('/', function () {
 });
 // Route::get('/kn22' , [kn1::class,'index']);
 
-
+// Route::match(['get','post'], '/getfile', [kn1::class, 'getfile']);
 
 Route::get('/shaperead' , [kn1::class,'shaperead']);
 

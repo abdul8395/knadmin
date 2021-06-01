@@ -39,6 +39,18 @@ a:focus {
     border: none;
 }
 
+.hlb{
+
+    border-radius: 10px;
+    padding: 6px;
+    background: #ae9039;
+    color: #fff;
+    margin-top: 8px !important;
+  
+     }
+.inputfile{
+    display: none;
+}
 /* .line {
     width: 100%;
     height: 1px;

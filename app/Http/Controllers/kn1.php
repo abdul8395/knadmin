@@ -227,7 +227,9 @@ class kn1 extends Controller
         }
     }
     public function shp($Shapefile){
-
+$q="INSERT INTO public.area_b_demoTest(
+    fid, entity, layer, color, linetype, elevation, linewt, refname, angle, geom)
+    values ";
         while ($Geometry = $Shapefile->fetchRecord()) {
             // Skip the record if marked as "deleted"
             if ($Geometry->isDeleted()) {
@@ -240,16 +242,27 @@ class kn1 extends Controller
             // // Print Geometry as WKT
             // print_r($Geometry->getWKT());
            $geom=$Geometry->getWKT();
-           print_r($geom);
+        //    print_r($geom);
             // // Print Geometry as GeoJSON
             // print_r($Geometry->getGeoJSON());
             
             // // Print DBF data
             // print_r($Geometry->getDataArray());
             $data=$Geometry->getDataArray();
-            print_r($data['FID']);
-exit();
+            // print_r($data);
+            $q.="(";
+            $q.=$data['FID'].", ". "'".$data['ENTITY']."'" .", "."'".$data['LAYER']."'".", ".$data['COLOR'].", "."'".$data['LINETYPE']."'".", ".$data['ELEVATION'].", ".$data['LINEWT'].", ".$data['REFNAME']." ".$data['ANGLE'].", "."'".$geom."'";
+            $q.="), ";
+           
+
+            // ('Point','palestine_bbh_makor',84,'Continuous',0,25,null,0),
+
         }
+        // $fq = rtrim($q, ',');
+        $qf= rtrim($q, " ,");
+        echo $qf;
+        // DB::insert($qf);
+        exit();
         // print_r($geom);
         // exit();
     //  for($i=0; $i<sizeof($geom); $i++){
