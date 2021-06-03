@@ -10,6 +10,8 @@ use Shapefile\Shapefile;
 use Shapefile\ShapefileException;
 use Shapefile\ShapefileReader;
 
+use VIPSoft\Unzip\Unzip;
+
 class kn1 extends Controller
 {
     // public function index(){
@@ -192,10 +194,44 @@ class kn1 extends Controller
             return json_encode(true);  
     }
 
-    public  function shaperead(){
+    public  function shaperead(Request $request){
+        // print_r($request->all());
+        // echo "shaperead controller";
+        $fileName = $request->file->getClientOriginalName();
+        $fname=basename($fileName,".zip"); 
+        // $filePath = $request->file->move(public_path('shapefiles'), $fileName);
+        $shpfilename;
+        if(isset($request->file)){
+            $unzipper  = new Unzip();
+            $file = $request->file->store('public/'.$fname); //store file in storage/app/zip
+            $filenames = $unzipper->extract(storage_path('app/'.$file),storage_path('app/public/'.$fname));
+            
+            $fdir=storage_path('app/public/'.$fname.'/');
+                $scan_arr = scandir($fdir);
+                $files_arr = array_diff($scan_arr, array('.','..') );
+                // echo "<pre>"; print_r( $files_arr ); echo "</pre>";
+                // Get each files of our directory with line break
+                foreach ($files_arr as $file) {
+                    //Get the file path
+                    $file_path = 'app/public/'.$fname.'/'.$file; //storage_path('app/public/'.$fname.'/'.$file);
+                    // Get the file extension
+                    $file_ext = pathinfo($file_path, PATHINFO_EXTENSION);
+                    if ($file_ext=="shp" || $file_ext=="png" || $file_ext=="JPG" || $file_ext=="PNG") {
+                        $shpfilename=$file;
+                    }
+                }
+                // echo $shpfilename;
+                // exit();
+            // dd($filenames); //show file names
+         }
+        // echo $shpfilename;
         try {
             // Open Shapefile
-            $Shapefile = new ShapefileReader('C:\xampp\htdocs\KN_admin\public\shapefile\tbl_area_b_demolitions.shp');
+            $shppath='C:\xampp\htdocs\KN_admin\storage\app\public\\'.$fname.'\\'.$shpfilename;
+            // $shppath=storage_path('app\public'.'\\'.$fname.'\\'.$shpfilename);
+            // echo $shppath;
+            // exit();
+            $Shapefile = new ShapefileReader($shppath);
             $this->shp($Shapefile);
             // Read all the records
             // while ($Geometry = $Shapefile->fetchRecord()) {
@@ -226,55 +262,48 @@ class kn1 extends Controller
                 . "\nDetails: " . $e->getDetails();
         }
     }
+    // Read all the records
     public function shp($Shapefile){
-$q="INSERT INTO public.area_b_demoTest(
-    fid, entity, layer, color, linetype, elevation, linewt, refname, angle, geom)
-    values ";
+        $q="INSERT INTO public.tbl_area_b_demolitions(
+            fid, entity, layer, color, linetype, elevation, linewt, refname, angle, geom)
+            VALUES";
         while ($Geometry = $Shapefile->fetchRecord()) {
-            // Skip the record if marked as "deleted"
-            if ($Geometry->isDeleted()) {
-                continue;
-            }
+                // Skip the record if marked as "deleted"
+                if ($Geometry->isDeleted()) {
+                    continue;
+                }
+                
+                // Print Geometry as an Array
+                // print_r($Geometry->getArray());
+                
+                // // Print Geometry as WKT
+                // print_r($Geometry->getWKT());
+            $geom=$Geometry->getWKT();
+                //    print_r($geom);
+                // // Print Geometry as GeoJSON
+                // print_r($Geometry->getGeoJSON());
+                
+                // // Print DBF data
+                // print_r($Geometry->getDataArray());
+                $data=$Geometry->getDataArray();
+                // print_r($data);
+                $q.="(";
+                $q.=$data['FID'].", ". "'".$data['ENTITY']."'" .", "."'".$data['LAYER']."'".", ".$data['COLOR'].", "."'".$data['LINETYPE']."'".", ".$data['ELEVATION'].", ".$data['LINEWT'].", "."'".$data['REFNAME']."'".", ".$data['ANGLE'].", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                $q.="), ";
             
-             // Print Geometry as an Array
-            // print_r($Geometry->getArray());
-            
-            // // Print Geometry as WKT
-            // print_r($Geometry->getWKT());
-           $geom=$Geometry->getWKT();
-        //    print_r($geom);
-            // // Print Geometry as GeoJSON
-            // print_r($Geometry->getGeoJSON());
-            
-            // // Print DBF data
-            // print_r($Geometry->getDataArray());
-            $data=$Geometry->getDataArray();
-            // print_r($data);
-            $q.="(";
-            $q.=$data['FID'].", ". "'".$data['ENTITY']."'" .", "."'".$data['LAYER']."'".", ".$data['COLOR'].", "."'".$data['LINETYPE']."'".", ".$data['ELEVATION'].", ".$data['LINEWT'].", ".$data['REFNAME']." ".$data['ANGLE'].", "."'".$geom."'";
-            $q.="), ";
-           
 
-            // ('Point','palestine_bbh_makor',84,'Continuous',0,25,null,0),
+                // ('Point','palestine_bbh_makor',84,'Continuous',0,25,null,0),
 
         }
         // $fq = rtrim($q, ',');
         $qf= rtrim($q, " ,");
-        echo $qf;
-        // DB::insert($qf);
-        exit();
-        // print_r($geom);
-        // exit();
-    //  for($i=0; $i<sizeof($geom); $i++){
-    //     echo $geom[$i];
-
-        // echo $data[$i];
-
-        // $q = DB::insert("INSERT INTO public.tbl_area_b_demolitions(
-        //     fid, entity, layer, color, linetype, elevation, linewt, refname, angle)
-        //     VALUES ($fid, '$a->entity', '$a->entity', '$a->layer', $a->color, '$a->linetype', '$a->elevation', $a->linewt, '$a->refname', '$a->angle');");
-        //     return json_encode(true);  
-
+        // echo $qf;
+        $pgq=DB::insert($qf);
+        if($pgq){
+            echo json_encode(true);
+        }else{
+            echo json_encode("Error!...Schema not match");
+            }
     }
 
 

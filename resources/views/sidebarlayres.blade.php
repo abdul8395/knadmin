@@ -31,12 +31,17 @@
                         <p>All Layers</p>    
                     </div>
                     <div class="col-sm">
-                            <form method="POST" action="" enctype="multipart/form-data" id="myForm">
+                            <!-- <form method="POST" action="/shaperead" enctype="multipart/form-data" id="myForm">
+                            @csrf
                                 <label class="hlb"><i class="fas fa-upload"style="font-size:15px;"></i>&nbsp
                                 <span class="small">Shape File</span>
-                                    <input id="shp" class="inputfile" type="file" size="60" accept=".zip" onchange="$('form').submit();">
+                                    <input id="shp" class="inputfile" name="zipfile" type="file" size="60" accept=".zip" onchange="$('form').submit();">
                                 </label> 
-                            </form>
+                            </form> -->
+                            <button id="upbtn" type="button" class="btn btn-warning btn-sm" style="margin-top: 10px !important;">
+                                <i class="fas fa-upload" style="font-size:15px;"></i>
+                                <span class="small">Shape File</span>
+                            </button>
                     </div>
 
                 </div>

@@ -82,9 +82,54 @@
 
 
             
-            <div id="map" ></div>
-             </div>
-                </div>
+            <div id="map" >
+                    <div id="dlgAttraction" class="modal">
+                        <div class="modal-dialog modal-dialog-centered modal-lg ">
+                            <div id='form' class="modal-content col-md-12 col-md-offset-6 ">
+                            <form method="POST" action="" enctype="multipart/form-data" id="myForm">
+                                
+                                    <div class="modal-header">
+                                    <h4 class="modal-title">Enter Shape File</h4>
+                                    <button type="button" id="close_btn" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+                                    <div class="modal-body" >
+                                        <!-- <div class="form-group row">
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" id="name" name="name" placeholder="Data Name" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" id="des" name="des" placeholder="Data Discription" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-sm-12">
+                                                <input type="text" class="form-control" id="crs" name="crs" placeholder="CRS:4326" required>
+                                            </div>
+                                        </div> -->
+
+                                        <div class="form-group" id="choose">
+                                            <div class="col-md-4">
+                                            <input type="file" name="file" id="shp" class="" accept=".zip" required>
+                                            </div>
+                                        </div>
+            
+
+                                    </div>
+                                    <div id="exl_btn" class="modal-footer">
+                                        <button id="btnsave" type="submit" class="btn btn-success pull-right">Save</button>
+                                        <!-- <button id="close_btn"  class="btn btn-danger pull-right">Cancel</button> -->
+                                        <!--                <button class="btn btn-danger btnCancel">Cancel</button>-->
+                                    </div>
+                                
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            </div>
+            </div>
                 
                 <div class="col" style="margin-bottom:10px !important;">
                 <div class="clearfix"></div><br />
@@ -156,6 +201,9 @@
 
 
     $(document).ready(function () {
+        $("#close_btn").on("click", function () {
+                $("#dlgAttraction").hide();
+            });
         
         var  geojsondata=$('#hidData').val();
                 gm=JSON.parse(geojsondata);
@@ -169,14 +217,21 @@
         "lengthMenu": [[2, 10, 25, -1], [2, 10, 25, "All"]]
         } );
 
-        $("#shp").on("change", function (e) {
-                var file = $(this)[0].files[0];
-                addShapefile(file);
-                this.value = null;
-            });
+        // $("#shp").on("change", function (e) {
+        //         var file = $(this)[0].files[0];
+        //         addShapefile(file);
+        //         this.value = null;
+        //     });
+
+           
 
 
-       
+
+        // $.ajaxSetup({
+        //         headers: {
+        //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        //         }
+        //     });   
     });
            
 
@@ -406,6 +461,45 @@
                     },300)
                 }
             }
+
+
+    $("#upbtn").on('click',function(){
+    $("#myForm").trigger("reset");
+    $("#dlgAttraction").show(); 
+    });
+        $("#myForm").on('submit', function(e){
+            $("#dlgAttraction").hide(); 
+            e.preventDefault();
+            var formData = new FormData(this);
+            formData.append('action', 'savadata');
+            // console.log(formData)
+            $.ajax({
+                type: 'POST',
+                url: '/shaperead',
+                data:formData,
+                contentType: false,
+                cache: false,
+                processData:false,
+                success: function(res){    
+                       console.log(res);  
+                       var r=JSON.parse(res)
+                        if(r == true){
+                            toastr.success("Shape File record inserted Successfully");
+                            loadtbledata();
+                        }
+                        else {
+                            toastr.error("Erorr!: Schema mismatch");
+                        }
+                },
+                // complete: function(){
+                // alert("Data uploaded successfully.");
+                // },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    toastr.error("Erorr!:     Schema mismatch");
+                }
+            });
+            // $("#myForm").trigger("reset");
+        });
 
 
     toastr.options = {
