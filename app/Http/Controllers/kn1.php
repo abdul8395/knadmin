@@ -67,7 +67,8 @@ class kn1 extends Controller
                                 
                 return view('tables.tbl_area_b_demolitions', ['geojson' => $geojson, 'tbldata' => $q1]);
             
-        }elseif($name=='area_b_nature_reserve'){
+        }
+        elseif($name=='area_b_nature_reserve'){
                 $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',fid,'geometry',ST_AsGeoJSON(geom)::json,    
                                 'properties', json_build_object(
                                 'fid', fid,
@@ -88,10 +89,264 @@ class kn1 extends Controller
 
              
                 return view('tables.tbl_area_b_nature_reserve', ['geojson' => $geojson, 'tbldata' => $q1]);
-        } 
+        }
+        elseif($name=='Area_AB_Combined'){
+            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',fid,'geometry',ST_AsGeoJSON(geom)::json,    
+                            'properties', json_build_object(
+                            'fid', fid,
+                            'class', class
+                             ))))                        
+                    FROM (
+                            SELECT fid, geom, class
+                                FROM public.tbl_area_a_and_b_combined) as tbl1;");
+
+                $arr = json_decode(json_encode($q), true);
+                $g=implode("",$arr[0]);
+                $geojson=json_encode($g);
+
+            $q1 = DB::select("SELECT fid, class, geom
+                                FROM public.tbl_area_a_and_b_combined;");
+
+         
+            return view('tables.tbl_area_a_and_b_combined', ['geojson' => $geojson, 'tbldata' => $q1]);
+        }
+        elseif($name=='Area_AB_Naturereserve'){
+            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',id,'geometry',ST_AsGeoJSON(geom)::json,    
+                                'properties', json_build_object(
+                                'id', id,
+                                'objectid', objectid,
+                                'class', class,
+                                'shape_leng',shape_leng ,
+                                'shape_area',shape_area ))))                        
+                        FROM (
+                                SELECT id, geom, objectid, class, shape_leng, shape_area
+                                    FROM public.tbl_area_a_area_b_naturereserve) as tbl1;");
+
+                    $arr = json_decode(json_encode($q), true);
+                    $g=implode("",$arr[0]);
+                    $geojson=json_encode($g);
+
+                $q1 = DB::select("SELECT id, geom, objectid, class, shape_leng, shape_area
+                                    FROM public.tbl_area_a_area_b_naturereserve;");
+
+             
+                return view('tables.tbl_area_a_area_b_naturereserve', ['geojson' => $geojson, 'tbldata' => $q1]);
+        }
+        elseif($name=='area_a_poly'){
+            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',fid,'geometry',ST_AsGeoJSON(geom)::json,    
+                                'properties', json_build_object(
+                                'fid', fid
+                                    ))))                        
+                        FROM (
+                                SELECT fid, geom
+                                    FROM public.tbl_area_a_poly) as tbl1;");
+
+                    $arr = json_decode(json_encode($q), true);
+                    $g=implode("",$arr[0]);
+                    $geojson=json_encode($g);
+
+                $q1 = DB::select("SELECT fid, geom
+                                    FROM public.tbl_area_a_poly;");
+
+             
+                return view('tables.tbl_area_a_poly', ['geojson' => $geojson, 'tbldata' => $q1]);
+        }
+        elseif($name=='area_b_poly'){
+            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',fid,'geometry',ST_AsGeoJSON(geom)::json,    
+                                'properties', json_build_object(
+                                'fid', fid,
+                                'areaupdt', areaupdt,
+                                'area', area,
+                                'shape_leng',shape_leng,
+                                'shape_area',shape_area ))))                        
+                        FROM (
+                            SELECT fid, geom, areaupdt, area, shape_leng, shape_area
+                                FROM public.tbl_area_b_poly) as tbl1;");
+
+                    $arr = json_decode(json_encode($q), true);
+                    $g=implode("",$arr[0]);
+                    $geojson=json_encode($g);
+
+                $q1 = DB::select("SELECT fid, geom, areaupdt, area, shape_leng, shape_area
+                                        FROM public.tbl_area_b_poly;");
+
+                return view('tables.tbl_area_b_poly', ['geojson' => $geojson, 'tbldata' => $q1]);
+        }
+        elseif($name=='area_b_training'){
+            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',fid,'geometry',ST_AsGeoJSON(geom)::json,    
+                                'properties', json_build_object(
+                                'fid', fid,
+                                'id', id
+                                        ))))                        
+                        FROM (
+                            SELECT fid, geom, id
+                                FROM public.tbl_area_b_training) as tbl1;");
+
+                    $arr = json_decode(json_encode($q), true);
+                    $g=implode("",$arr[0]);
+                    $geojson=json_encode($g);
+
+                $q1 = DB::select("SELECT fid, geom, id
+                                        FROM public.tbl_area_b_training;");
+
+                return view('tables.tbl_area_b_training', ['geojson' => $geojson, 'tbldata' => $q1]);
+        }
+        elseif($name=='demolitions_orders'){
+            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',fid,'geometry',ST_AsGeoJSON(geom)::json,    
+                                'properties', json_build_object(
+                                'fid', fid,
+                                'objectid', objectid,
+                                'id', id
+                                        ))))                        
+                        FROM (
+                            SELECT fid, geom, objectid, id
+                                FROM public.tbl_demolition_orders) as tbl1;");
+
+                    $arr = json_decode(json_encode($q), true);
+                    $g=implode("",$arr[0]);
+                    $geojson=json_encode($g);
+
+                $q1 = DB::select("SELECT fid, geom, objectid, id
+                                        FROM public.tbl_demolition_orders;");
+
+                return view('tables.tbl_demolition_orders', ['geojson' => $geojson, 'tbldata' => $q1]);
+        }
+        elseif($name=='expropriation_orders'){
+            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',id,'geometry',ST_AsGeoJSON(geom)::json,    
+                                'properties', json_build_object(
+                                'id', id,
+                                'reason', reason,
+                                'title', title,
+                                'sign_date', sign_date,
+                                'remark', remark,
+                                'created_us', created_us,
+                                'created_da', created_da,
+                                'last_edite', last_edite,
+                                'last_edi_1', last_edi_1,
+                                'shape_leng', shape_leng,
+                                'shape_area', shape_area,
+                                'd_reason',d_reason ,
+                                'd_district',d_district ))))                        
+                        FROM (
+                                SELECT id, reason, title, sign_date, district, remark, created_us, created_da, last_edite, last_edi_1, shape_leng, shape_area, d_reason, d_district, geom
+                                    FROM public.tbl_expropriation_orders) as tbl1;");
+
+                    $arr = json_decode(json_encode($q), true);
+                    $g=implode("",$arr[0]);
+                    $geojson=json_encode($g);
+
+                $q1 = DB::select("SELECT id, reason, title, sign_date, district, remark, created_us, created_da, last_edite, last_edi_1, shape_leng, shape_area, d_reason, d_district, geom
+                                    FROM public.tbl_expropriation_orders;");
+
+             
+                return view('tables.tbl_expropriation_orders', ['geojson' => $geojson, 'tbldata' => $q1]);
+        }
+        elseif($name=='expropriation_orders_AB'){
+            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',id,'geometry',ST_AsGeoJSON(geom)::json,    
+                                'properties', json_build_object(
+                                'id', id,
+                                'objectid', objectid,
+                                'shape_leng',shape_leng ,
+                                'shape_area',shape_area ))))                        
+                        FROM (
+                                SELECT id, geom, objectid, shape_leng, shape_area
+                                    FROM public.tbl_expropriation_orders_ab) as tbl1;");
+
+                    $arr = json_decode(json_encode($q), true);
+                    $g=implode("",$arr[0]);
+                    $geojson=json_encode($g);
+
+                $q1 = DB::select("SELECT id, geom, objectid, shape_leng, shape_area
+                                    FROM public.tbl_expropriation_orders_ab;");
+
+             
+                return view('tables.tbl_expropriation_orders_ab', ['geojson' => $geojson, 'tbldata' => $q1]);
+        }
+        elseif($name=='expropriation_orders_not_AB'){
+            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',id,'geometry',ST_AsGeoJSON(geom)::json,    
+                                'properties', json_build_object(
+                                'id', id
+                                        ))))                        
+                        FROM (
+                            SELECT geom, id
+                                FROM public.tbl_expropriation_orders_not_ab) as tbl1;");
+
+                    $arr = json_decode(json_encode($q), true);
+                    $g=implode("",$arr[0]);
+                    $geojson=json_encode($g);
+
+                $q1 = DB::select("SELECT geom, id
+                                        FROM public.tbl_expropriation_orders_not_ab;");
+
+                return view('tables.tbl_expropriation_orders_not_ab', ['geojson' => $geojson, 'tbldata' => $q1]);
+        }
+        elseif($name=='security_orders'){
+            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',fid,'geometry',ST_AsGeoJSON(geom)::json,    
+                                'properties', json_build_object(
+                                'fid', fid,
+                                'id', id
+                                        ))))                        
+                        FROM (
+                            SELECT fid, geom, id
+                                FROM public.tbl_security_orders) as tbl1;");
+
+                    $arr = json_decode(json_encode($q), true);
+                    $g=implode("",$arr[0]);
+                    $geojson=json_encode($g);
+
+                $q1 = DB::select("SELECT fid, geom, id
+                                        FROM public.tbl_security_orders;");
+
+                return view('tables.tbl_security_orders', ['geojson' => $geojson, 'tbldata' => $q1]);
+        }
+        elseif($name=='Seizure_AB'){
+            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',id,'geometry',ST_AsGeoJSON(geom)::json,    
+                                'properties', json_build_object(
+                                'id', id
+                                        ))))                        
+                        FROM (
+                            SELECT geom, id
+                                FROM public.tbl_seizure_ab) as tbl1;");
+
+                    $arr = json_decode(json_encode($q), true);
+                    $g=implode("",$arr[0]);
+                    $geojson=json_encode($g);
+
+                $q1 = DB::select("SELECT geom, id
+                                        FROM public.tbl_seizure_ab;");
+
+                return view('tables.tbl_seizure_ab', ['geojson' => $geojson, 'tbldata' => $q1]);
+        }
+        elseif($name=='Seizure_All'){
+            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',fid,'geometry',ST_AsGeoJSON(geom)::json,    
+                                'properties', json_build_object(
+                                'fid', fid,
+                                'from_date', from_date,
+                                'to_date', to_date,
+                                'ar_num', ar_num,
+                                'area', area
+                                    ))))  
+                                     FROM (
+                                SELECT fid, from_date, to_date, ar_num, area, geom
+                                    FROM public.tbl_seizure_all) as tbl1;");
+                                   
+
+                    $arr = json_decode(json_encode($q), true);
+                    $g=implode("",$arr[0]);
+                    $geojson=json_encode($g);
+
+                $q1 = DB::select("SELECT fid, from_date, to_date, ar_num, area, geom
+                                    FROM public.tbl_seizure_all;");
+                                    
+
+             
+                return view('tables.tbl_seizure_all', ['geojson' => $geojson, 'tbldata' => $q1]);
+               
+        }
+        
     }
 
-
+//tbl_area_b_demolitions.....................
     public  function deletebtn_tbl_area_b_demolitions($data){
         // echo $data;
         // exit();
@@ -115,41 +370,6 @@ class kn1 extends Controller
         // }else{
         //     $entity=$a->entity;
         // }
-        // if($a->layer==''){
-        //     $layer='null';
-        // }else{
-        //     $layer=$a->layer;
-        // }
-        // if($a->color==''){
-           
-        // }else{
-        //     $color=$a->color;
-        // }
-        // if($a->linetype==''){
-        //     $linetype='null';
-        // }else{
-        //     $linetype=$a->linetype;
-        // }
-        // if($a->elevation==''){
-        //     $elevation='null';
-        // }else{
-        //     $elevation=$a->elevation;
-        // }
-        // if($a->linewt==''){
-        //     $linewt=null;
-        // }else{
-        //     $linewt=$a->linewt;
-        // }
-        // if($a->layer==''){
-        //     $layer='null';
-        // }else{
-        //     $layer=$a->layer;
-        // }
-        // if($a->layer==''){
-        //     $layer='null';
-        // }else{
-        //     $layer=$a->layer;
-        // }
         
         $q="UPDATE public.tbl_area_b_demolitions
         SET entity='$a->entity', layer='$a->layer', color=$a->color, linetype='$a->linetype', elevation=$a->elevation, linewt=$a->linewt, refname='$a->refname', angle='$a->angle'
@@ -158,6 +378,8 @@ class kn1 extends Controller
         // echo $q;
         return json_encode(true);  
     }
+
+
 //tbl_area_b_nature_reserve.....................
     public  function deletebtn_tbl_area_b_nature_reserve($data){
         // echo $data;
@@ -174,6 +396,7 @@ class kn1 extends Controller
     }
     public  function updat_tbl_area_b_nature_reserve($data){
         $a=json_decode($data);
+
         $q="UPDATE public.tbl_area_b_nature_reserve
         SET objectid=$a->objectid, class='$a->class', shape_leng='$a->shape_leng', shape_area='$a->shape_area'
         WHERE fid=$a->fid;";
@@ -181,6 +404,37 @@ class kn1 extends Controller
         // echo $q;
         return json_encode(true);  
     }
+
+     
+//tbl_Area_AB_Combined.....................
+    public  function deletebtn_tbl_area_a_and_b_combined($data){
+        // echo $data;
+        // exit();
+        DB::delete("DELETE FROM public.tbl_area_a_and_b_combined
+        WHERE fid=$data;");
+            return json_encode(true);
+    } 
+
+    public  function editbtn_tbl_area_a_and_b_combined($id){
+        $q = DB::select("SELECT *
+                            FROM public.tbl_area_a_and_b_combined where fid=$id;");
+        return json_encode($q);  
+    }
+    public  function updat_tbl_area_a_and_b_combined($data){
+        $a=json_decode($data);
+
+        $q="UPDATE public.tbl_area_a_and_b_combined
+        SET objectid=$a->objectid, class='$a->class', shape_leng='$a->shape_leng', shape_area='$a->shape_area'
+        WHERE fid=$a->fid;";
+                DB::update($q);
+        // echo $q;
+        return json_encode(true);  
+    } 
+
+
+
+
+
 
     public  function savedata($data){
         $a=json_decode($data);
@@ -196,6 +450,8 @@ class kn1 extends Controller
 
     public  function shaperead(Request $request){
         // print_r($request->all());
+        $tbl_name=$request->tablename;
+
         // echo "shaperead controller";
         $fileName = $request->file->getClientOriginalName();
         $fname=basename($fileName,".zip"); 
@@ -223,7 +479,7 @@ class kn1 extends Controller
                 // echo $shpfilename;
                 // exit();
             // dd($filenames); //show file names
-         }
+        }
         // echo $shpfilename;
         try {
             // Open Shapefile
@@ -232,7 +488,7 @@ class kn1 extends Controller
             // echo $shppath;
             // exit();
             $Shapefile = new ShapefileReader($shppath);
-            $this->shp($Shapefile);
+            $this->shp($tbl_name,$Shapefile);
             // Read all the records
             // while ($Geometry = $Shapefile->fetchRecord()) {
             //     // Skip the record if marked as "deleted"
@@ -263,47 +519,43 @@ class kn1 extends Controller
         }
     }
     // Read all the records
-    public function shp($Shapefile){
-        $q="INSERT INTO public.tbl_area_b_demolitions(
-            fid, entity, layer, color, linetype, elevation, linewt, refname, angle, geom)
-            VALUES";
-        while ($Geometry = $Shapefile->fetchRecord()) {
-                // Skip the record if marked as "deleted"
-                if ($Geometry->isDeleted()) {
-                    continue;
-                }
-                
-                // Print Geometry as an Array
-                // print_r($Geometry->getArray());
-                
-                // // Print Geometry as WKT
-                // print_r($Geometry->getWKT());
-            $geom=$Geometry->getWKT();
-                //    print_r($geom);
-                // // Print Geometry as GeoJSON
-                // print_r($Geometry->getGeoJSON());
-                
-                // // Print DBF data
-                // print_r($Geometry->getDataArray());
-                $data=$Geometry->getDataArray();
-                // print_r($data);
-                $q.="(";
-                $q.=$data['FID'].", ". "'".$data['ENTITY']."'" .", "."'".$data['LAYER']."'".", ".$data['COLOR'].", "."'".$data['LINETYPE']."'".", ".$data['ELEVATION'].", ".$data['LINEWT'].", "."'".$data['REFNAME']."'".", ".$data['ANGLE'].", ".\DB::raw("ST_GeomFromText('$geom',4326)");
-                $q.="), ";
-            
+    public function shp($tbl_name,$Shapefile){
 
-                // ('Point','palestine_bbh_makor',84,'Continuous',0,25,null,0),
+        if($tbl_name == 'area_b_demolitions'){
+            $q="INSERT INTO public.tbl_area_b_demolitions(
+                fid, entity, layer, color, linetype, elevation, linewt, refname, angle, geom)
+                VALUES";
+            while ($Geometry = $Shapefile->fetchRecord()) {
+                    // Skip the record if marked as "deleted"
+                    if ($Geometry->isDeleted()) {
+                        continue;
+                    }
+                    $geom=$Geometry->getWKT();
+                    $data=$Geometry->getDataArray();
+                    // print_r($data);
+                    $q.="(";
+                    $q.=$data['FID'].", ". "'".$data['ENTITY']."'" .", "."'".$data['LAYER']."'".", ".$data['COLOR'].", "."'".$data['LINETYPE']."'".", ".$data['ELEVATION'].", ".$data['LINEWT'].", "."'".$data['REFNAME']."'".", ".$data['ANGLE'].", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                    $q.="), ";
+            }
+            // $fq = rtrim($q, ',');
+            $qf= rtrim($q, " ,");
+            // echo $qf;
+            $pgq=DB::insert($qf);
+            if($pgq){
+                echo json_encode(true);
+                exit();
+            }
+            else{
+                echo json_encode(false);
+            }
+        }elseif($tbl_name == 'area_b_nature_reserve'){
 
         }
-        // $fq = rtrim($q, ',');
-        $qf= rtrim($q, " ,");
-        // echo $qf;
-        $pgq=DB::insert($qf);
-        if($pgq){
-            echo json_encode(true);
-        }else{
-            echo json_encode("Error!...Schema not match");
-            }
+        else{
+            echo json_encode(false);
+        } 
+        
+
     }
 
 

@@ -108,8 +108,9 @@ a:focus {
 
 #sidebar ul li.active>a,
 a[aria-expanded="true"] {
-    color: #fff;
-    background: #6d7fcc;
+    border-radius: 10px;
+    color: #212529;
+    background: #ffffff85;;
 }
 
 a[data-toggle="collapse"] {

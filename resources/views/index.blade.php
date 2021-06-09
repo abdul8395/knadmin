@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>Kn Admin</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -83,13 +83,13 @@
 
             
             <div id="map" >
-                    <div id="dlgAttraction" class="modal">
+                    <div id="shpfileuploadmodal" class="modal">
                         <div class="modal-dialog modal-dialog-centered modal-lg ">
                             <div id='form' class="modal-content col-md-12 col-md-offset-6 ">
                             <form method="POST" action="" enctype="multipart/form-data" id="myForm">
                                 
                                     <div class="modal-header">
-                                    <h4 class="modal-title">Enter Shape File</h4>
+                                    <h4 class="modal-title">Choose Table Name for Shape File Insertion</h4>
                                     <button type="button" id="close_btn" class="close" data-dismiss="modal">&times;</button>
                                     </div>
                                     <div class="modal-body" >
@@ -108,6 +108,27 @@
                                                 <input type="text" class="form-control" id="crs" name="crs" placeholder="CRS:4326" required>
                                             </div>
                                         </div> -->
+                                        <div class="form-group row">
+                                            <div class="col-sm-12">
+                                                <select id="tablename" class="form-control" name="tablename">
+                                                    <option style="color:red" selected disabled>--Select Table Name--</option>
+                                                    <option value="area_b_nature_reserve">Area B Nature Reserve</option>
+                                                    <option value="area_b_demolitions">Area B Demolitions</option>
+                                                    <option value="Area_AB_Combined">Area A&B Combined</option>
+                                                    <option value="Area_AB_Naturereserve">Area A&B Naturereserve</option>
+                                                    <option value="area_a_poly">Area A Poly</option>
+                                                    <option value="area_b_poly">Area B Poly</option>
+                                                    <option value="area_b_training">Area B Tranining</option>
+                                                    <option value="demolitions_orders">Demolitions Orders</option>
+                                                    <option value="expropriation_orders">Expropriation Orders</option>
+                                                    <option value="expropriation_orders_AB">Expropriation Orders AB</option>
+                                                    <option value="expropriation_orders_not_AB">Expropriation Orders Not AB</option>
+                                                    <option value="security_orders">Security Orders</option>
+                                                    <option value="Seizure_AB">Seizure AB</option>
+                                                    <option value="Seizure_All">Seizure All</option>
+                                                </select>
+                                            </div>
+                                        </div>
 
                                         <div class="form-group" id="choose">
                                             <div class="col-md-4">
@@ -202,7 +223,7 @@
 
     $(document).ready(function () {
         $("#close_btn").on("click", function () {
-                $("#dlgAttraction").hide();
+                $("#shpfileuploadmodal").hide();
             });
         
         var  geojsondata=$('#hidData').val();
@@ -235,24 +256,24 @@
     });
            
 
-            function deletebtn_tbl_area_b_demolitions(id){
-                $.ajax({
-                    type : "GET", 
-                    url : 'switch_layre/deletebtn_tbl_area_b_demolitions/'+id,
-                    success:function(res){
-                        var r=JSON.parse(res)
-                                if(r == true){
-                                    toastr.success("Deleted Successfully");
-                                    loadtbledata();
-                                }
-                                else {
-                                    toastr.error("can't Delete ");
-                                }
-                                
+        function deletebtn_tbl_area_b_demolitions(id){
+            $.ajax({
+                type : "GET", 
+                url : 'switch_layre/deletebtn_tbl_area_b_demolitions/'+id,
+                success:function(res){
+                    var r=JSON.parse(res)
+                            if(r == true){
+                                toastr.success("Deleted Successfully");
+                                location.reload();
+                            }
+                            else {
+                                toastr.error("can't Delete ");
+                            }
+                            
 
-                    }
-                });
-            }
+                }
+            });
+        }
 
         function editbtn_tbl_area_b_demolitions(id) {
                 
@@ -300,7 +321,7 @@
                         if(r == true){
                             toastr.success("Updated Successfully");
                             $("#datamodal").modal("hide");
-                            loadtbledata();
+                            location.reload();
                         }
                         else {
                             toastr.error("can't Update Error");
@@ -318,7 +339,7 @@
                         var r=JSON.parse(res)
                                 if(r == true){
                                     toastr.success("Deleted Successfully");
-                                    loadtbledata();
+                                    location.reload();
                                 }
                                 else {
                                     toastr.error("can't Delete ");
@@ -333,7 +354,7 @@
             
                 $.ajax({
                     type: "get",
-                    url: "switch_layre/editbtn_tbl_area_b_demolitions/"+id,
+                    url: "switch_layre/editbtn_tbl_area_b_nature_reserve/"+id,
                     // dataType : "json",
                     success: function (res) {
                         var r=JSON.parse(res)
@@ -352,22 +373,21 @@
         function updat_tbl_area_b_nature_reserve() {
             
                 var reqdata={
-                    entity:$('#objectid').val(),
-                    layer:$('#class').val(),
-                    color:$('#shape_leng').val(),
-                    linetype:$('#shape_area').val(),
+                    objectid:$('#objectid').val(),
+                    class:$('#class').val(),
+                    shape_leng:$('#shape_leng').val(),
+                    shape_area:$('#shape_area').val(),
                     fid:$('#hidnfid').val()
                 };
                 $.ajax({
                     type: "get",
-                    url: "switch_layre/update_tbl_area_b_demolitions/"+JSON.stringify(reqdata),
+                    url: "switch_layre/updat_tbl_area_b_nature_reserve/"+JSON.stringify(reqdata),
                     // dataType : "json",
                     success: function (res) {
                         var r=JSON.parse(res)
                         if(r == true){
                             toastr.success("Updated Successfully");
                             $("#datamodal").modal("hide");
-                            loadtbledata();
                         }
                         else {
                             toastr.error("can't Update Error");
@@ -397,7 +417,7 @@
                         if(r == true){
                             toastr.success("Saved Successfully");
                             $("#datamodal").modal("hide");
-                            loadtbledata();
+                            location.reload();
                         }
                         else {
                             toastr.error("can't Save Error");
@@ -463,42 +483,50 @@
             }
 
 
-    $("#upbtn").on('click',function(){
+    $("#shpupbtn").on('click',function(){
     $("#myForm").trigger("reset");
-    $("#dlgAttraction").show(); 
+    $("#shpfileuploadmodal").show(); 
     });
         $("#myForm").on('submit', function(e){
-            $("#dlgAttraction").hide(); 
             e.preventDefault();
-            var formData = new FormData(this);
-            formData.append('action', 'savadata');
-            // console.log(formData)
-            $.ajax({
-                type: 'POST',
-                url: '/shaperead',
-                data:formData,
-                contentType: false,
-                cache: false,
-                processData:false,
-                success: function(res){    
-                       console.log(res);  
-                       var r=JSON.parse(res)
-                        if(r == true){
-                            toastr.success("Shape File record inserted Successfully");
-                            loadtbledata();
-                        }
-                        else {
-                            toastr.error("Erorr!: Schema mismatch");
-                        }
-                },
-                // complete: function(){
-                // alert("Data uploaded successfully.");
-                // },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    toastr.error("Erorr!:     Schema mismatch");
-                }
-            });
-            // $("#myForm").trigger("reset");
+            var tablename= $("#tablename").val();
+            if(tablename)
+            {
+                $("#shpfileuploadmodal").hide(); 
+                var formData = new FormData(this);
+                formData.append('action', 'savadata');
+                // console.log(formData)
+                $.ajax({
+                    type: 'POST',
+                    url: '/shaperead',
+                    data:formData,
+                    contentType: false,
+                    cache: false,
+                    processData:false,
+                    success: function(res){    
+                        console.log(res);  
+                        var r=JSON.parse(res)
+                            if(r == true){
+                                toastr.success("Shape File record inserted Successfully");
+                                location.reload();
+                            }
+                            else {
+                                toastr.error("Erorr!: Schema mismatch");
+                            }
+                    },
+                    // complete: function(){
+                    // alert("Data uploaded successfully.");
+                    // },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        toastr.error("Erorr!:     Schema mismatch");
+                    }
+                });
+                // $("#myForm").trigger("reset");
+            }
+            else
+            {
+                toastr.error("First select Table Name then Press Save Button:  Error!");
+            }
         });
 
 
