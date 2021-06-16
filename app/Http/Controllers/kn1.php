@@ -424,7 +424,7 @@ class kn1 extends Controller
         $a=json_decode($data);
 
         $q="UPDATE public.tbl_area_a_and_b_combined
-        SET objectid=$a->objectid, class='$a->class', shape_leng='$a->shape_leng', shape_area='$a->shape_area'
+        SET class='$a->class'
         WHERE fid=$a->fid;";
                 DB::update($q);
         // echo $q;
@@ -451,25 +451,25 @@ class kn1 extends Controller
     public  function shaperead(Request $request){
         // print_r($request->all());
         $tbl_name=$request->tablename;
-
-        // echo "shaperead controller";
+        
         $fileName = $request->file->getClientOriginalName();
         $fname=basename($fileName,".zip"); 
         // $filePath = $request->file->move(public_path('shapefiles'), $fileName);
         $shpfilename;
         if(isset($request->file)){
             $unzipper  = new Unzip();
-            $file = $request->file->store('public/'.$fname); //store file in storage/app/zip
-            $filenames = $unzipper->extract(storage_path('app/'.$file),storage_path('app/public/'.$fname));
+            $filePath = $request->file->move(public_path('uploads/shapefiles'), $fileName);
+            // $file = $request->file->store('public/'.$fname); //store file in storage/app/zip
+            $filenames = $unzipper->extract(public_path('uploads/shapefiles/'.$fileName),public_path('uploads/shapefiles/'.$fname));
             
-            $fdir=storage_path('app/public/'.$fname.'/');
+            $fdir=public_path('uploads/shapefiles/'.$fname.'/');
                 $scan_arr = scandir($fdir);
                 $files_arr = array_diff($scan_arr, array('.','..') );
                 // echo "<pre>"; print_r( $files_arr ); echo "</pre>";
                 // Get each files of our directory with line break
                 foreach ($files_arr as $file) {
                     //Get the file path
-                    $file_path = 'app/public/'.$fname.'/'.$file; //storage_path('app/public/'.$fname.'/'.$file);
+                    $file_path = 'uploads/shapefiles/'.$fname.'/'.$file; //storage_path('app/public/'.$fname.'/'.$file);
                     // Get the file extension
                     $file_ext = pathinfo($file_path, PATHINFO_EXTENSION);
                     if ($file_ext=="shp" || $file_ext=="png" || $file_ext=="JPG" || $file_ext=="PNG") {
@@ -483,7 +483,8 @@ class kn1 extends Controller
         // echo $shpfilename;
         try {
             // Open Shapefile
-            $shppath='C:\xampp\htdocs\KN_admin\storage\app\public\\'.$fname.'\\'.$shpfilename;
+            $shppath=public_path('uploads\shapefiles\\'.$fname.'\\'.$shpfilename);
+            // echo $shppath; C:\xampp\htdocs\KN_admin\public\uploads\shapefiles\tbl_area_b_demolitions\tbl_area_b_demolitions.shp
             // $shppath=storage_path('app\public'.'\\'.$fname.'\\'.$shpfilename);
             // echo $shppath;
             // exit();

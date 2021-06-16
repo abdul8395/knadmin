@@ -39,6 +39,17 @@ Route::get('/switch_layre/switch_layre/deletebtn_tbl_area_b_nature_reserve/{id}'
 Route::get('/switch_layre/switch_layre/editbtn_tbl_area_b_nature_reserve/{id}' , [kn1::class,'editbtn_tbl_area_b_nature_reserve'])->middleware('auth');
 Route::get('/switch_layre/switch_layre/updat_tbl_area_b_nature_reserve/{data}' , [kn1::class,'updat_tbl_area_b_nature_reserve'])->middleware('auth');
 
+Route::get('/switch_layre/switch_layre/deletebtn_tbl_area_a_and_b_combined/{id}' , [kn1::class,'deletebtn_tbl_area_a_and_b_combined'])->middleware('auth');
+Route::get('/switch_layre/switch_layre/editbtn_tbl_area_a_and_b_combined/{id}' , [kn1::class,'editbtn_tbl_area_a_and_b_combined'])->middleware('auth');
+Route::get('/switch_layre/switch_layre/updat_tbl_area_a_and_b_combined/{data}' , [kn1::class,'updat_tbl_area_a_and_b_combined'])->middleware('auth');
+
+
+
+
+
+
+
+
 Route::get('/switch_layre/switch_layre/savedata/{data}' , [kn1::class,'savedata'])->middleware('auth');
 
 

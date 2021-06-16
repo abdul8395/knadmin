@@ -256,81 +256,9 @@
     });
            
 
-        function deletebtn_tbl_area_b_demolitions(id){
-            $.ajax({
-                type : "GET", 
-                url : 'switch_layre/deletebtn_tbl_area_b_demolitions/'+id,
-                success:function(res){
-                    var r=JSON.parse(res)
-                            if(r == true){
-                                toastr.success("Deleted Successfully");
-                                location.reload();
-                            }
-                            else {
-                                toastr.error("can't Delete ");
-                            }
-                            
+       
 
-                }
-            });
-        }
-
-        function editbtn_tbl_area_b_demolitions(id) {
-                
-                $.ajax({
-                    type: "get",
-                    url: "switch_layre/editbtn_tbl_area_b_demolitions/"+id,
-                    // dataType : "json",
-                    success: function (res) {
-                        var r=JSON.parse(res)
-                        console.log(r);
-                        // alert(r[0].entity)
-                            $('#entity').val(r[0].entity)
-                            $('#layer').val(r[0].layer)
-                            $('#color').val(r[0].color)
-                            $('#linetype').val(r[0].linetype)
-                            $('#elevation').val(r[0].elevation)
-                            $('#linewt').val(r[0].linewt)
-                            $('#refname').val(r[0].refname)
-                            $('#angle').val(r[0].angle)
-                            $('#hidnfid').val(r[0].fid);
-                            $("#datamodal").modal("show");
-                    }
-                });   
-        }
-
-        function update_tbl_area_b_demolitions() {
-            
-                var reqdata={
-                    entity:$('#entity').val(),
-                    layer:$('#layer').val(),
-                    color:$('#color').val(),
-                    linetype:$('#linetype').val(),
-                    elevation:$('#elevation').val(),
-                    linewt:$('#linewt').val(),
-                    refname:$('#refname').val(),
-                    angle:$('#angle').val(),
-                    fid:$('#hidnfid').val()
-                };
-                $.ajax({
-                    type: "get",
-                    url: "switch_layre/update_tbl_area_b_demolitions/"+JSON.stringify(reqdata),
-                    // dataType : "json",
-                    success: function (res) {
-                        var r=JSON.parse(res)
-                        if(r == true){
-                            toastr.success("Updated Successfully");
-                            $("#datamodal").modal("hide");
-                            location.reload();
-                        }
-                        else {
-                            toastr.error("can't Update Error");
-                        }
-                    }
-                });   
-        }
-// table tbl_area_b_nature_reserve
-
+// table tbl_area_b_nature_reserve update/delete
         function deletebtn_tbl_area_b_nature_reserve(id){
                 $.ajax({
                     type : "GET", 
@@ -349,7 +277,6 @@
                     }
                 });
             }
-
         function editbtn_tbl_area_b_nature_reserve(id) {
             
                 $.ajax({
@@ -395,6 +322,143 @@
                     }
                 });   
         }
+
+// table tbl_area_b_demolitions update/delete
+        function deletebtn_tbl_area_b_demolitions(id){
+            $.ajax({
+                type : "GET", 
+                url : 'switch_layre/deletebtn_tbl_area_b_demolitions/'+id,
+                success:function(res){
+                    var r=JSON.parse(res)
+                            if(r == true){
+                                toastr.success("Deleted Successfully");
+                                location.reload();
+                            }
+                            else {
+                                toastr.error("can't Delete ");
+                            }
+                            
+
+                }
+            });
+        }
+        function editbtn_tbl_area_b_demolitions(id) {
+                
+                $.ajax({
+                    type: "get",
+                    url: "switch_layre/editbtn_tbl_area_b_demolitions/"+id,
+                    // dataType : "json",
+                    success: function (res) {
+                        var r=JSON.parse(res)
+                        console.log(r);
+                        // alert(r[0].entity)
+                            $('#entity').val(r[0].entity)
+                            $('#layer').val(r[0].layer)
+                            $('#color').val(r[0].color)
+                            $('#linetype').val(r[0].linetype)
+                            $('#elevation').val(r[0].elevation)
+                            $('#linewt').val(r[0].linewt)
+                            $('#refname').val(r[0].refname)
+                            $('#angle').val(r[0].angle)
+                            $('#hidnfid').val(r[0].fid);
+                            $("#datamodal").modal("show");
+                    }
+                });   
+        }
+
+        function update_tbl_area_b_demolitions() {
+            
+            var reqdata={
+                entity:$('#entity').val(),
+                layer:$('#layer').val(),
+                color:$('#color').val(),
+                linetype:$('#linetype').val(),
+                elevation:$('#elevation').val(),
+                linewt:$('#linewt').val(),
+                refname:$('#refname').val(),
+                angle:$('#angle').val(),
+                fid:$('#hidnfid').val()
+            };
+            $.ajax({
+                type: "get",
+                url: "switch_layre/update_tbl_area_b_demolitions/"+JSON.stringify(reqdata),
+                // dataType : "json",
+                success: function (res) {
+                    var r=JSON.parse(res)
+                    if(r == true){
+                        toastr.success("Updated Successfully");
+                        $("#datamodal").modal("hide");
+                        location.reload();
+                    }
+                    else {
+                        toastr.error("can't Update Error");
+                    }
+                }
+            });   
+        }
+
+// table tbl_area_a_and_b_combined
+        function deletebtn_tbl_area_a_and_b_combined(id){
+            $.ajax({
+                type : "GET", 
+                url : 'switch_layre/deletebtn_tbl_area_a_and_b_combined/'+id,
+                success:function(res){
+                    var r=JSON.parse(res)
+                            if(r == true){
+                                toastr.success("Deleted Successfully");
+                                location.reload();
+                            }
+                            else {
+                                toastr.error("can't Delete ");
+                            }
+                            
+
+                }
+            });
+        }
+        function editbtn_tbl_area_a_and_b_combined(id) {
+                
+                $.ajax({
+                    type: "get",
+                    url: "switch_layre/editbtn_tbl_area_a_and_b_combined/"+id,
+                    // dataType : "json",
+                    success: function (res) {
+                        var r=JSON.parse(res)
+                        console.log(r);
+                        // alert(r[0].entity)
+                            $('#class').val(r[0].class)
+                            $("#datamodal").modal("show");
+                    }
+                });   
+        }
+
+        function updat_tbl_area_a_and_b_combined() {
+            
+            var reqdata={
+                class:$('#class').val(),
+                fid:$('#hidnfid').val()
+            };
+            $.ajax({
+                type: "get",
+                url: "switch_layre/updat_tbl_area_a_and_b_combined/"+JSON.stringify(reqdata),
+                // dataType : "json",
+                success: function (res) {
+                    var r=JSON.parse(res)
+                    if(r == true){
+                        toastr.success("Updated Successfully");
+                        $("#datamodal").modal("hide");
+                        location.reload();
+                    }
+                    else {
+                        toastr.error("can't Update Error");
+                    }
+                }
+            });   
+        }
+
+
+
+
 
         function savedata() {
                 var reqdata={
