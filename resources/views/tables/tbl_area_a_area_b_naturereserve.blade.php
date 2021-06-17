@@ -43,7 +43,7 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class=" btn btn-warning" onclick="updat_tbl_area_a_area_b_naturereserve()" id="updatedata" style="color:white;">Update</button>
+                            <button type="button" class=" btn btn-warning" onclick="updat_tbl_area_a_area_b_nature_reserve()" id="updatedata" style="color:white;">Update</button>
                             <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                         </div>
                     </div>
@@ -116,8 +116,8 @@
                 <td>
                     <input type="hidden" id="hidData" value="{{$geojson}}" />
                     <input type="hidden" id="hidnfid" />   
-                    <input type="button" class="btn btn-warning"  value="Edit" onclick="editbtn_tbl_area_a_area_b_naturereserve({{$p->id}})" />    
-                    <input type="button" class="btn btn-danger" style="margin-top: 2px !important;" value="Delete" onclick="deletebtn_tbl_area_a_area_b_naturereserve({{$p->id}})" />    
+                    <input type="button" class="btn btn-warning"  value="Edit" onclick="editbtn_tbl_area_a_area_b_nature_reserve({{$p->id}})" />    
+                    <input type="button" class="btn btn-danger" style="margin-top: 2px !important;" value="Delete" onclick="deletebtn_tbl_area_a_area_b_nature_reserve({{$p->id}})" />    
                 </td>
             </tr>
     @endforeach

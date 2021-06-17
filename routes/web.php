@@ -31,9 +31,13 @@ Route::match(['get','post'], '/shaperead', [kn1::class, 'shaperead']);
 Auth::routes();
 // ------------kn1 rooutes----------------
 Route::get('/switch_layre/{name}' , [kn1::class,'switch_layre'])->name('switch_layre')->middleware('auth');
+
+// Route::get('/switch_layre/switch_layre/insert_area_b_demolation/{data}' , [kn1::class,'insert_area_b_demolation']);
+// Route::get('/switch_layre/switch_layre/insert_modal_tbl_area_b_demolitions' , [kn1::class,'insert_modal_tbl_area_b_demolitions'])->middleware('auth');
 Route::get('/switch_layre/switch_layre/deletebtn_tbl_area_b_demolitions/{id}' , [kn1::class,'deletebtn_tbl_area_b_demolitions'])->middleware('auth');
 Route::get('/switch_layre/switch_layre/editbtn_tbl_area_b_demolitions/{id}' , [kn1::class,'editbtn_tbl_area_b_demolitions'])->middleware('auth');
-Route::get('/switch_layre/switch_layre/update_tbl_area_b_demolitions/{data}' , [kn1::class,'update_tbl_area_b_demolitions']);
+Route::post('/switch_layre/switch_layre/update_tbl_area_b_demolitions' , [kn1::class,'update_tbl_area_b_demolitions']);
+Route::post('/switch_layre/switch_layre/insert_area_b_demolation' , [kn1::class,'insert_area_b_demolation']);
 
 Route::get('/switch_layre/switch_layre/deletebtn_tbl_area_b_nature_reserve/{id}' , [kn1::class,'deletebtn_tbl_area_b_nature_reserve'])->middleware('auth');
 Route::get('/switch_layre/switch_layre/editbtn_tbl_area_b_nature_reserve/{id}' , [kn1::class,'editbtn_tbl_area_b_nature_reserve'])->middleware('auth');
@@ -43,7 +47,9 @@ Route::get('/switch_layre/switch_layre/deletebtn_tbl_area_a_and_b_combined/{id}'
 Route::get('/switch_layre/switch_layre/editbtn_tbl_area_a_and_b_combined/{id}' , [kn1::class,'editbtn_tbl_area_a_and_b_combined'])->middleware('auth');
 Route::get('/switch_layre/switch_layre/updat_tbl_area_a_and_b_combined/{data}' , [kn1::class,'updat_tbl_area_a_and_b_combined'])->middleware('auth');
 
-
+Route::get('/switch_layre/switch_layre/deletebtn_tbl_area_a_area_b_nature_reserve/{id}' , [kn1::class,'deletebtn_tbl_area_a_area_b_nature_reserve'])->middleware('auth');
+Route::get('/switch_layre/switch_layre/editbtn_tbl_area_a_area_b_nature_reserve/{id}' , [kn1::class,'editbtn_tbl_area_a_area_b_nature_reserve'])->middleware('auth');
+Route::get('/switch_layre/switch_layre/updat_tbl_area_a_area_b_nature_reserve/{data}' , [kn1::class,'updat_tbl_area_a_area_b_nature_reserve'])->middleware('auth');
 
 
 
