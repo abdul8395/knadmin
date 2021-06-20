@@ -42,9 +42,9 @@
     </head>
     <body >
     <input type="hidden" id="hidngeom" >
+    <input type="hidden" id="hidnupdatedgeom" >
     <div class="wrapper" >
         @include('sidebarlayres')
-
         <!-- Page Content  -->
         <div id="content">
 
@@ -183,13 +183,14 @@
 
 
 <script>
-   var geom
-    var gm;
+   var tbl_name;
+   var geojsonfromhiddenfld;
+
             var map = L.map('map').setView([31.807491554, 35.341034188], 8);
    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
        var drawnItems = L.featureGroup().addTo(map);
-        redliningDrawControl = new L.Control.Draw({
+        var drawControl = new L.Control.Draw({
             position: 'topleft',
             draw: {
                 circle: false,
@@ -211,30 +212,128 @@
             drawnItems.addLayer(layer);
             // console.log(type);
             var json_data= layer.toGeoJSON();
-            data=json_data.geometry;
+                data=json_data.geometry;
             // console.log(data);
              var gm= JSON.stringify(data)
             $("#hidngeom").val(gm);
-            $("#insert_area_b_demo_modal").modal("show");
-            
-            
+            if(tbl_name=='tbl_area_b_demolitions'){
+                $("#insert_modal").modal("show");
+            }
+            else if(tbl_name=='tbl_area_a_and_b_combined'){
+                $("#insert_modal").modal("show");
+            }
+            else if(tbl_name=='tbl_area_b_nature_reserve'){
+                $("#insert_modal").modal("show");
+            }
+            else if(tbl_name=='tbl_area_b_nature_reserve'){
+                $("#insert_modal").modal("show");
+            }
+            else if(tbl_name=='tbl_area_b_nature_reserve'){
+                $("#insert_modal").modal("show");
+            }
+            else if(tbl_name=='tbl_area_b_nature_reserve'){
+                $("#insert_modal").modal("show");
+            }
+            else if(tbl_name=='tbl_area_b_training'){
+                $("#insert_modal").modal("show");
+            }
+            else if(tbl_name=='tbl_area_b_nature_reserve'){
+                $("#insert_modal").modal("show");
+            }
+            else if(tbl_name=='tbl_area_b_nature_reserve'){
+                $("#insert_modal").modal("show");
+            }
+            else if(tbl_name=='tbl_area_b_nature_reserve'){
+                $("#insert_modal").modal("show");
+            }
+            else if(tbl_name=='tbl_area_b_nature_reserve'){
+                $("#insert_modal").modal("show");
+            }
+            else if(tbl_name=='tbl_area_b_nature_reserve'){
+                $("#insert_modal").modal("show");
+            }
+            else if(tbl_name=='tbl_area_b_nature_reserve'){
+                $("#insert_modal").modal("show");
+            }
+            else if(tbl_name=='tbl_area_b_nature_reserve'){
+                $("#insert_modal").modal("show");
+            }
+            else if(tbl_name=='tbl_area_b_nature_reserve'){
+                $("#insert_modal").modal("show");
+            }
+            else if(tbl_name=='tbl_area_b_nature_reserve'){
+                $("#insert_modal").modal("show");
+            }
+
+                    
+
         });
 
         map.on('draw:edited', function (e) {
             var layers = e.layers;
             var json_data= layers.toGeoJSON();
-                    data=json_data;
-                    var updated_geom=data.features[0].geometry;
-                    var id=data.features[0].id
-                    // console.log(updated_geom);
-                    editgeom_tbl_area_b_demolitions(id, updated_geom)
+                data=json_data;
+                var updated_geom=data.features[0].geometry;
+                var id=data.features[0].id
+                // console.log(updated_geom);
+            if(tbl_name=='tbl_area_b_demolitions'){
+                editgeom_tbl_area_b_demolitions(id, updated_geom)
+            }
+            else if(tbl_name=='tbl_area_a_and_b_combined'){
+                editgeom_tbl_area_a_and_b_combined(id, updated_geom)
+            }
+            else if(tbl_name=='tbl_area_b_nature_reserve'){
+                editgeom_tbl_area_b_nature_reserve(id, updated_geom)
+            }
+            else if(tbl_name=='tbl_area_b_nature_reserve'){
+                editgeom_tbl_area_b_nature_reserve(id, updated_geom)
+            }
+            else if(tbl_name=='tbl_area_b_nature_reserve'){
+                editgeom_tbl_area_b_nature_reserve(id, updated_geom)
+            }
+            else if(tbl_name=='tbl_area_b_nature_reserve'){
+                editgeom_tbl_area_b_nature_reserve(id, updated_geom)
+            }
+            else if(tbl_name=='tbl_area_b_nature_reserve'){
+                editgeom_tbl_area_b_nature_reserve(id, updated_geom)
+            }
+            else if(tbl_name=='tbl_area_b_nature_reserve'){
+                editgeom_tbl_area_b_nature_reserve(id, updated_geom)
+            }
+            else if(tbl_name=='tbl_area_b_training'){
+                editgeom_tbl_area_b_training(id, updated_geom)
+            }
+            else if(tbl_name=='tbl_area_b_nature_reserve'){
+                editgeom_tbl_area_b_nature_reserve(id, updated_geom)
+            }
+            else if(tbl_name=='tbl_area_b_nature_reserve'){
+                editgeom_tbl_area_b_nature_reserve(id, updated_geom)
+            }
+            else if(tbl_name=='tbl_area_b_nature_reserve'){
+                editgeom_tbl_area_b_nature_reserve(id, updated_geom)
+            }
+            else if(tbl_name=='tbl_area_b_nature_reserve'){
+                editgeom_tbl_area_b_nature_reserve(id, updated_geom)
+            }
+            else if(tbl_name=='tbl_area_b_nature_reserve'){
+                editgeom_tbl_area_b_nature_reserve(id, updated_geom)
+            }
+            else if(tbl_name=='tbl_area_b_nature_reserve'){
+                editgeom_tbl_area_b_nature_reserve(id, updated_geom)
+            }
+            else if(tbl_name=='tbl_area_b_nature_reserve'){
+                editgeom_tbl_area_b_nature_reserve(id, updated_geom)
+            }
+            
+
+
         });
 
     setTimeout(function(){ 
-        // console.log(gm)
-        //L.geoJSON(JSON.parse(gm)).addTo(this.map);
+        // console.log(geojsonfromhiddenfld)
+        //L.geoJSON(JSON.parse(geojsonfromhiddenfld)).addTo(this.map);
 
-        L.geoJSON(JSON.parse(gm), {
+        L.geoJSON(JSON.parse(geojsonfromhiddenfld), {
                 onEachFeature: function (feature, layer) {
                     layer.on('click', function (e) {
                         drawnItems.addLayer(layer);
@@ -255,7 +354,9 @@
             });
         
         var  geojsondata=$('#hidData').val();
-                gm=JSON.parse(geojsondata);
+        geojsonfromhiddenfld=JSON.parse(geojsondata);
+
+         tbl_name=$('#hidden_table_name').val();
 
 
         $('#sidebarCollapse').on('click', function () {
@@ -267,15 +368,10 @@
         } );
     });
            
+    // table tbl_area_b_demolitions insert/update/delete
 
-
-        function insert_area_b_demolation() {
+        function insert_tbl_area_b_demolation() {
             var hgeom=$('#hidngeom').val()
-            // console.log(hgeom)
-            // var hg=JSON.stringify(hgeom)
-            // console.log(hg)
-            //var g = encodeURIComponent(hgeom);
-           // console.log(g)
             
             var reqdata={
                 entity:$('#ins_entity').val(),
@@ -297,7 +393,8 @@
                     var r=JSON.parse(res)
                     if(r == true){
                         toastr.success("inserted Successfully");
-                        $("#datamodal").modal("hide");
+                        $("#insert_modal").modal("hide");
+                        $('#hidngeom').val('');
                         location.reload();
                     }
                     else {
@@ -308,48 +405,175 @@
         }
        
         function editgeom_tbl_area_b_demolitions(id,updatedgeom) {
-                console.log(id)
-                console.log(updatedgeom)
-                var hg=JSON.stringify(updatedgeom)
+            // console.log(id)
+            // console.log(updatedgeom)
+            var hiddengeom=JSON.stringify(updatedgeom)
 
-                $.ajax({
-                    type: "get",
-                    url: "switch_layre/editbtn_tbl_area_b_demolitions/"+id,
-                    // dataType : "json",
-                    success: function (res) {
-                        var r=JSON.parse(res)
-                        // console.log(r);
-                        // alert(r[0].entity)
-                            $('#entity').val(r[0].entity)
-                            $('#layer').val(r[0].layer)
-                            $('#color').val(r[0].color)
-                            $('#linetype').val(r[0].linetype)
-                            $('#elevation').val(r[0].elevation)
-                            $('#linewt').val(r[0].linewt)
-                            $('#refname').val(r[0].refname)
-                            $('#angle').val(r[0].angle)
-                            $('#hidnfid').val(r[0].fid);
-                            $('#hidnupdatedgeom').val(hg);
-                            $("#datamodal").modal("show");
-                    }
-                });   
+            $.ajax({
+                type: "get",
+                url: "switch_layre/editbtn_tbl_area_b_demolitions/"+id,
+                // dataType : "json",
+                success: function (res) {
+                    var r=JSON.parse(res)
+                    // console.log(r);
+                    // alert(r[0].entity)
+                        $('#entity').val(r[0].entity)
+                        $('#layer').val(r[0].layer)
+                        $('#color').val(r[0].color)
+                        $('#linetype').val(r[0].linetype)
+                        $('#elevation').val(r[0].elevation)
+                        $('#linewt').val(r[0].linewt)
+                        $('#refname').val(r[0].refname)
+                        $('#angle').val(r[0].angle)
+                        $('#hidnfid').val(r[0].fid);
+                        $('#hidnupdatedgeom').val(hiddengeom);
+                        $("#edit_modal").modal("show");
+                }
+            });   
         }
-// table tbl_area_b_nature_reserve update/delete
+        
+        function deletebtn_tbl_area_b_demolitions(id){
+            $.ajax({
+                type : "GET", 
+                url : 'switch_layre/deletebtn_tbl_area_b_demolitions/'+id,
+                success:function(res){
+                    var r=JSON.parse(res)
+                    if(r == true){
+                        toastr.success("Deleted Successfully");
+                        location.reload();
+                    }
+                    else {
+                        toastr.error("can't Delete ");
+                    }
+                }
+            });
+        }
+        function editbtn_tbl_area_b_demolitions(id) {   
+            $.ajax({
+                type: "get",
+                url: "switch_layre/editbtn_tbl_area_b_demolitions/"+id,
+                // dataType : "json",
+                success: function (res) {
+                    var r=JSON.parse(res)
+                    // console.log(r);
+                    // alert(r[0].entity)
+                    $('#entity').val(r[0].entity)
+                    $('#layer').val(r[0].layer)
+                    $('#color').val(r[0].color)
+                    $('#linetype').val(r[0].linetype)
+                    $('#elevation').val(r[0].elevation)
+                    $('#linewt').val(r[0].linewt)
+                    $('#refname').val(r[0].refname)
+                    $('#angle').val(r[0].angle)
+                    $('#hidnfid').val(r[0].fid);
+                    $("#edit_modal").modal("show");
+                }
+            });   
+        }
+
+        function update_tbl_area_b_demolitions() {
+            var hidnupdatedgeom=$('#hidnupdatedgeom').val()
+
+            var reqdata={
+                entity:$('#entity').val(),
+                layer:$('#layer').val(),
+                color:$('#color').val(),
+                linetype:$('#linetype').val(),
+                elevation:$('#elevation').val(),
+                linewt:$('#linewt').val(),
+                refname:$('#refname').val(),
+                angle:$('#angle').val(),
+                fid:$('#hidnfid').val(),
+                upgeom:JSON.stringify(hidnupdatedgeom)
+                
+            };
+            $.ajax({
+                type: "post",
+                url: "switch_layre/update_tbl_area_b_demolitions",
+                data:{data:reqdata},
+                // dataType : "json",
+                success: function (res) {
+                    var r=JSON.parse(res)
+                    if(r == true){
+                        toastr.success("Updated Successfully");
+                        $("#edit_modal").modal("hide");
+                        $('#hidnupdatedgeom').val('')
+                        location.reload();
+                    }
+                    else {
+                        toastr.error("can't Update Error");
+                    }
+                }
+            });   
+        }
+    // table tbl_area_b_nature_reserve add/update/delete
+        function insert_tbl_area_b_nature_reserve() {
+            var hgeom=$('#hidngeom').val()
+            var reqdata={
+                objectid:$('#ins_objectid').val(),
+                class:$('#ins_class').val(),
+                shape_leng:$('#ins_shape_leng').val(),
+                shape_area:$('#ins_shape_area').val(),
+                fid:$('#hidnfid').val(),
+                geom:JSON.stringify(hgeom)
+            };
+            $.ajax({
+                type: "post",
+                url: "switch_layre/insert_tbl_area_b_nature_reserve",
+                // dataType : "json",
+                data:{data:reqdata},
+                success: function (res) {
+                    var r=JSON.parse(res)
+                    if(r == true){
+                        toastr.success("inserted Successfully");
+                        $("#insert_modal").modal("hide");
+                        $('#hidngeom').val('');
+                        location.reload();
+                    }
+                    else {
+                        toastr.error("can't insert Error");
+                    }
+                }
+            });   
+        }
+       
+        function editgeom_tbl_area_b_nature_reserve(id,updatedgeom) {
+            // console.log(id)
+            // console.log(updatedgeom)
+            var hiddengeom=JSON.stringify(updatedgeom)
+
+            $.ajax({
+                type: "get",
+                url: "switch_layre/editbtn_tbl_area_b_nature_reserve/"+id,
+                // dataType : "json",
+                success: function (res) {
+                    var r=JSON.parse(res)
+                    // console.log(r);
+                    // alert(r[0].entity)
+                        $('#objectid').val(r[0].objectid)
+                        $('#class').val(r[0].class)
+                        $('#shape_leng').val(r[0].shape_leng)
+                        $('#shape_area').val(r[0].shape_area)
+                        $('#hidnfid').val(r[0].fid);
+                        $('#hidnupdatedgeom').val(hiddengeom);
+                        $("#edit_modal").modal("show");
+                }
+            });   
+        }
+
         function deletebtn_tbl_area_b_nature_reserve(id){
                 $.ajax({
                     type : "GET", 
                     url : 'switch_layre/deletebtn_tbl_area_b_nature_reserve/'+id,
                     success:function(res){
                         var r=JSON.parse(res)
-                                if(r == true){
-                                    toastr.success("Deleted Successfully");
-                                    location.reload();
-                                }
-                                else {
-                                    toastr.error("can't Delete ");
-                                }
-                                
-
+                        if(r == true){
+                            toastr.success("Deleted Successfully");
+                            location.reload();
+                        }
+                        else {
+                            toastr.error("can't Delete ");
+                        }
                     }
                 });
             }
@@ -368,108 +592,32 @@
                             $('#shape_leng').val(r[0].shape_leng)
                             $('#shape_area').val(r[0].shape_area)
                             $('#hidnfid').val(r[0].fid);
-                            $("#datamodal").modal("show");
+                            $("#edit_modal").modal("show");
                     }
                 });   
         }
 
         function updat_tbl_area_b_nature_reserve() {
-            
-                var reqdata={
-                    objectid:$('#objectid').val(),
-                    class:$('#class').val(),
-                    shape_leng:$('#shape_leng').val(),
-                    shape_area:$('#shape_area').val(),
-                    fid:$('#hidnfid').val()
-                };
-                $.ajax({
-                    type: "get",
-                    url: "switch_layre/updat_tbl_area_b_nature_reserve/"+JSON.stringify(reqdata),
-                    // dataType : "json",
-                    success: function (res) {
-                        var r=JSON.parse(res)
-                        if(r == true){
-                            toastr.success("Updated Successfully");
-                            $("#datamodal").modal("hide");
-                        }
-                        else {
-                            toastr.error("can't Update Error");
-                        }
-                    }
-                });   
-        }
-
-// table tbl_area_b_demolitions update/delete
-
-        
-        function deletebtn_tbl_area_b_demolitions(id){
-            $.ajax({
-                type : "GET", 
-                url : 'switch_layre/deletebtn_tbl_area_b_demolitions/'+id,
-                success:function(res){
-                    var r=JSON.parse(res)
-                            if(r == true){
-                                toastr.success("Deleted Successfully");
-                                location.reload();
-                            }
-                            else {
-                                toastr.error("can't Delete ");
-                            }
-                            
-
-                }
-            });
-        }
-        function editbtn_tbl_area_b_demolitions(id) {
-                
-                $.ajax({
-                    type: "get",
-                    url: "switch_layre/editbtn_tbl_area_b_demolitions/"+id,
-                    // dataType : "json",
-                    success: function (res) {
-                        var r=JSON.parse(res)
-                        // console.log(r);
-                        // alert(r[0].entity)
-                            $('#entity').val(r[0].entity)
-                            $('#layer').val(r[0].layer)
-                            $('#color').val(r[0].color)
-                            $('#linetype').val(r[0].linetype)
-                            $('#elevation').val(r[0].elevation)
-                            $('#linewt').val(r[0].linewt)
-                            $('#refname').val(r[0].refname)
-                            $('#angle').val(r[0].angle)
-                            $('#hidnfid').val(r[0].fid);
-                            $("#datamodal").modal("show");
-                    }
-                });   
-        }
-
-        function update_tbl_area_b_demolitions() {
-            var upg=$('#hidnupdatedgeom').val()
-
+            var hidnupdatedgeom=$('#hidnupdatedgeom').val()
             var reqdata={
-                entity:$('#entity').val(),
-                layer:$('#layer').val(),
-                color:$('#color').val(),
-                linetype:$('#linetype').val(),
-                elevation:$('#elevation').val(),
-                linewt:$('#linewt').val(),
-                refname:$('#refname').val(),
-                angle:$('#angle').val(),
+                objectid:$('#objectid').val(),
+                class:$('#class').val(),
+                shape_leng:$('#shape_leng').val(),
+                shape_area:$('#shape_area').val(),
                 fid:$('#hidnfid').val(),
-                upgeom:JSON.stringify(upg)
+                upgeom:JSON.stringify(hidnupdatedgeom)
             };
             $.ajax({
                 type: "post",
-                url: "switch_layre/update_tbl_area_b_demolitions",
+                url: "switch_layre/updat_tbl_area_b_nature_reserve",
                 data:{data:reqdata},
                 // dataType : "json",
                 success: function (res) {
                     var r=JSON.parse(res)
                     if(r == true){
                         toastr.success("Updated Successfully");
-                        $("#datamodal").modal("hide");
-                        location.reload();
+                        $("#edit_modal").modal("hide");
+                        $('#hidnupdatedgeom').val();
                     }
                     else {
                         toastr.error("can't Update Error");
@@ -479,58 +627,323 @@
         }
 
 // table tbl_area_a_and_b_combined
-        function deletebtn_tbl_area_a_and_b_combined(id){
-            $.ajax({
-                type : "GET", 
-                url : 'switch_layre/deletebtn_tbl_area_a_and_b_combined/'+id,
-                success:function(res){
-                    var r=JSON.parse(res)
-                            if(r == true){
-                                toastr.success("Deleted Successfully");
-                                location.reload();
-                            }
-                            else {
-                                toastr.error("can't Delete ");
-                            }
-                            
-
+    function insert_tbl_area_a_and_b_combined() {
+        var hgeom=$('#hidngeom').val()
+        var reqdata={
+            class:$('#class').val(),
+            fid:$('#hidnfid').val(),
+            geom:JSON.stringify(hgeom)
+        };
+        $.ajax({
+            type: "post",
+            url: "switch_layre/insert_tbl_area_a_and_b_combined",
+            // dataType : "json",
+            data:{data:reqdata},
+            success: function (res) {
+                var r=JSON.parse(res)
+                if(r == true){
+                    toastr.success("inserted Successfully");
+                    $("#insert_modal").modal("hide");
+                    $('#hidngeom').val('');
+                    location.reload();
                 }
-            });
-        }
-        function editbtn_tbl_area_a_and_b_combined(id) {
-                
-                $.ajax({
-                    type: "get",
-                    url: "switch_layre/editbtn_tbl_area_a_and_b_combined/"+id,
-                    // dataType : "json",
-                    success: function (res) {
-                        var r=JSON.parse(res)
-                        // console.log(r);
-                        // alert(r[0].entity)
-                            $('#class').val(r[0].class)
-                            $('#hidnfid').val(r[0].fid);
-                            $("#datamodal").modal("show");
-                    }
-                });   
-        }
+                else {
+                    toastr.error("can't insert Error");
+                }
+            }
+        });   
+    }
+       
+    function editgeom_tbl_area_a_and_b_combined(id,updatedgeom) {
+        var hiddengeom=JSON.stringify(updatedgeom)
+        $.ajax({
+            type: "get",
+            url: "switch_layre/editbtn_tbl_area_a_and_b_combined/"+id,
+            // dataType : "json",
+            success: function (res) {
+                // console.log(res)
+                var r=JSON.parse(res)
+                $('#class').val(r[0].class)
+                $('#hidnfid').val(r[0].fid);
+                $('#hidnupdatedgeom').val(hiddengeom);
+                $("#edit_modal").modal("show");
+            }
+        });   
+    }
+    function deletebtn_tbl_area_a_and_b_combined(id){
+        $.ajax({
+            type : "GET", 
+            url : 'switch_layre/deletebtn_tbl_area_a_and_b_combined/'+id,
+            success:function(res){
+                var r=JSON.parse(res)
+                        if(r == true){
+                            toastr.success("Deleted Successfully");
+                            location.reload();
+                        }
+                        else {
+                            toastr.error("can't Delete ");
+                        }
+                        
 
-        function updat_tbl_area_a_and_b_combined() {
-        //    var a= $("#hidnfid").val();
-        //     alert(a);
-            var reqdata={
-                class:$('#class').val(),
-                fid:$('#hidnfid').val()
-            };
+            }
+        });
+    }
+    function editbtn_tbl_area_a_and_b_combined(id) {
+            
             $.ajax({
                 type: "get",
-                url: "switch_layre/updat_tbl_area_a_and_b_combined/"+JSON.stringify(reqdata),
+                url: "switch_layre/editbtn_tbl_area_a_and_b_combined/"+id,
+                // dataType : "json",
+                success: function (res) {
+                    var r=JSON.parse(res)
+                    // console.log(r);
+                    // alert(r[0].entity)
+                        $('#class').val(r[0].class)
+                        $('#hidnfid').val(r[0].fid);
+                        $("#edit_modal").modal("show");
+                }
+            });   
+    }
+    function updat_tbl_area_a_and_b_combined() {
+        var hidnupdatedgeom=$('#hidnupdatedgeom').val()
+        var reqdata={
+            class:$('#class').val(),
+            fid:$('#hidnfid').val(),
+            upgeom:JSON.stringify(hidnupdatedgeom)
+        };
+        $.ajax({
+            type: "post",
+            url: "switch_layre/updat_tbl_area_a_and_b_combined",
+            data:{data:reqdata},
+            // dataType : "json",
+            success: function (res) {
+                var r=JSON.parse(res)
+                if(r == true){
+                    toastr.success("Updated Successfully");
+                    $("#edit_modal").modal("hide");
+                    location.reload();
+                    
+                }
+                else {
+                    toastr.error("can't Update Error");
+                }
+            }
+        });   
+    }
+
+// table tbl_area_a_area_b_naturereserve update/delete
+    function insert_tbl_area_a_area_b_naturereserve() {
+        var hgeom=$('#hidngeom').val()
+        var reqdata={
+            objectid:$('#ins_objectid').val(),
+            class:$('#ins_class').val(),
+            shape_leng:$('#ins_shape_leng').val(),
+            shape_area:$('#ins_shape_area').val(),
+            geom:JSON.stringify(hgeom)
+        };
+        $.ajax({
+            type: "post",
+            url: "switch_layre/insert_tbl_area_a_area_b_naturereserve",
+            // dataType : "json",
+            data:{data:reqdata},
+            success: function (res) {
+                var r=JSON.parse(res)
+                if(r == true){
+                    toastr.success("inserted Successfully");
+                    $("#insert_modal").modal("hide");
+                    $('#hidngeom').val('');
+                    location.reload();
+                }
+                else {
+                    toastr.error("can't insert Error");
+                }
+            }
+        });   
+    }
+    
+    function editgeom_tbl_area_a_area_b_naturereserve(id,updatedgeom) {
+        // console.log(id)
+        // console.log(updatedgeom)
+        var hiddengeom=JSON.stringify(updatedgeom)
+        $.ajax({
+            type: "get",
+            url: "switch_layre/editbtn_tbl_area_a_area_b_naturereserve/"+id,
+            // dataType : "json",
+            success: function (res) {
+                var r=JSON.parse(res)
+                // console.log(r);
+                // alert(r[0].entity)
+                $('#objectid').val(r[0].objectid)
+                $('#class').val(r[0].class)
+                $('#shape_leng').val(r[0].shape_leng)
+                $('#shape_area').val(r[0].shape_area)
+                $('#hidnfid').val(r[0].id);
+                $('#hidnupdatedgeom').val(hiddengeom);
+                $("#edit_modal").modal("show");
+            }
+        });   
+    }
+
+    function deletebtn_tbl_area_a_area_b_naturereserve(id){
+        $.ajax({
+            type : "GET", 
+            url : 'switch_layre/deletebtn_tbl_area_a_area_b_naturereserve/'+id,
+            success:function(res){
+                var r=JSON.parse(res)
+                if(r == true){
+                    toastr.success("Deleted Successfully");
+                    location.reload();
+                }
+                else {
+                    toastr.error("can't Delete ");
+                }
+            }
+        });
+    }
+    function editbtn_tbl_area_a_area_b_naturereserve(id) {
+        $.ajax({
+            type: "get",
+            url: "switch_layre/editbtn_tbl_area_a_area_b_naturereserve/"+id,
+            // dataType : "json",
+            success: function (res) {
+                var r=JSON.parse(res)
+                // console.log(r);
+                // alert(r[0].entity)
+                $('#objectid').val(r[0].objectid)
+                $('#class').val(r[0].class)
+                $('#shape_leng').val(r[0].shape_leng)
+                $('#shape_area').val(r[0].shape_area)
+                $('#hidnfid').val(r[0].id);
+                $("#edit_modal").modal("show");
+            }
+        });   
+    }
+
+    function updat_tbl_area_a_area_b_naturereserve() {
+        var hidnupdatedgeom=$('#hidnupdatedgeom').val()
+        var reqdata={
+            objectid:$('#objectid').val(),
+            class:$('#class').val(),
+            shape_leng:$('#shape_leng').val(),
+            shape_area:$('#shape_area').val(),
+            fid:$('#hidnfid').val(),
+            upgeom:JSON.stringify(hidnupdatedgeom)
+        };
+        $.ajax({
+            type: "post",
+            url: "switch_layre/updat_tbl_area_a_area_b_naturereserve",
+            data:{data:reqdata},
+            // dataType : "json",
+            success: function (res) {
+                var r=JSON.parse(res)
+                if(r == true){
+                    toastr.success("Updated Successfully");
+                    $("#edit_modal").modal("hide");
+                    $('#hidnupdatedgeom').val();
+                }
+                else {
+                    toastr.error("can't Update Error");
+                }
+            }
+        });   
+    }
+
+// table tbl_area_b_training add/update/delete
+        function insert_tbl_area_b_training() {
+            var hgeom=$('#hidngeom').val()
+            var reqdata={
+                id:$('#ins_id').val(),
+                fid:$('#hidnfid').val(),
+                geom:JSON.stringify(hgeom)
+            };
+            $.ajax({
+                type: "post",
+                url: "switch_layre/insert_tbl_area_b_training",
+                // dataType : "json",
+                data:{data:reqdata},
+                success: function (res) {
+                    var r=JSON.parse(res)
+                    if(r == true){
+                        toastr.success("inserted Successfully");
+                        $("#insert_modal").modal("hide");
+                        $('#hidngeom').val('');
+                        location.reload();
+                    }
+                    else {
+                        toastr.error("can't insert Error");
+                    }
+                }
+            });   
+        }
+       
+        function editgeom_tbl_area_b_training(id,updatedgeom) {
+            var hiddengeom=JSON.stringify(updatedgeom)
+            $.ajax({
+                type: "get",
+                url: "switch_layre/editbtn_tbl_area_b_training/"+id,
+                // dataType : "json",
+                success: function (res) {
+                    // console.log(res)
+                    var r=JSON.parse(res)
+                    $('#id').val(r[0].id)
+                    $('#hidnfid').val(r[0].fid);
+                    $('#hidnupdatedgeom').val(hiddengeom);
+                    $("#edit_modal").modal("show");
+                }
+            });   
+        }
+
+        function deletebtn_tbl_area_b_training(id){
+                $.ajax({
+                    type : "GET", 
+                    url : 'switch_layre/deletebtn_tbl_area_b_training/'+id,
+                    success:function(res){
+                        var r=JSON.parse(res)
+                        if(r == true){
+                            toastr.success("Deleted Successfully");
+                            location.reload();
+                        }
+                        else {
+                            toastr.error("can't Delete ");
+                        }
+                    }
+                });
+        }
+        function editbtn_tbl_area_b_training(id) {
+            $.ajax({
+                type: "get",
+                url: "switch_layre/editbtn_tbl_area_b_training/"+id,
+                // dataType : "json",
+                success: function (res) {
+                    var r=JSON.parse(res)
+                    // console.log(r);
+                    // alert(r[0].entity)
+                        $('#id').val(r[0].id)
+                        $('#hidnfid').val(r[0].fid);
+                        $("#edit_modal").modal("show");
+                }
+            });   
+        }
+
+        function updat_tbl_area_b_training() {
+            var hidnupdatedgeom=$('#hidnupdatedgeom').val()
+            var reqdata={
+                id:$('#id').val(),
+                fid:$('#hidnfid').val(),
+                upgeom:JSON.stringify(hidnupdatedgeom)
+            };
+            $.ajax({
+                type: "post",
+                url: "switch_layre/updat_tbl_area_b_training",
+                data:{data:reqdata},
                 // dataType : "json",
                 success: function (res) {
                     var r=JSON.parse(res)
                     if(r == true){
                         toastr.success("Updated Successfully");
-                        $("#datamodal").modal("hide");
+                        $("#edit_modal").modal("hide");
                         location.reload();
+                        
                     }
                     else {
                         toastr.error("can't Update Error");
@@ -539,70 +952,9 @@
             });   
         }
 
-// table tbl_area_a_area_b_nature_reserve update/delete
-function deletebtn_tbl_area_a_area_b_nature_reserve(id){
-                $.ajax({
-                    type : "GET", 
-                    url : 'switch_layre/deletebtn_tbl_area_a_area_b_nature_reserve/'+id,
-                    success:function(res){
-                        var r=JSON.parse(res)
-                                if(r == true){
-                                    toastr.success("Deleted Successfully");
-                                    location.reload();
-                                }
-                                else {
-                                    toastr.error("can't Delete ");
-                                }
-                                
 
-                    }
-                });
-            }
-        function editbtn_tbl_area_a_area_b_nature_reserve(id) {
-            
-                $.ajax({
-                    type: "get",
-                    url: "switch_layre/editbtn_tbl_area_a_area_b_nature_reserve/"+id,
-                    // dataType : "json",
-                    success: function (res) {
-                        var r=JSON.parse(res)
-                        // console.log(r);
-                        // alert(r[0].entity)
-                            $('#objectid').val(r[0].objectid)
-                            $('#class').val(r[0].class)
-                            $('#shape_leng').val(r[0].shape_leng)
-                            $('#shape_area').val(r[0].shape_area)
-                            $('#hidnfid').val(r[0].fid);
-                            $("#datamodal").modal("show");
-                    }
-                });   
-        }
 
-        function updat_tbl_area_a_area_b_nature_reserve() {
-            
-                var reqdata={
-                    objectid:$('#objectid').val(),
-                    class:$('#class').val(),
-                    shape_leng:$('#shape_leng').val(),
-                    shape_area:$('#shape_area').val(),
-                    fid:$('#hidnfid').val()
-                };
-                $.ajax({
-                    type: "get",
-                    url: "switch_layre/updat_tbl_area_a_area_b_nature_reserve/"+JSON.stringify(reqdata),
-                    // dataType : "json",
-                    success: function (res) {
-                        var r=JSON.parse(res)
-                        if(r == true){
-                            toastr.success("Updated Successfully");
-                            $("#datamodal").modal("hide");
-                        }
-                        else {
-                            toastr.error("can't Update Error");
-                        }
-                    }
-                });   
-        }
+
 
 
 

@@ -391,7 +391,7 @@ class kn1 extends Controller
  
     public  function editbtn_tbl_area_b_demolitions($id){
         $q = DB::select("SELECT *
-        FROM public.tbl_area_b_demolitions where fid=$id;");
+                        FROM public.tbl_area_b_demolitions where fid=$id;");
 
          return json_encode($q);  
     }
@@ -423,7 +423,7 @@ class kn1 extends Controller
             $q="UPDATE public.tbl_area_b_demolitions
             SET entity='$entity', layer='$layer', color=$color, linetype='$linetype', elevation=$elevation, linewt=$linewt, refname='$refname', angle='$angle' 
             WHERE fid=$fid;";
-                    DB::update($q);
+            DB::update($q);
             // echo $q;
             // exit();
             return json_encode(true);
@@ -442,6 +442,27 @@ class kn1 extends Controller
 
 
 //tbl_area_b_nature_reserve.....................
+    public  function insert_tbl_area_b_nature_reserve(Request $request){
+        $geom=json_decode($request->data['geom']);
+
+        $objectid=$request->data['objectid'];
+        $class=($request->data['class']);
+        $shape_leng=($request->data['shape_leng']);
+        $shape_area=($request->data['shape_area']);
+        
+        $q = DB::select("select max(fid) from public.tbl_area_b_nature_reserve;");
+        $arr = json_decode(json_encode($q), true);
+        $fid=implode("",$arr[0])+1;
+
+        $iq="INSERT INTO public.tbl_area_b_nature_reserve(
+                        fid, objectid, class, shape_leng, shape_area, geom)
+            VALUES ($fid, $objectid, '$class', $shape_leng, $shape_area, ST_GeomFromGeoJSON('$geom'));";
+        // echo $iq;
+        // exit();
+        $q = DB::insert($iq);
+            return json_encode(true);  
+    }
+
     public  function deletebtn_tbl_area_b_nature_reserve($data){
         // echo $data;
         // exit();
@@ -455,19 +476,56 @@ class kn1 extends Controller
                             FROM public.tbl_area_b_nature_reserve where fid=$id;");
          return json_encode($q);  
     }
-    public  function updat_tbl_area_b_nature_reserve($data){
-        $a=json_decode($data);
 
-        $q="UPDATE public.tbl_area_b_nature_reserve
-        SET objectid=$a->objectid, class='$a->class', shape_leng='$a->shape_leng', shape_area='$a->shape_area'
-        WHERE fid=$a->fid;";
-                DB::update($q);
-        // echo $q;
-        return json_encode(true);  
+    public  function updat_tbl_area_b_nature_reserve(Request $request){
+        // return $request->all();
+        $geom=json_decode($request->data['upgeom']);
+
+        $objectid=$request->data['objectid'];
+        $class=($request->data['class']);
+        $shape_leng=($request->data['shape_leng']);
+        $shape_area=($request->data['shape_area']);
+        $fid=($request->data['fid']);
+
+        if(empty($geom)){
+            $q="UPDATE public.tbl_area_b_nature_reserve
+            SET objectid=$objectid, class='$class', shape_leng=$shape_leng, shape_area=$shape_area
+            WHERE fid=$fid;";
+            DB::update($q);
+            // echo $q;
+            // exit();
+            return json_encode(true);
+        }else{
+            $q="UPDATE public.tbl_area_b_nature_reserve
+            SET objectid=$objectid, class='$class', shape_leng=$shape_leng, shape_area=$shape_area, geom=ST_GeomFromGeoJSON('$geom') 
+            WHERE fid=$fid;";
+            DB::update($q);
+            // echo $q;
+            // exit();
+            return json_encode(true);
+        }
     }
 
      
 //tbl_Area_AB_Combined.....................
+    public  function insert_tbl_area_a_and_b_combined(Request $request){
+        $geom=json_decode($request->data['geom']);
+
+        $class=$request->data['class'];
+        
+        $q = DB::select("select max(fid) from public.tbl_area_a_and_b_combined;");
+        $arr = json_decode(json_encode($q), true);
+        $fid=implode("",$arr[0])+1;
+
+        $iq="INSERT INTO public.tbl_area_a_and_b_combined(
+                        fid, class, geom)
+            VALUES ($fid, '$class', ST_GeomFromGeoJSON('$geom'));";
+        // echo $iq;
+        // exit();
+        $q = DB::insert($iq);
+            return json_encode(true);  
+    }
+
     public  function deletebtn_tbl_area_a_and_b_combined($data){
         // echo $data;
         // exit();
@@ -481,42 +539,154 @@ class kn1 extends Controller
                             FROM public.tbl_area_a_and_b_combined where fid=$id;");
         return json_encode($q);  
     }
-    public  function updat_tbl_area_a_and_b_combined($data){
-        $a=json_decode($data);
-        // echo $a->fid;
+
+    public  function updat_tbl_area_a_and_b_combined(Request $request){
+        $geom=json_decode($request->data['upgeom']);
+
+        $class=$request->data['class'];
+        $fid=($request->data['fid']);
+
+        if(empty($geom)){
+            $q="UPDATE public.tbl_area_a_and_b_combined
+            SET class='$class'
+            WHERE fid=$fid;";
+            DB::update($q);
+            // echo $q;
+            // exit();
+            return json_encode(true);
+        }else{
+            $q="UPDATE public.tbl_area_a_and_b_combined
+            SET class='$class', geom=ST_GeomFromGeoJSON('$geom') 
+            WHERE fid=$fid;";
+            DB::update($q);
+            // echo $q;
+            // exit();
+            return json_encode(true);
+        }
+    }
+
+//tbl_area_a_area_b_naturereserve.....................
+    public  function insert_tbl_area_a_area_b_naturereserve(Request $request){
+        $geom=json_decode($request->data['geom']);
+
+        $objectid=$request->data['objectid'];
+        $class=($request->data['class']);
+        $shape_leng=($request->data['shape_leng']);
+        $shape_area=($request->data['shape_area']);
+        
+        $q = DB::select("select max(fid) from public.tbl_area_a_area_b_naturereserve;");
+        $arr = json_decode(json_encode($q), true);
+        $fid=implode("",$arr[0])+1;
+
+        $iq="INSERT INTO public.tbl_area_a_area_b_naturereserve(
+                        fid, objectid, class, shape_leng, shape_area, geom)
+            VALUES ($fid, $objectid, '$class', $shape_leng, $shape_area, ST_GeomFromGeoJSON('$geom'));";
+        // echo $iq;
         // exit();
-        $q="UPDATE public.tbl_area_a_and_b_combined
-        SET class='$a->class'
-        WHERE fid=$a->fid;";
-                DB::update($q);
-        // echo $q;
-        return json_encode(true);  
-    } 
+        $q = DB::insert($iq);
+            return json_encode(true);  
+    }
 
-
-//tbl_area_b_nature_reserve.....................
-    public  function deletebtn_tbl_area_a_area_b_nature_reserve($data){
+    public  function deletebtn_tbl_area_a_area_b_naturereserve($data){
         // echo $data;
         // exit();
         DB::delete("DELETE FROM public.tbl_area_a_area_b_naturereserve
         WHERE fid=$data;");
             return json_encode(true);
     } 
-
-    public  function editbtn_tbl_area_a_area_b_nature_reserve($id){
+ 
+    public  function editbtn_tbl_area_a_area_b_naturereserve($id){
         $q = DB::select("SELECT *
-                            FROM public.tbl_area_a_area_b_naturereserve where fid=$id;");
+                            FROM public.tbl_area_a_area_b_naturereserve where id=$id;");
+         return json_encode($q);  
+    }
+
+    public  function updat_tbl_area_a_area_b_naturereserve(Request $request){
+        // return $request->all();
+        $geom=json_decode($request->data['upgeom']);
+
+        $objectid=$request->data['objectid'];
+        $class=($request->data['class']);
+        $shape_leng=($request->data['shape_leng']);
+        $shape_area=($request->data['shape_area']);
+        $fid=($request->data['fid']);
+
+        if(empty($geom)){
+            $q="UPDATE public.tbl_area_a_area_b_naturereserve
+            SET objectid=$objectid, class='$class', shape_leng=$shape_leng, shape_area=$shape_area
+            WHERE id=$fid;";
+            DB::update($q);
+            // echo $q;
+            // exit();
+            return json_encode(true);
+        }else{
+            $q="UPDATE public.tbl_area_a_area_b_naturereserve
+            SET objectid=$objectid, class='$class', shape_leng=$shape_leng, shape_area=$shape_area, geom=ST_GeomFromGeoJSON('$geom') 
+            WHERE id=$fid;";
+            DB::update($q);
+            // echo $q;
+            // exit();
+            return json_encode(true);
+        }
+    }
+
+
+//tbl_area_b_training.....................
+    public  function insert_tbl_area_b_training(Request $request){
+        $geom=json_decode($request->data['geom']);
+
+        $id=$request->data['id'];
+        
+        $q = DB::select("select max(fid) from public.tbl_area_b_training;");
+        $arr = json_decode(json_encode($q), true);
+        $fid=implode("",$arr[0])+1;
+
+        $iq="INSERT INTO public.tbl_area_b_training(
+                        fid, id, geom)
+            VALUES ($fid, $id, ST_GeomFromGeoJSON('$geom'));";
+        // echo $iq;
+        // exit();
+        $q = DB::insert($iq);
+            return json_encode(true);  
+    }
+
+    public  function deletebtn_tbl_area_b_training($data){
+        // echo $data;
+        // exit();
+        DB::delete("DELETE FROM public.tbl_area_b_training
+        WHERE fid=$data;");
+            return json_encode(true);
+    } 
+
+    public  function editbtn_tbl_area_b_training($id){
+        $q = DB::select("SELECT *
+                            FROM public.tbl_area_b_training where fid=$id;");
         return json_encode($q);  
     }
-    public  function updat_tbl_area_a_area_b_nature_reserve($data){
-        $a=json_decode($data);
 
-        $q="UPDATE public.tbl_area_a_area_b_naturereserve
-        SET objectid=$a->objectid, class='$a->class', shape_leng='$a->shape_leng', shape_area='$a->shape_area'
-        WHERE fid=$a->fid;";
-                DB::update($q);
-        // echo $q;
-        return json_encode(true);  
+    public  function updat_tbl_area_b_training(Request $request){
+        $geom=json_decode($request->data['upgeom']);
+
+        $id=$request->data['id'];
+        $fid=($request->data['fid']);
+
+        if(empty($geom)){
+            $q="UPDATE public.tbl_area_b_training
+            SET id=$id
+            WHERE fid=$fid;";
+            DB::update($q);
+            // echo $q;
+            // exit();
+            return json_encode(true);
+        }else{
+            $q="UPDATE public.tbl_area_b_training
+            SET id=$id, geom=ST_GeomFromGeoJSON('$geom') 
+            WHERE fid=$fid;";
+            DB::update($q);
+            // echo $q;
+            // exit();
+            return json_encode(true);
+        }
     }
 
 
