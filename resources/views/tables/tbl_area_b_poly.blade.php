@@ -1,54 +1,95 @@
 ﻿@extends('index')
 
 @section('content')
-
-<div id="datamodal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
-                <div class="modal-dialog" style="width:60%;">
-
-                    <!-- Modal content-->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <!-- <h4 class="modal-title">Marker Feature</h4> -->
-                        </div>
-                        <div class="modal-body">
-                            <form >
-                            <input type="hidden" id="hidnfid" >
-                            <div class="row">
-                                <div class="col">
-                                    <div class="form-group">
-                                    <label for="email">areaupdt:</label>
-                                    <input type="text" class="form-control" id="areaupdt" name="areaupdt" required>
-                                    </div>
-                                    <div class="form-group">
-                                    <label for="email">area:</label>
-                                    <input type="text" class="form-control" id="area"  name="area" required>
-                                    </div>
-                                   
-                                </div>
-                                <div class="col">
-                                    <div class="form-group">
-                                    <label for="email">shape_leng:</label>
-                                    <input type="number" class="form-control" id="shape_leng"  name="shape_leng" required>
-                                    </div>
-                                    <div class="form-group">
-                                    <label for="email">shape_area:</label>
-                                    <input type="number" class="form-control" id="shape_area"  name="shape_area" required>
-                                    </div>
-                                   
-                                </div>
+    <input type="hidden" id="hidnfid" /> 
+    <input type="hidden" id="hidden_table_name"  value="tbl_area_b_poly">
+ <!--Insert  Modal -->
+    <div id="insert_modal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" style="width:60%;">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <!-- <h4 class="modal-title">Marker Feature</h4> -->
+                </div>
+                <div class="modal-body">
+                    <form >
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                            <label for="email">areaupdt:</label>
+                            <input type="number" class="form-control" id="ins_areaupdt" name="areaupdt" required>
                             </div>
-                               
-                                
-                            </form>
+                            <div class="form-group">
+                            <label for="email">area:</label>
+                            <input type="number" class="form-control" id="ins_area"  name="area" required>
+                            </div>
+                            
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class=" btn btn-warning" onclick="updat_tbl_area_b_poly()" id="updatedata" style="color:white;">Update</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <div class="col">
+                            <div class="form-group">
+                            <label for="email">shape_leng:</label>
+                            <input type="number" class="form-control" id="ins_shape_leng"  name="shape_leng" required>
+                            </div>
+                            <div class="form-group">
+                            <label for="email">shape_area:</label>
+                            <input type="number" class="form-control" id="ins_shape_area"  name="shape_area" required>
+                            </div> 
                         </div>
-                    </div>
+                    </div> 
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class=" btn btn-success" onclick="insert_tbl_area_b_poly()" id="updatedata" style="color:white;">Insert</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 </div>
             </div>
+        </div>
+    </div>
+<!--edit Modal -->
+    <div id="edit_modal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+        <div class="modal-dialog" style="width:60%;">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <!-- <h4 class="modal-title">Marker Feature</h4> -->
+                </div>
+                <div class="modal-body">
+                    <form >
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                            <label for="email">areaupdt:</label>
+                            <input type="number" class="form-control" id="areaupdt" name="areaupdt" required>
+                            </div>
+                            <div class="form-group">
+                            <label for="email">area:</label>
+                            <input type="number" class="form-control" id="area"  name="area" required>
+                            </div>
+                            
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                            <label for="email">shape_leng:</label>
+                            <input type="number" class="form-control" id="shape_leng"  name="shape_leng" required>
+                            </div>
+                            <div class="form-group">
+                            <label for="email">shape_area:</label>
+                            <input type="number" class="form-control" id="shape_area"  name="shape_area" required>
+                            </div>
+                            
+                        </div>
+                    </div> 
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class=" btn btn-warning" onclick="updat_tbl_area_b_poly()" id="updatedata" style="color:white;">Update</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 <style>
     /* .btn-info, .btn-warning, .btn-danger {
@@ -116,8 +157,7 @@
                 </td>
                 
                 <td>
-                    <input type="hidden" id="hidData" value="" />
-                    <input type="hidden" id="hidnfid" />   
+                    <input type="hidden" id="hidData" value="" />  
                     <input type="button" class="btn btn-warning"  value="Edit" onclick="editbtn_tbl_area_b_poly({{$p->fid}})" />    
                     <input type="button" class="btn btn-danger" style="margin-top: 2px !important;" value="Delete" onclick="deletebtn_tbl_area_b_poly({{$p->fid}})" />    
                 </td>

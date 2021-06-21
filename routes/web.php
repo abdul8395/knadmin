@@ -48,10 +48,25 @@ Route::get('/switch_layre/switch_layre/editbtn_tbl_area_a_area_b_naturereserve/{
 Route::post('/switch_layre/switch_layre/updat_tbl_area_a_area_b_naturereserve' , [kn1::class,'updat_tbl_area_a_area_b_naturereserve'])->middleware('auth');
 Route::get('/switch_layre/switch_layre/deletebtn_tbl_area_a_area_b_naturereserve/{id}' , [kn1::class,'deletebtn_tbl_area_a_area_b_naturereserve'])->middleware('auth');
 
+Route::post('/switch_layre/switch_layre/insert_tbl_area_a_poly' , [kn1::class,'insert_tbl_area_a_poly']);
+Route::get('/switch_layre/switch_layre/editbtn_tbl_area_a_poly/{id}' , [kn1::class,'editbtn_tbl_area_a_poly'])->middleware('auth');
+Route::post('/switch_layre/switch_layre/updat_tbl_area_a_poly' , [kn1::class,'updat_tbl_area_a_poly'])->middleware('auth');
+Route::get('/switch_layre/switch_layre/deletebtn_tbl_area_a_poly/{id}' , [kn1::class,'deletebtn_tbl_area_a_poly'])->middleware('auth');
+
+Route::post('/switch_layre/switch_layre/insert_tbl_area_b_poly' , [kn1::class,'insert_tbl_area_b_poly']);
+Route::get('/switch_layre/switch_layre/editbtn_tbl_area_b_poly/{id}' , [kn1::class,'editbtn_tbl_area_b_poly'])->middleware('auth');
+Route::post('/switch_layre/switch_layre/updat_tbl_area_b_poly' , [kn1::class,'updat_tbl_area_b_poly'])->middleware('auth');
+Route::get('/switch_layre/switch_layre/deletebtn_tbl_area_b_poly/{id}' , [kn1::class,'deletebtn_tbl_area_b_poly'])->middleware('auth');
+
 Route::post('/switch_layre/switch_layre/insert_tbl_area_b_training' , [kn1::class,'insert_tbl_area_b_training']);
 Route::get('/switch_layre/switch_layre/editbtn_tbl_area_b_training/{id}' , [kn1::class,'editbtn_tbl_area_b_training'])->middleware('auth');
 Route::post('/switch_layre/switch_layre/updat_tbl_area_b_training' , [kn1::class,'updat_tbl_area_b_training'])->middleware('auth');
 Route::get('/switch_layre/switch_layre/deletebtn_tbl_area_b_training/{id}' , [kn1::class,'deletebtn_tbl_area_b_training'])->middleware('auth');
+
+Route::post('/switch_layre/switch_layre/insert_tbl_demolition_orders' , [kn1::class,'insert_tbl_demolition_orders']);
+Route::get('/switch_layre/switch_layre/editbtn_tbl_demolition_orders/{id}' , [kn1::class,'editbtn_tbl_demolition_orders'])->middleware('auth');
+Route::post('/switch_layre/switch_layre/updat_tbl_demolition_orders' , [kn1::class,'updat_tbl_demolition_orders'])->middleware('auth');
+Route::get('/switch_layre/switch_layre/deletebtn_tbl_demolition_orders/{id}' , [kn1::class,'deletebtn_tbl_demolition_orders'])->middleware('auth');
 
 
 

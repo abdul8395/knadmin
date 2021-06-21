@@ -2,7 +2,7 @@
 
 @section('content')
     <input type="hidden" id="hidnfid" /> 
-    <input type="hidden" id="hidden_table_name"  value="tbl_area_b_nature_reserve">
+    <input type="hidden" id="hidden_table_name"  value="tbl_area_a_area_b_naturereserve">
  <!--Insert  Modal -->
     <div id="insert_modal" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog" style="width:60%;">
@@ -156,7 +156,7 @@
                 <td>
                     <input type="hidden" id="hidData" value="{{$geojson}}" />
                     <input type="button" class="btn btn-warning"  value="Edit" onclick="editbtn_tbl_area_a_area_b_naturereserve({{$p->id}})" />    
-                    <input type="button" class="btn btn-danger" style="margin-top: 2px !important;" value="Delete" onclick="deletebtn_tbl_area_a_area_b_nature_reserve({{$p->id}})" />    
+                    <input type="button" class="btn btn-danger" style="margin-top: 2px !important;" value="Delete" onclick="deletebtn_tbl_area_a_area_b_naturereserve({{$p->id}})" />    
                 </td>
             </tr>
     @endforeach

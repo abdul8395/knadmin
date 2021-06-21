@@ -107,7 +107,7 @@
         <tr>
 
             <th>
-                Fid 
+                id 
             </th>
 
             <th>
@@ -137,7 +137,7 @@
     @foreach ($tbldata as $p)
             <tr>
                 <td>
-                    {{$p->fid}}
+                    {{$p->id}}
                 </td>
 
                 <td>
@@ -156,7 +156,7 @@
                 </td>
                 <td>
                     <input type="hidden" id="hidData" value="{{$geojson}}" />
-                    <input type="button" class="btn btn-warning"  value="Edit" onclick="editbtn_tbl_area_b_nature_reserve({{$p->fid}})" />    
+                    <input type="button" class="btn btn-warning"  value="Edit" onclick="editbtn_tbl_area_b_nature_reserve({{$p->id}})" />    
                     <input type="button" class="btn btn-danger" style="margin-top: 2px !important;" value="Delete" onclick="deletebtn_tbl_area_b_nature_reserve({{$p->fid}})" />    
                 </td>
             </tr>
