@@ -8,26 +8,27 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-        
+
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-   
+
 
       <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
-
+{{--        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />--}}
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-draw@1.0.4/dist/leaflet.draw.css"/>
 
 
 
       <link rel="stylesheet" href="{{URL::asset('/css/kn1style.css')}}">
 
       <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">
-  
+
   <link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
 
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-  <link rel="stylesheet" href="{{URL::asset('draw/leaflet.draw.css')}}"/>
+{{--  <link rel="stylesheet" href="{{URL::asset('draw/leaflet.draw.css')}}"/>--}}
 
-  
-      
+
+
 
         <!-- Styles -->
         <style>
@@ -52,7 +53,7 @@
                 <div class="col">
       <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <div class="container-fluid"> -->
-<!-- 
+<!--
                     <button type="button" id="sidebarCollapse" class="btn btn-info">
                         <i class="fas fa-align-left"></i>
                         <span>Toggle Sidebar</span>
@@ -82,13 +83,13 @@
             <!-- <hr style="margin-top 0px !important; height:10px;border-width:0;color:gray;background-color:#7386D5;"> -->
 
 
-            
+
             <div id="map" >
                     <div id="shpfileuploadmodal" class="modal">
                         <div class="modal-dialog modal-dialog-centered modal-lg ">
                             <div id='form' class="modal-content col-md-12 col-md-offset-6 ">
                             <form method="POST" action="" enctype="multipart/form-data" id="myForm">
-                                
+
                                     <div class="modal-header">
                                     <h4 class="modal-title">Choose Table Name for Shape File Insertion</h4>
                                     <button type="button" id="close_btn" class="close" data-dismiss="modal">&times;</button>
@@ -136,7 +137,7 @@
                                             <input type="file" name="file" id="shp" class="" accept=".zip" required>
                                             </div>
                                         </div>
-            
+
 
                                     </div>
                                     <div id="exl_btn" class="modal-footer">
@@ -144,7 +145,7 @@
                                         <!-- <button id="close_btn"  class="btn btn-danger pull-right">Cancel</button> -->
                                         <!--                <button class="btn btn-danger btnCancel">Cancel</button>-->
                                     </div>
-                                
+
                                 </form>
                             </div>
                         </div>
@@ -152,7 +153,7 @@
             </div>
             </div>
             </div>
-                
+
                 <div class="col" style="margin-bottom:10px !important;">
                 <div class="clearfix"></div><br />
                     @yield('content')
@@ -160,26 +161,27 @@
             </div>
         </div>
 
-      
 
 
-                
 
-                
-                    
-                
+
+
+
+
+
     </div>
     </body>
 </html>
 <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
-<script src="{{URL::asset('draw/leaflet.draw-custom.js')}}"></script>
+{{--<script src="{{URL::asset('draw/leaflet.draw-custom.js')}}"></script>--}}
+<script src="https://cdn.jsdelivr.net/npm/leaflet-draw@1.0.4/dist/leaflet.draw.js"></script>
 <script src="{{URL::asset('shapefilelib/shp.js')}}"></script>
 <script src="{{URL::asset('shapefilelib/leaflet.shpfile.js')}}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
       <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
       <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
-      
+
 
 
 <script>
@@ -204,7 +206,7 @@
             edit: {featureGroup: drawnItems, edit: true}
         }).addTo(map);
 
-        
+
         map.on('draw:created', function (e) {
 
             var type = e.layerType;
@@ -240,9 +242,9 @@
             else if(tbl_name=='tbl_demolition_orders'){
                 $("#insert_modal").modal("show");
             }
-           
 
-                    
+
+
 
         });
 
@@ -277,17 +279,34 @@
             else if(tbl_name=='tbl_demolition_orders'){
                 editgeom_tbl_demolition_orders(id, updated_geom)
             }
-           
-            
+
+
 
 
         });
 
-    setTimeout(function(){ 
+    setTimeout(function(){
         // console.log(geojsonfromhiddenfld)
         //L.geoJSON(JSON.parse(geojsonfromhiddenfld)).addTo(this.map);
+        var result_set=JSON.parse(geojsonfromhiddenfld);
+        if(result_set.features[0].geometry.type=='MultiPolygon'){
+              for(var j=0;j<result_set.features.length;j++) {
+                  result_set.features[j].geometry.coordinates.forEach(function (shapeCoords, i) {
+                      var polygon = {type: "Polygon", coordinates: shapeCoords};
 
-        L.geoJSON(JSON.parse(geojsonfromhiddenfld), {
+                      L.geoJson(polygon, {
+                          onEachFeature: function (feature, layer) {
+                              layer.on('click', function (e) {
+                           //   layer.options = layer.options||{};
+                              drawnItems.addLayer(layer);
+                             // layer.editing.enable();
+                              });
+                          }
+                      }).addTo(this.map);
+                  })
+              }
+        }else {
+            L.geoJSON(result_set, {
                 onEachFeature: function (feature, layer) {
                     layer.on('click', function (e) {
                         drawnItems.addLayer(layer);
@@ -299,14 +318,16 @@
                     });
                 }
             }).addTo(this.map);
+        }
     }, 2000);
+
 
 
     $(document).ready(function () {
         $("#close_btn").on("click", function () {
                 $("#shpfileuploadmodal").hide();
             });
-        
+
         var  geojsondata=$('#hidData').val();
         geojsonfromhiddenfld=JSON.parse(geojsondata);
 
@@ -321,12 +342,12 @@
         "lengthMenu": [[2, 10, 25, -1], [2, 10, 25, "All"]]
         } );
     });
-           
+
     // table tbl_area_b_demolitions insert/update/delete
 
         function insert_tbl_area_b_demolation() {
             var hgeom=$('#hidngeom').val()
-            
+
             var reqdata={
                 entity:$('#ins_entity').val(),
                 layer:$('#ins_layer').val(),
@@ -354,9 +375,9 @@
                         toastr.error("can't insert Error");
                     }
                 }
-            });   
+            });
         }
-       
+
         function editgeom_tbl_area_b_demolitions(id,updatedgeom) {
             // console.log(id)
             // console.log(updatedgeom)
@@ -382,12 +403,12 @@
                         $('#hidnupdatedgeom').val(hiddengeom);
                         $("#edit_modal").modal("show");
                 }
-            });   
+            });
         }
-        
+
         function deletebtn_tbl_area_b_demolitions(id){
             $.ajax({
-                type : "GET", 
+                type : "GET",
                 url : 'switch_layre/deletebtn_tbl_area_b_demolitions/'+id,
                 success:function(res){
                     var r=JSON.parse(res)
@@ -401,7 +422,7 @@
                 }
             });
         }
-        function editbtn_tbl_area_b_demolitions(id) {   
+        function editbtn_tbl_area_b_demolitions(id) {
             $.ajax({
                 type: "get",
                 url: "switch_layre/editbtn_tbl_area_b_demolitions/"+id,
@@ -421,7 +442,7 @@
                     $('#hidnfid').val(r[0].fid);
                     $("#edit_modal").modal("show");
                 }
-            });   
+            });
         }
 
         function update_tbl_area_b_demolitions() {
@@ -438,7 +459,7 @@
                 angle:$('#angle').val(),
                 fid:$('#hidnfid').val(),
                 upgeom:JSON.stringify(hidnupdatedgeom)
-                
+
             };
             $.ajax({
                 type: "post",
@@ -457,7 +478,7 @@
                         toastr.error("can't Update Error");
                     }
                 }
-            });   
+            });
         }
     // table tbl_area_b_nature_reserve add/update/delete
         function insert_tbl_area_b_nature_reserve() {
@@ -485,9 +506,9 @@
                         toastr.error("can't insert Error");
                     }
                 }
-            });   
+            });
         }
-       
+
         function editgeom_tbl_area_b_nature_reserve(id,updatedgeom) {
             // console.log(id)
             // console.log(updatedgeom)
@@ -509,12 +530,12 @@
                         $('#hidnupdatedgeom').val(hiddengeom);
                         $("#edit_modal").modal("show");
                 }
-            });   
+            });
         }
 
         function deletebtn_tbl_area_b_nature_reserve(id){
                 $.ajax({
-                    type : "GET", 
+                    type : "GET",
                     url : 'switch_layre/deletebtn_tbl_area_b_nature_reserve/'+id,
                     success:function(res){
                         var r=JSON.parse(res)
@@ -529,7 +550,7 @@
                 });
             }
         function editbtn_tbl_area_b_nature_reserve(id) {
-            
+
                 $.ajax({
                     type: "get",
                     url: "switch_layre/editbtn_tbl_area_b_nature_reserve/"+id,
@@ -545,7 +566,7 @@
                             $('#hidnfid').val(r[0].fid);
                             $("#edit_modal").modal("show");
                     }
-                });   
+                });
         }
 
         function updat_tbl_area_b_nature_reserve() {
@@ -574,7 +595,7 @@
                         toastr.error("can't Update Error");
                     }
                 }
-            });   
+            });
         }
 
 // table tbl_area_a_and_b_combined
@@ -600,9 +621,9 @@
                     toastr.error("can't insert Error");
                 }
             }
-        });   
+        });
     }
-       
+
     function editgeom_tbl_area_a_and_b_combined(id,updatedgeom) {
         var hiddengeom=JSON.stringify(updatedgeom)
         $.ajax({
@@ -617,11 +638,11 @@
                 $('#hidnupdatedgeom').val(hiddengeom);
                 $("#edit_modal").modal("show");
             }
-        });   
+        });
     }
     function deletebtn_tbl_area_a_and_b_combined(id){
         $.ajax({
-            type : "GET", 
+            type : "GET",
             url : 'switch_layre/deletebtn_tbl_area_a_and_b_combined/'+id,
             success:function(res){
                 var r=JSON.parse(res)
@@ -632,13 +653,13 @@
                         else {
                             toastr.error("can't Delete ");
                         }
-                        
+
 
             }
         });
     }
     function editbtn_tbl_area_a_and_b_combined(id) {
-            
+
             $.ajax({
                 type: "get",
                 url: "switch_layre/editbtn_tbl_area_a_and_b_combined/"+id,
@@ -651,7 +672,7 @@
                         $('#hidnfid').val(r[0].fid);
                         $("#edit_modal").modal("show");
                 }
-            });   
+            });
     }
     function updat_tbl_area_a_and_b_combined() {
         var hidnupdatedgeom=$('#hidnupdatedgeom').val()
@@ -671,13 +692,13 @@
                     toastr.success("Updated Successfully");
                     $("#edit_modal").modal("hide");
                     location.reload();
-                    
+
                 }
                 else {
                     toastr.error("can't Update Error");
                 }
             }
-        });   
+        });
     }
 
 // table tbl_area_a_area_b_naturereserve insert/update/delete
@@ -706,9 +727,9 @@
                     toastr.error("can't insert Error");
                 }
             }
-        });   
+        });
     }
-    
+
     function editgeom_tbl_area_a_area_b_naturereserve(id,updatedgeom) {
         // console.log(id)
         // console.log(updatedgeom)
@@ -729,12 +750,12 @@
                 $('#hidnupdatedgeom').val(hiddengeom);
                 $("#edit_modal").modal("show");
             }
-        });   
+        });
     }
 
     function deletebtn_tbl_area_a_area_b_naturereserve(id){
         $.ajax({
-            type : "GET", 
+            type : "GET",
             url : 'switch_layre/deletebtn_tbl_area_a_area_b_naturereserve/'+id,
             success:function(res){
                 var r=JSON.parse(res)
@@ -764,7 +785,7 @@
                 $('#hidnfid').val(r[0].id);
                 $("#edit_modal").modal("show");
             }
-        });   
+        });
     }
 
     function updat_tbl_area_a_area_b_naturereserve() {
@@ -793,7 +814,7 @@
                     toastr.error("can't Update Error");
                 }
             }
-        });   
+        });
     }
 // table tbl_area_a_poly
     function insert_tbl_area_a_poly() {
@@ -817,9 +838,9 @@
                     toastr.error("can't insert Error");
                 }
             }
-        });   
+        });
     }
-       
+
     function editgeom_tbl_area_a_poly(id,updatedgeom) {
         var hiddengeom=JSON.stringify(updatedgeom)
         $.ajax({
@@ -833,11 +854,11 @@
                 $('#hidnupdatedgeom').val(hiddengeom);
                 $("#edit_modal").modal("show");
             }
-        });   
+        });
     }
     function deletebtn_tbl_area_a_poly(id){
         $.ajax({
-            type : "GET", 
+            type : "GET",
             url : 'switch_layre/deletebtn_tbl_area_a_poly/'+id,
             success:function(res){
                 var r=JSON.parse(res)
@@ -863,7 +884,7 @@
                 $('#hidnfid').val(r[0].fid);
                 $("#edit_modal").modal("show");
             }
-        });   
+        });
     }
     function updat_tbl_area_a_poly() {
         var hidnupdatedgeom=$('#hidnupdatedgeom').val()
@@ -881,13 +902,13 @@
                 if(r == true){
                     toastr.success("Updated Successfully");
                     $("#edit_modal").modal("hide");
-                    location.reload();  
+                    location.reload();
                 }
                 else {
                     toastr.error("can't Update Error");
                 }
             }
-        });   
+        });
     }
 
 // table tbl_area_b_poly insert/update/delete
@@ -916,9 +937,9 @@
                     toastr.error("can't insert Error");
                 }
             }
-        });   
+        });
     }
-    
+
     function editgeom_tbl_area_b_poly(id,updatedgeom) {
         // console.log(id)
         // console.log(updatedgeom)
@@ -939,12 +960,12 @@
                 $('#hidnupdatedgeom').val(hiddengeom);
                 $("#edit_modal").modal("show");
             }
-        });   
+        });
     }
 
     function deletebtn_tbl_area_b_poly(id){
         $.ajax({
-            type : "GET", 
+            type : "GET",
             url : 'switch_layre/deletebtn_tbl_area_b_poly/'+id,
             success:function(res){
                 var r=JSON.parse(res)
@@ -974,7 +995,7 @@
                 $('#hidnfid').val(r[0].fid);
                 $("#edit_modal").modal("show");
             }
-        });   
+        });
     }
 
     function updat_tbl_area_b_poly() {
@@ -1003,7 +1024,7 @@
                     toastr.error("can't Update Error");
                 }
             }
-        });   
+        });
     }
 // table tbl_area_b_training add/update/delete
     function insert_tbl_area_b_training() {
@@ -1029,9 +1050,9 @@
                     toastr.error("can't insert Error");
                 }
             }
-        });   
+        });
     }
-    
+
     function editgeom_tbl_area_b_training(id,updatedgeom) {
         var hiddengeom=JSON.stringify(updatedgeom)
         $.ajax({
@@ -1046,12 +1067,12 @@
                 $('#hidnupdatedgeom').val(hiddengeom);
                 $("#edit_modal").modal("show");
             }
-        });   
+        });
     }
 
     function deletebtn_tbl_area_b_training(id){
             $.ajax({
-                type : "GET", 
+                type : "GET",
                 url : 'switch_layre/deletebtn_tbl_area_b_training/'+id,
                 success:function(res){
                     var r=JSON.parse(res)
@@ -1078,7 +1099,7 @@
                     $('#hidnfid').val(r[0].fid);
                     $("#edit_modal").modal("show");
             }
-        });   
+        });
     }
 
     function updat_tbl_area_b_training() {
@@ -1099,13 +1120,13 @@
                     toastr.success("Updated Successfully");
                     $("#edit_modal").modal("hide");
                     location.reload();
-                    
+
                 }
                 else {
                     toastr.error("can't Update Error");
                 }
             }
-        });   
+        });
     }
 
 // table tbl_demolition_orders insert/update/delete
@@ -1132,9 +1153,9 @@
                     toastr.error("can't insert Error");
                 }
             }
-        });   
+        });
     }
-    
+
     function editgeom_tbl_demolition_orders(id,updatedgeom) {
         // console.log(id)
         // console.log(updatedgeom)
@@ -1153,12 +1174,12 @@
                 $('#hidnupdatedgeom').val(hiddengeom);
                 $("#edit_modal").modal("show");
             }
-        });   
+        });
     }
 
     function deletebtn_tbl_demolition_orders(id){
         $.ajax({
-            type : "GET", 
+            type : "GET",
             url : 'switch_layre/deletebtn_tbl_demolition_orders/'+id,
             success:function(res){
                 var r=JSON.parse(res)
@@ -1186,7 +1207,7 @@
                 $('#hidnfid').val(r[0].id);
                 $("#edit_modal").modal("show");
             }
-        });   
+        });
     }
 
     function updat_tbl_demolition_orders() {
@@ -1213,7 +1234,7 @@
                     toastr.error("can't Update Error");
                 }
             }
-        });   
+        });
     }
 
 
@@ -1249,7 +1270,7 @@
                             toastr.error("can't Save Error");
                         }
                     }
-                });   
+                });
         }
 
         // function validate() {
@@ -1270,7 +1291,7 @@
         //     }
         // }
 
-    
+
 
         function addShapefile(file){
 
@@ -1296,14 +1317,14 @@
                 }
                 var mp_str=JSON.stringify(mp_geoJson);
                 // $("#kmlf").val(mp_str);
-                
+
             },3000)
 
             map.addLayer(myLayers[file.name]);
 
                     setTimeout(function(){
                         map.fitBounds(myLayers[file.name].getBounds());
-                
+
                     },300)
                 }
             }
@@ -1311,14 +1332,14 @@
 
     $("#shpupbtn").on('click',function(){
     $("#myForm").trigger("reset");
-    $("#shpfileuploadmodal").show(); 
+    $("#shpfileuploadmodal").show();
     });
         $("#myForm").on('submit', function(e){
             e.preventDefault();
             var tablename= $("#tablename").val();
             if(tablename)
             {
-                $("#shpfileuploadmodal").hide(); 
+                $("#shpfileuploadmodal").hide();
                 var formData = new FormData(this);
                 formData.append('action', 'savadata');
                 // console.log(formData)
@@ -1329,8 +1350,8 @@
                     contentType: false,
                     cache: false,
                     processData:false,
-                    success: function(res){    
-                        console.log(res);  
+                    success: function(res){
+                        console.log(res);
                         var r=JSON.parse(res)
                             if(r == true){
                                 toastr.success("Shape File Records inserted into Specified Table Successfully");
@@ -1372,5 +1393,5 @@
   "showMethod": "fadeIn",
   "hideMethod": "fadeOut"
 }
-    
+
 </script>

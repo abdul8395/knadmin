@@ -15,9 +15,9 @@ use VIPSoft\Unzip\Unzip;
 class kn1 extends Controller
 {
     // public function index(){
-     
+
     //     return view('kn1.index');
-    // } 
+    // }
     public function __construct()
     {
         $this->middleware('auth');
@@ -25,15 +25,15 @@ class kn1 extends Controller
 
     public function switch_layre($name)
     {
-        if ($name=='area_b_demolitions'){  
+        if ($name=='area_b_demolitions'){
                 $q = DB::select("SELECT json_build_object(
                     'type', 'FeatureCollection',
                     'crs',  json_build_object(
-                        'type',      'name', 
+                        'type',      'name',
                         'properties', json_build_object(
-                            'name', 'EPSG:4326'  
+                            'name', 'EPSG:4326'
                         )
-                    ), 
+                    ),
                     'features', json_agg(
                         json_build_object(
                             'type',       'Feature',
@@ -49,7 +49,7 @@ class kn1 extends Controller
                                 'linewt',linewt,
                                 'refname',refname,
                                 'angle',angle
-                                
+
                             )
                         )
                     )
@@ -64,18 +64,18 @@ class kn1 extends Controller
                 $q1 = DB::select("SELECT fid, entity, layer, color, linetype, elevation, linewt, refname, angle, geom
                 FROM public.tbl_area_b_demolitions;");
 
-                                
+
                 return view('tables.tbl_area_b_demolitions', ['geojson' => $geojson, 'tbldata' => $q1]);
-            
+
         }
         elseif($name=='area_b_nature_reserve'){
-                $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',fid,'geometry',ST_AsGeoJSON(geom)::json,    
+                $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',fid,'geometry',ST_AsGeoJSON(geom)::json,
                                 'properties', json_build_object(
                                 'fid', fid,
                                 'objectid', objectid,
                                 'class', class,
                                 'shape_leng',shape_leng ,
-                                'shape_area',shape_area ))))                        
+                                'shape_area',shape_area ))))
                         FROM (
                                 SELECT fid, geom, objectid, class, shape_leng, shape_area
                                     FROM public.tbl_area_b_nature_reserve) as tbl1;");
@@ -87,15 +87,15 @@ class kn1 extends Controller
                 $q1 = DB::select("SELECT fid, geom, objectid, class, shape_leng, shape_area
                                     FROM public.tbl_area_b_nature_reserve;");
 
-             
+
                 return view('tables.tbl_area_b_nature_reserve', ['geojson' => $geojson, 'tbldata' => $q1]);
         }
         elseif($name=='Area_AB_Combined'){
-            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',fid,'geometry',ST_AsGeoJSON(geom)::json,    
+            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',fid,'geometry',ST_AsGeoJSON(geom)::json,
                             'properties', json_build_object(
                             'fid', fid,
                             'class', class
-                             ))))                        
+                             ))))
                     FROM (
                             SELECT fid, geom, class
                                 FROM public.tbl_area_a_and_b_combined) as tbl1;");
@@ -107,17 +107,17 @@ class kn1 extends Controller
             $q1 = DB::select("SELECT fid, class, geom
                                 FROM public.tbl_area_a_and_b_combined;");
 
-         
+
             return view('tables.tbl_area_a_and_b_combined', ['geojson' => $geojson, 'tbldata' => $q1]);
         }
         elseif($name=='Area_AB_Naturereserve'){
-            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',id,'geometry',ST_AsGeoJSON(geom)::json,    
+            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',id,'geometry',ST_AsGeoJSON(geom)::json,
                                 'properties', json_build_object(
                                 'id', id,
                                 'objectid', objectid,
                                 'class', class,
                                 'shape_leng',shape_leng ,
-                                'shape_area',shape_area ))))                        
+                                'shape_area',shape_area ))))
                         FROM (
                                 SELECT id, geom, objectid, class, shape_leng, shape_area
                                     FROM public.tbl_area_a_area_b_naturereserve) as tbl1;");
@@ -129,14 +129,14 @@ class kn1 extends Controller
                 $q1 = DB::select("SELECT id, geom, objectid, class, shape_leng, shape_area
                                     FROM public.tbl_area_a_area_b_naturereserve;");
 
-             
+
                 return view('tables.tbl_area_a_area_b_naturereserve', ['geojson' => $geojson, 'tbldata' => $q1]);
         }
         elseif($name=='area_a_poly'){
-            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',fid,'geometry',ST_AsGeoJSON(geom)::json,    
+            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',fid,'geometry',ST_AsGeoJSON(geom)::json,
                                 'properties', json_build_object(
                                 'fid', fid
-                                    ))))                        
+                                    ))))
                         FROM (
                                 SELECT fid, geom
                                     FROM public.tbl_area_a_poly) as tbl1;");
@@ -148,17 +148,17 @@ class kn1 extends Controller
                 $q1 = DB::select("SELECT fid, geom
                                     FROM public.tbl_area_a_poly;");
 
-             
+
                 return view('tables.tbl_area_a_poly', ['geojson' => $geojson, 'tbldata' => $q1]);
         }
         elseif($name=='area_b_poly'){
-            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',fid,'geometry',ST_AsGeoJSON(geom)::json,    
+            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',fid,'geometry',ST_AsGeoJSON(geom)::json,
                                 'properties', json_build_object(
                                 'fid', fid,
                                 'areaupdt', areaupdt,
                                 'area', area,
                                 'shape_leng',shape_leng,
-                                'shape_area',shape_area ))))                        
+                                'shape_area',shape_area ))))
                         FROM (
                             SELECT fid, geom, areaupdt, area, shape_leng, shape_area
                                 FROM public.tbl_area_b_poly) as tbl1;");
@@ -173,11 +173,11 @@ class kn1 extends Controller
                 return view('tables.tbl_area_b_poly', ['geojson' => $geojson, 'tbldata' => $q1]);
         }
         elseif($name=='area_b_training'){
-            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',fid,'geometry',ST_AsGeoJSON(geom)::json,    
+            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',fid,'geometry',ST_AsGeoJSON(geom)::json,
                                 'properties', json_build_object(
                                 'fid', fid,
                                 'id', id
-                                        ))))                        
+                                        ))))
                         FROM (
                             SELECT fid, geom, id
                                 FROM public.tbl_area_b_training) as tbl1;");
@@ -192,12 +192,12 @@ class kn1 extends Controller
                 return view('tables.tbl_area_b_training', ['geojson' => $geojson, 'tbldata' => $q1]);
         }
         elseif($name=='demolitions_orders'){
-            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',fid,'geometry',ST_AsGeoJSON(geom)::json,    
+            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',fid,'geometry',ST_AsGeoJSON(geom)::json,
                                 'properties', json_build_object(
                                 'fid', fid,
                                 'objectid', objectid,
                                 'id', id
-                                        ))))                        
+                                        ))))
                         FROM (
                             SELECT fid, geom, objectid, id
                                 FROM public.tbl_demolition_orders) as tbl1;");
@@ -212,7 +212,7 @@ class kn1 extends Controller
                 return view('tables.tbl_demolition_orders', ['geojson' => $geojson, 'tbldata' => $q1]);
         }
         elseif($name=='expropriation_orders'){
-            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',id,'geometry',ST_AsGeoJSON(geom)::json,    
+            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',id,'geometry',ST_AsGeoJSON(geom)::json,
                                 'properties', json_build_object(
                                 'id', id,
                                 'reason', reason,
@@ -226,7 +226,7 @@ class kn1 extends Controller
                                 'shape_leng', shape_leng,
                                 'shape_area', shape_area,
                                 'd_reason',d_reason ,
-                                'd_district',d_district ))))                        
+                                'd_district',d_district ))))
                         FROM (
                                 SELECT id, reason, title, sign_date, district, remark, created_us, created_da, last_edite, last_edi_1, shape_leng, shape_area, d_reason, d_district, geom
                                     FROM public.tbl_expropriation_orders) as tbl1;");
@@ -238,16 +238,16 @@ class kn1 extends Controller
                 $q1 = DB::select("SELECT id, reason, title, sign_date, district, remark, created_us, created_da, last_edite, last_edi_1, shape_leng, shape_area, d_reason, d_district, geom
                                     FROM public.tbl_expropriation_orders;");
 
-             
+
                 return view('tables.tbl_expropriation_orders', ['geojson' => $geojson, 'tbldata' => $q1]);
         }
         elseif($name=='expropriation_orders_AB'){
-            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',id,'geometry',ST_AsGeoJSON(geom)::json,    
+            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',id,'geometry',ST_AsGeoJSON(geom)::json,
                                 'properties', json_build_object(
                                 'id', id,
                                 'objectid', objectid,
                                 'shape_leng',shape_leng ,
-                                'shape_area',shape_area ))))                        
+                                'shape_area',shape_area ))))
                         FROM (
                                 SELECT id, geom, objectid, shape_leng, shape_area
                                     FROM public.tbl_expropriation_orders_ab) as tbl1;");
@@ -259,14 +259,14 @@ class kn1 extends Controller
                 $q1 = DB::select("SELECT id, geom, objectid, shape_leng, shape_area
                                     FROM public.tbl_expropriation_orders_ab;");
 
-             
+
                 return view('tables.tbl_expropriation_orders_ab', ['geojson' => $geojson, 'tbldata' => $q1]);
         }
         elseif($name=='expropriation_orders_not_AB'){
-            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',id,'geometry',ST_AsGeoJSON(geom)::json,    
+            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',id,'geometry',ST_AsGeoJSON(geom)::json,
                                 'properties', json_build_object(
                                 'id', id
-                                        ))))                        
+                                        ))))
                         FROM (
                             SELECT geom, id
                                 FROM public.tbl_expropriation_orders_not_ab) as tbl1;");
@@ -281,11 +281,11 @@ class kn1 extends Controller
                 return view('tables.tbl_expropriation_orders_not_ab', ['geojson' => $geojson, 'tbldata' => $q1]);
         }
         elseif($name=='security_orders'){
-            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',fid,'geometry',ST_AsGeoJSON(geom)::json,    
+            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',fid,'geometry',ST_AsGeoJSON(geom)::json,
                                 'properties', json_build_object(
                                 'fid', fid,
                                 'id', id
-                                        ))))                        
+                                        ))))
                         FROM (
                             SELECT fid, geom, id
                                 FROM public.tbl_security_orders) as tbl1;");
@@ -300,10 +300,10 @@ class kn1 extends Controller
                 return view('tables.tbl_security_orders', ['geojson' => $geojson, 'tbldata' => $q1]);
         }
         elseif($name=='Seizure_AB'){
-            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',id,'geometry',ST_AsGeoJSON(geom)::json,    
+            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',id,'geometry',ST_AsGeoJSON(geom)::json,
                                 'properties', json_build_object(
                                 'id', id
-                                        ))))                        
+                                        ))))
                         FROM (
                             SELECT geom, id
                                 FROM public.tbl_seizure_ab) as tbl1;");
@@ -318,18 +318,18 @@ class kn1 extends Controller
                 return view('tables.tbl_seizure_ab', ['geojson' => $geojson, 'tbldata' => $q1]);
         }
         elseif($name=='Seizure_All'){
-            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',fid,'geometry',ST_AsGeoJSON(geom)::json,    
+            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',fid,'geometry',ST_AsGeoJSON(geom)::json,
                                 'properties', json_build_object(
                                 'fid', fid,
                                 'from_date', from_date,
                                 'to_date', to_date,
                                 'ar_num', ar_num,
                                 'area', area
-                                    ))))  
+                                    ))))
                                      FROM (
                                 SELECT fid, from_date, to_date, ar_num, area, geom
                                     FROM public.tbl_seizure_all) as tbl1;");
-                                   
+
 
                     $arr = json_decode(json_encode($q), true);
                     $g=implode("",$arr[0]);
@@ -337,13 +337,13 @@ class kn1 extends Controller
 
                 $q1 = DB::select("SELECT fid, from_date, to_date, ar_num, area, geom
                                     FROM public.tbl_seizure_all;");
-                                    
 
-             
+
+
                 return view('tables.tbl_seizure_all', ['geojson' => $geojson, 'tbldata' => $q1]);
-               
+
         }
-        
+
     }
 
 //tbl_area_b_demolitions.....................
@@ -362,7 +362,7 @@ class kn1 extends Controller
          $linewt=($request->data['linewt']);
          $refname=($request->data['refname']);
          $angle=($request->data['angle']);
-        
+
         //  print_r($request->data['geom']);
         // echo gettype($a);
         // echo $entity;
@@ -377,7 +377,7 @@ class kn1 extends Controller
         // echo $iq;
         // exit();
         $q = DB::insert($iq);
-            return json_encode(true);  
+            return json_encode(true);
     }
 
     public  function deletebtn_tbl_area_b_demolitions($data){
@@ -387,13 +387,13 @@ class kn1 extends Controller
         WHERE fid=$data;");
         // DB::table('public.tbl_area_b_demolitions')->where('fid', $data)->delete();
             return json_encode(true);
-    } 
- 
+    }
+
     public  function editbtn_tbl_area_b_demolitions($id){
         $q = DB::select("SELECT *
                         FROM public.tbl_area_b_demolitions where fid=$id;");
 
-         return json_encode($q);  
+         return json_encode($q);
     }
     public  function update_tbl_area_b_demolitions(Request $request){
 
@@ -408,7 +408,7 @@ class kn1 extends Controller
         // }
         // exit();
 
-        
+
         $entity=$request->data['entity'];
         $layer=($request->data['layer']);
         $color=($request->data['color']);
@@ -421,16 +421,16 @@ class kn1 extends Controller
 
         if(empty($geom)){
             $q="UPDATE public.tbl_area_b_demolitions
-            SET entity='$entity', layer='$layer', color=$color, linetype='$linetype', elevation=$elevation, linewt=$linewt, refname='$refname', angle='$angle' 
+            SET entity='$entity', layer='$layer', color=$color, linetype='$linetype', elevation=$elevation, linewt=$linewt, refname='$refname', angle='$angle'
             WHERE fid=$fid;";
             DB::update($q);
             // echo $q;
             // exit();
             return json_encode(true);
-           
+
         }else{
             $q="UPDATE public.tbl_area_b_demolitions
-            SET entity='$entity', layer='$layer', color=$color, linetype='$linetype', elevation=$elevation, linewt=$linewt, refname='$refname', angle='$angle', geom=ST_GeomFromGeoJSON('$geom') 
+            SET entity='$entity', layer='$layer', color=$color, linetype='$linetype', elevation=$elevation, linewt=$linewt, refname='$refname', angle='$angle', geom=ST_GeomFromGeoJSON('$geom')
             WHERE fid=$fid;";
             DB::update($q);
             // echo $q;
@@ -449,7 +449,7 @@ class kn1 extends Controller
         $class=($request->data['class']);
         $shape_leng=($request->data['shape_leng']);
         $shape_area=($request->data['shape_area']);
-        
+
         $q = DB::select("select max(fid) from public.tbl_area_b_nature_reserve;");
         $arr = json_decode(json_encode($q), true);
         $fid=implode("",$arr[0])+1;
@@ -460,7 +460,7 @@ class kn1 extends Controller
         // echo $iq;
         // exit();
         $q = DB::insert($iq);
-            return json_encode(true);  
+            return json_encode(true);
     }
 
     public  function deletebtn_tbl_area_b_nature_reserve($data){
@@ -469,12 +469,12 @@ class kn1 extends Controller
         DB::delete("DELETE FROM public.tbl_area_b_nature_reserve
         WHERE fid=$data;");
             return json_encode(true);
-    } 
- 
+    }
+
     public  function editbtn_tbl_area_b_nature_reserve($id){
         $q = DB::select("SELECT *
                             FROM public.tbl_area_b_nature_reserve where fid=$id;");
-         return json_encode($q);  
+         return json_encode($q);
     }
 
     public  function updat_tbl_area_b_nature_reserve(Request $request){
@@ -497,7 +497,7 @@ class kn1 extends Controller
             return json_encode(true);
         }else{
             $q="UPDATE public.tbl_area_b_nature_reserve
-            SET objectid=$objectid, class='$class', shape_leng=$shape_leng, shape_area=$shape_area, geom=ST_GeomFromGeoJSON('$geom') 
+            SET objectid=$objectid, class='$class', shape_leng=$shape_leng, shape_area=$shape_area, geom=ST_GeomFromGeoJSON('$geom')
             WHERE fid=$fid;";
             DB::update($q);
             // echo $q;
@@ -506,24 +506,24 @@ class kn1 extends Controller
         }
     }
 
-     
+
 //tbl_Area_AB_Combined.....................
     public  function insert_tbl_area_a_and_b_combined(Request $request){
         $geom=json_decode($request->data['geom']);
 
         $class=$request->data['class'];
-        
+
         $q = DB::select("select max(fid) from public.tbl_area_a_and_b_combined;");
         $arr = json_decode(json_encode($q), true);
         $fid=implode("",$arr[0])+1;
 
         $iq="INSERT INTO public.tbl_area_a_and_b_combined(
                         fid, class, geom)
-            VALUES ($fid, '$class', ST_GeomFromGeoJSON('$geom'));";
+            VALUES ($fid, '$class', ST_Multi(ST_GeomFromGeoJSON('$geom')));";
         // echo $iq;
         // exit();
         $q = DB::insert($iq);
-            return json_encode(true);  
+            return json_encode(true);
     }
 
     public  function deletebtn_tbl_area_a_and_b_combined($data){
@@ -532,12 +532,12 @@ class kn1 extends Controller
         DB::delete("DELETE FROM public.tbl_area_a_and_b_combined
         WHERE fid=$data;");
             return json_encode(true);
-    } 
+    }
 
     public  function editbtn_tbl_area_a_and_b_combined($id){
         $q = DB::select("SELECT *
                             FROM public.tbl_area_a_and_b_combined where fid=$id;");
-        return json_encode($q);  
+        return json_encode($q);
     }
 
     public  function updat_tbl_area_a_and_b_combined(Request $request){
@@ -556,7 +556,7 @@ class kn1 extends Controller
             return json_encode(true);
         }else{
             $q="UPDATE public.tbl_area_a_and_b_combined
-            SET class='$class', geom=ST_GeomFromGeoJSON('$geom') 
+            SET class='$class', geom=ST_GeomFromGeoJSON('$geom')
             WHERE fid=$fid;";
             DB::update($q);
             // echo $q;
@@ -573,7 +573,7 @@ class kn1 extends Controller
         $class=($request->data['class']);
         $shape_leng=($request->data['shape_leng']);
         $shape_area=($request->data['shape_area']);
-        
+
         $q = DB::select("select max(id) from public.tbl_area_a_area_b_naturereserve;");
         $arr = json_decode(json_encode($q), true);
         $id=implode("",$arr[0])+1;
@@ -584,7 +584,7 @@ class kn1 extends Controller
         // echo $iq;
         // exit();
         $q = DB::insert($iq);
-            return json_encode(true);  
+            return json_encode(true);
     }
 
     public  function deletebtn_tbl_area_a_area_b_naturereserve($data){
@@ -593,12 +593,12 @@ class kn1 extends Controller
         DB::delete("DELETE FROM public.tbl_area_a_area_b_naturereserve
         WHERE id=$data;");
             return json_encode(true);
-    } 
- 
+    }
+
     public  function editbtn_tbl_area_a_area_b_naturereserve($id){
         $q = DB::select("SELECT *
                             FROM public.tbl_area_a_area_b_naturereserve where id=$id;");
-         return json_encode($q);  
+         return json_encode($q);
     }
 
     public  function updat_tbl_area_a_area_b_naturereserve(Request $request){
@@ -621,7 +621,7 @@ class kn1 extends Controller
             return json_encode(true);
         }else{
             $q="UPDATE public.tbl_area_a_area_b_naturereserve
-            SET objectid=$objectid, class='$class', shape_leng=$shape_leng, shape_area=$shape_area, geom=ST_GeomFromGeoJSON('$geom') 
+            SET objectid=$objectid, class='$class', shape_leng=$shape_leng, shape_area=$shape_area, geom=ST_GeomFromGeoJSON('$geom')
             WHERE id=$id;";
             DB::update($q);
             // echo $q;
@@ -634,7 +634,7 @@ class kn1 extends Controller
     public  function insert_tbl_area_a_poly(Request $request){
         $geom=json_decode($request->data['geom']);
 
-        
+
         $q = DB::select("select max(fid) from public.tbl_area_a_poly;");
         $arr = json_decode(json_encode($q), true);
         $fid=implode("",$arr[0])+1;
@@ -645,7 +645,7 @@ class kn1 extends Controller
         // echo $iq;
         // exit();
         $q = DB::insert($iq);
-            return json_encode(true);  
+            return json_encode(true);
     }
 
     public  function deletebtn_tbl_area_a_poly($data){
@@ -654,12 +654,12 @@ class kn1 extends Controller
         DB::delete("DELETE FROM public.tbl_area_a_poly
         WHERE fid=$data;");
             return json_encode(true);
-    } 
+    }
 
     public  function editbtn_tbl_area_a_poly($id){
         $q = DB::select("SELECT *
                             FROM public.tbl_area_a_poly where fid=$id;");
-        return json_encode($q);  
+        return json_encode($q);
     }
 
     public  function updat_tbl_area_a_poly(Request $request){
@@ -676,7 +676,7 @@ class kn1 extends Controller
             return json_encode(true);
         }else{
             $q="UPDATE public.tbl_area_a_poly
-            SET geom=ST_GeomFromGeoJSON('$geom') 
+            SET geom=ST_GeomFromGeoJSON('$geom')
             WHERE fid=$fid;";
             DB::update($q);
             // echo $q;
@@ -694,7 +694,7 @@ class kn1 extends Controller
         $area=($request->data['area']);
         $shape_leng=($request->data['shape_leng']);
         $shape_area=($request->data['shape_area']);
-        
+
         $q = DB::select("select max(fid) from public.tbl_area_b_poly;");
         $arr = json_decode(json_encode($q), true);
         $fid=implode("",$arr[0])+1;
@@ -705,7 +705,7 @@ class kn1 extends Controller
         // echo $iq;
         // exit();
         $q = DB::insert($iq);
-            return json_encode(true);  
+            return json_encode(true);
     }
 
     public  function deletebtn_tbl_area_b_poly($data){
@@ -714,12 +714,12 @@ class kn1 extends Controller
         DB::delete("DELETE FROM public.tbl_area_b_poly
         WHERE fid=$data;");
             return json_encode(true);
-    } 
+    }
 
     public  function editbtn_tbl_area_b_poly($id){
         $q = DB::select("SELECT *
                             FROM public.tbl_area_b_poly where fid=$id;");
-        return json_encode($q);  
+        return json_encode($q);
     }
 
     public  function updat_tbl_area_b_poly(Request $request){
@@ -742,7 +742,7 @@ class kn1 extends Controller
             return json_encode(true);
         }else{
             $q="UPDATE public.tbl_area_b_poly
-            SET areaupdt=$areaupdt, area=$area, shape_leng=$shape_leng, shape_area=$shape_area, geom=ST_GeomFromGeoJSON('$geom') 
+            SET areaupdt=$areaupdt, area=$area, shape_leng=$shape_leng, shape_area=$shape_area, geom=ST_GeomFromGeoJSON('$geom')
             WHERE fid=$fid;";
             DB::update($q);
             // echo $q;
@@ -756,7 +756,7 @@ class kn1 extends Controller
         $geom=json_decode($request->data['geom']);
 
         $id=$request->data['id'];
-        
+
         $q = DB::select("select max(fid) from public.tbl_area_b_training;");
         $arr = json_decode(json_encode($q), true);
         $fid=implode("",$arr[0])+1;
@@ -767,7 +767,7 @@ class kn1 extends Controller
         // echo $iq;
         // exit();
         $q = DB::insert($iq);
-            return json_encode(true);  
+            return json_encode(true);
     }
 
     public  function deletebtn_tbl_area_b_training($data){
@@ -776,12 +776,12 @@ class kn1 extends Controller
         DB::delete("DELETE FROM public.tbl_area_b_training
         WHERE fid=$data;");
             return json_encode(true);
-    } 
+    }
 
     public  function editbtn_tbl_area_b_training($id){
         $q = DB::select("SELECT *
                             FROM public.tbl_area_b_training where fid=$id;");
-        return json_encode($q);  
+        return json_encode($q);
     }
 
     public  function updat_tbl_area_b_training(Request $request){
@@ -800,7 +800,7 @@ class kn1 extends Controller
             return json_encode(true);
         }else{
             $q="UPDATE public.tbl_area_b_training
-            SET id=$id, geom=ST_GeomFromGeoJSON('$geom') 
+            SET id=$id, geom=ST_GeomFromGeoJSON('$geom')
             WHERE fid=$fid;";
             DB::update($q);
             // echo $q;
@@ -814,7 +814,7 @@ public  function insert_tbl_demolition_orders(Request $request){
 
     $objectid=$request->data['objectid'];
     $id=($request->data['id']);
-    
+
     $q = DB::select("select max(fid) from public.tbl_demolition_orders;");
     $arr = json_decode(json_encode($q), true);
     $fid=implode("",$arr[0])+1;
@@ -825,7 +825,7 @@ public  function insert_tbl_demolition_orders(Request $request){
     // echo $iq;
     // exit();
     $q = DB::insert($iq);
-        return json_encode(true);  
+        return json_encode(true);
 }
 
 public  function deletebtn_tbl_demolition_orders($data){
@@ -834,12 +834,12 @@ public  function deletebtn_tbl_demolition_orders($data){
     DB::delete("DELETE FROM public.tbl_demolition_orders
     WHERE fid=$data;");
         return json_encode(true);
-} 
+}
 
 public  function editbtn_tbl_demolition_orders($id){
     $q = DB::select("SELECT *
                         FROM public.tbl_demolition_orders where fid=$id;");
-     return json_encode($q);  
+     return json_encode($q);
 }
 
 public  function updat_tbl_demolition_orders(Request $request){
@@ -860,7 +860,7 @@ public  function updat_tbl_demolition_orders(Request $request){
         return json_encode(true);
     }else{
         $q="UPDATE public.tbl_demolition_orders
-        SET objectid=$objectid, id=$id, geom=ST_GeomFromGeoJSON('$geom') 
+        SET objectid=$objectid, id=$id, geom=ST_GeomFromGeoJSON('$geom')
         WHERE fid=$fid;";
         DB::update($q);
         // echo $q;
@@ -892,7 +892,7 @@ public  function updat_tbl_demolition_orders(Request $request){
         $q = DB::insert("INSERT INTO public.tbl_area_b_demolitions(
             fid, entity, layer, color, linetype, elevation, linewt, refname, angle)
             VALUES ($fid, '$a->entity', '$a->entity', '$a->layer', $a->color, '$a->linetype', '$a->elevation', $a->linewt, '$a->refname', '$a->angle');");
-            return json_encode(true);  
+            return json_encode(true);
     }
 
     public  function shaperead(Request $request){
@@ -900,7 +900,7 @@ public  function updat_tbl_demolition_orders(Request $request){
         $tbl_name=$request->tablename;
 
         $fileName = $request->file->getClientOriginalName();
-        $fname=basename($fileName,".zip"); 
+        $fname=basename($fileName,".zip");
         // $filePath = $request->file->move(public_path('shapefiles'), $fileName);
         $shpfilename;
         if(isset($request->file)){
@@ -908,7 +908,7 @@ public  function updat_tbl_demolition_orders(Request $request){
             $filePath = $request->file->move(public_path('uploads/shapefiles'), $fileName);
             // $file = $request->file->store('public/'.$fname); //store file in storage/app/zip
             $filenames = $unzipper->extract(public_path('uploads/shapefiles/'.$fileName),public_path('uploads/shapefiles/'.$fname));
-            
+
             $fdir=public_path('uploads/shapefiles/'.$fname.'/');
                 $scan_arr = scandir($fdir);
                 $files_arr = array_diff($scan_arr, array('.','..') );
@@ -943,22 +943,22 @@ public  function updat_tbl_demolition_orders(Request $request){
             //     if ($Geometry->isDeleted()) {
             //         continue;
             //     }
-                
+
             //      // Print Geometry as an Array
             //     // print_r($Geometry->getArray());
-                
+
             //     // // Print Geometry as WKT
             //     // print_r($Geometry->getWKT());
             //     $geom=$Geometry->getWKT();
             //     // // Print Geometry as GeoJSON
             //     // print_r($Geometry->getGeoJSON());
-                
+
             //     // // Print DBF data
             //     // print_r($Geometry->getDataArray());
             //     $data=$Geometry->getDataArray();
-                
+
             // }
-        
+
         } catch (ShapefileException $e) {
             // Print detailed error information
             echo "Error Type: " . $e->getErrorType()
@@ -1376,8 +1376,8 @@ public  function updat_tbl_demolition_orders(Request $request){
         }
         else{
             echo json_encode(false);
-        } 
-        
+        }
+
 
     }
 
