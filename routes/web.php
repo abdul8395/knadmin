@@ -25,9 +25,9 @@ Route::get('/', function () {
 
 
 Auth::routes();
-// ------------kn1 rooutes----------------
+// ------------area_b_demolation    rooutes----------------
 Route::get('/switch_layre/{name}' , [kn1::class,'switch_layre'])->name('switch_layre')->middleware('auth');
-
+// ------------kn1 rooutes----------------
 Route::post('/switch_layre/switch_layre/insert_area_b_demolation' , [kn1::class,'insert_area_b_demolation']);
 Route::get('/switch_layre/switch_layre/editbtn_tbl_area_b_demolitions/{id}' , [kn1::class,'editbtn_tbl_area_b_demolitions'])->middleware('auth');
 Route::post('/switch_layre/switch_layre/update_tbl_area_b_demolitions' , [kn1::class,'update_tbl_area_b_demolitions']);
@@ -68,6 +68,35 @@ Route::get('/switch_layre/switch_layre/editbtn_tbl_demolition_orders/{id}' , [kn
 Route::post('/switch_layre/switch_layre/updat_tbl_demolition_orders' , [kn1::class,'updat_tbl_demolition_orders'])->middleware('auth');
 Route::get('/switch_layre/switch_layre/deletebtn_tbl_demolition_orders/{id}' , [kn1::class,'deletebtn_tbl_demolition_orders'])->middleware('auth');
 
+Route::post('/switch_layre/switch_layre/insert_tbl_expropriation_orders' , [kn1::class,'insert_tbl_expropriation_orders']);
+Route::get('/switch_layre/switch_layre/editbtn_tbl_expropriation_orders/{id}' , [kn1::class,'editbtn_tbl_expropriation_orders'])->middleware('auth');
+Route::post('/switch_layre/switch_layre/updat_tbl_expropriation_orders' , [kn1::class,'updat_tbl_expropriation_orders'])->middleware('auth');
+Route::get('/switch_layre/switch_layre/deletebtn_tbl_expropriation_orders/{id}' , [kn1::class,'deletebtn_tbl_expropriation_orders'])->middleware('auth');
+
+Route::post('/switch_layre/switch_layre/insert_tbl_expropriation_orders_ab' , [kn1::class,'insert_tbl_expropriation_orders_ab']);
+Route::get('/switch_layre/switch_layre/editbtn_tbl_expropriation_orders_ab/{id}' , [kn1::class,'editbtn_tbl_expropriation_orders_ab'])->middleware('auth');
+Route::post('/switch_layre/switch_layre/updat_tbl_expropriation_orders_ab' , [kn1::class,'updat_tbl_expropriation_orders_ab'])->middleware('auth');
+Route::get('/switch_layre/switch_layre/deletebtn_tbl_expropriation_orders_ab/{id}' , [kn1::class,'deletebtn_tbl_expropriation_orders_ab'])->middleware('auth');
+
+Route::post('/switch_layre/switch_layre/insert_tbl_expropriation_orders_not_ab' , [kn1::class,'insert_tbl_expropriation_orders_not_ab']);
+Route::get('/switch_layre/switch_layre/editbtn_tbl_expropriation_orders_not_ab/{id}' , [kn1::class,'editbtn_tbl_expropriation_orders_not_ab'])->middleware('auth');
+Route::post('/switch_layre/switch_layre/updat_tbl_expropriation_orders_not_ab' , [kn1::class,'updat_tbl_expropriation_orders_not_ab'])->middleware('auth');
+Route::get('/switch_layre/switch_layre/deletebtn_tbl_expropriation_orders_not_ab/{id}' , [kn1::class,'deletebtn_tbl_expropriation_orders_not_ab'])->middleware('auth');
+
+Route::post('/switch_layre/switch_layre/insert_tbl_security_orders' , [kn1::class,'insert_tbl_security_orders']);
+Route::get('/switch_layre/switch_layre/editbtn_tbl_security_orders/{id}' , [kn1::class,'editbtn_tbl_security_orders'])->middleware('auth');
+Route::post('/switch_layre/switch_layre/updat_tbl_security_orders' , [kn1::class,'updat_tbl_security_orders'])->middleware('auth');
+Route::get('/switch_layre/switch_layre/deletebtn_tbl_security_orders/{id}' , [kn1::class,'deletebtn_tbl_security_orders'])->middleware('auth');
+
+Route::post('/switch_layre/switch_layre/insert_tbl_seizure_ab' , [kn1::class,'insert_tbl_seizure_ab']);
+Route::get('/switch_layre/switch_layre/editbtn_tbl_seizure_ab/{id}' , [kn1::class,'editbtn_tbl_seizure_ab'])->middleware('auth');
+Route::post('/switch_layre/switch_layre/updat_tbl_seizure_ab' , [kn1::class,'updat_tbl_seizure_ab'])->middleware('auth');
+Route::get('/switch_layre/switch_layre/deletebtn_tbl_seizure_ab/{id}' , [kn1::class,'deletebtn_tbl_seizure_ab'])->middleware('auth');
+
+Route::post('/switch_layre/switch_layre/insert_tbl_seizure_all' , [kn1::class,'insert_tbl_seizure_all']);
+Route::get('/switch_layre/switch_layre/editbtn_tbl_seizure_all/{id}' , [kn1::class,'editbtn_tbl_seizure_all'])->middleware('auth');
+Route::post('/switch_layre/switch_layre/updat_tbl_seizure_all' , [kn1::class,'updat_tbl_seizure_all'])->middleware('auth');
+Route::get('/switch_layre/switch_layre/deletebtn_tbl_seizure_all/{id}' , [kn1::class,'deletebtn_tbl_seizure_all'])->middleware('auth');
 
 
 
