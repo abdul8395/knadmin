@@ -174,6 +174,7 @@
             <th>
                 Action
             </th>
+            
 
 
         </tr>
@@ -215,7 +216,8 @@
                 <td>
                     <input type="hidden" id="hidData" value="{{$geojson}}" />
                     <input type="button" class="btn btn-warning"  value="Edit" onclick="editbtn_tbl_area_b_demolitions({{$p->fid}})" />    
-                    <input type="button" class="btn btn-danger" style="margin-top: 2px !important;" value="Delete" onclick="deletebtn_tbl_area_b_demolitions({{$p->fid}})" />    
+                    <input type="button" class="btn btn-danger" style="margin-top: 2px !important;" value="Delete" onclick="deletebtn_tbl_area_b_demolitions({{$p->fid}})" /> 
+                    <input type="button" class="btn btn-success" style="margin-top: 2px !important;" value="Zoom" onclick="zoombtn_tbl_area_b_demolitions({{$p->fid}})" />   
                 </td>
             </tr>
     @endforeach

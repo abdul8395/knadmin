@@ -161,7 +161,7 @@ class kn1 extends Controller
                                 'shape_area',shape_area ))))
                         FROM (
                             SELECT fid, geom, areaupdt, area, shape_leng, shape_area
-                                FROM public.tbl_area_b_poly) as tbl1;");
+                                FROM public.tbl_area_b_poly LIMIT 10 OFFSET 1) as tbl1;");
 
                     $arr = json_decode(json_encode($q), true);
                     $g=implode("",$arr[0]);
@@ -328,8 +328,7 @@ class kn1 extends Controller
                                     ))))
                                      FROM (
                                 SELECT fid, from_date, to_date, ar_num, area, geom
-                                    FROM public.tbl_seizure_all) as tbl1;");
-
+                                    FROM public.tbl_seizure_all LIMIT 10 OFFSET 1) as tbl1;");
 
                     $arr = json_decode(json_encode($q), true);
                     $g=implode("",$arr[0]);
@@ -337,10 +336,84 @@ class kn1 extends Controller
 
                 $q1 = DB::select("SELECT fid, from_date, to_date, ar_num, area, geom
                                     FROM public.tbl_seizure_all;");
-
-
-
                 return view('tables.tbl_seizure_all', ['geojson' => $geojson, 'tbldata' => $q1]);
+
+        }
+        elseif($name=='Settlements'){
+            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',fid,'geometry',ST_AsGeoJSON(geom)::json,
+                                'properties', json_build_object(
+                                'fid', fid,
+                                'objectid', objectid,
+                                'id', id,
+                                'name_hebrew', name_hebrew,
+                                'name_english', name_english,
+                                'et_id', et_id,
+                                'shape_leng', shape_leng,
+                                'shape_area', shape_area,
+                                'gis_id', gis_id,
+                                'type', type,
+                                'area', area,
+                                'name_arabic', name_arabic
+                                    ))))
+                                     FROM (
+                                SELECT fid, geom, objectid, id, name_hebrew, name_english, et_id, shape_leng, shape_area, gis_id, type, area, name_arabic
+                                    FROM public.tbl_settlements) as tbl1;");
+                                    
+                    $arr = json_decode(json_encode($q), true);
+                    $g=implode("",$arr[0]);
+                    $geojson=json_encode($g);
+
+                $q1 = DB::select("SELECT fid, geom, objectid, id, name_hebrew, name_english, et_id, shape_leng, shape_area, gis_id, type, area, name_arabic
+                                    FROM public.tbl_settlements;");
+                return view('tables.tbl_settlements', ['geojson' => $geojson, 'tbldata' => $q1]);
+
+        }
+        elseif($name=='area_b_violations'){
+            $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',gid,'geometry',ST_AsGeoJSON(geom)::json,
+                                'properties', json_build_object(
+                                'gid', gid,
+                                'fid_', fid_,
+                                'x', x,
+                                'y', y,
+                                'picture_id', picture_id,
+                                'categoryid', categoryid,
+                                'cat_eng', cat_eng,
+                                'desc_arb', desc_arb,
+                                'desc_eng', desc_eng,
+                                'desc_heb', desc_heb,
+                                'set_heb', set_heb,
+                                'set_arb', set_arb,
+                                'set_eng', set_eng,
+                                'pal_heb', pal_heb,
+                                'pal_arb', pal_arb,
+                                'pal_eng', pal_eng,
+                                'art_heb', art_heb,
+                                'art_eng', art_eng,
+                                'art_arb', art_arb,
+                                'titt_heb', titt_heb,
+                                'titt_eng', titt_eng,
+                                'titt_arb', titt_arb,
+                                'artheb1', artheb1,
+                                'arteng1', arteng1,
+                                'artarb1', artarb1,
+                                'tittheb1', tittheb1,
+                                'titteng1', titteng1,
+                                'tittarb1', tittarb1
+                                    ))))
+                                     FROM (
+                                SELECT gid, fid_, x, y, picture_id, categoryid, cat_eng, desc_arb, desc_eng, desc_heb, set_heb, 
+                                    set_arb, set_eng, pal_heb, pal_arb, pal_eng, art_heb, art_eng, art_arb, titt_heb, titt_eng, 
+                                    titt_arb, artheb1, arteng1, artarb1, tittheb1, titteng1, tittarb1, geom
+                                    FROM public.tbl_area_b_violations) as tbl1;");
+                    $arr = json_decode(json_encode($q), true);
+                    $g=implode("",$arr[0]);
+                    $geojson=json_encode($g);
+
+                $q1 = DB::select("SELECT gid, fid_, x, y, picture_id, categoryid, cat_eng, desc_arb, desc_eng, desc_heb, set_heb, 
+                                        set_arb, set_eng, pal_heb, pal_arb, pal_eng, art_heb, art_eng, art_arb, titt_heb, titt_eng, 
+                                        titt_arb, artheb1, arteng1, artarb1, tittheb1, titteng1, tittarb1, geom
+                                    FROM public.tbl_area_b_violations;");
+                return view('tables.tbl_area_b_violations', ['geojson' => $geojson, 'tbldata' => $q1]);
 
         }
 
@@ -488,7 +561,7 @@ class kn1 extends Controller
          return json_encode($q);
     }
 
-    public  function updat_tbl_area_b_nature_reserve(Request $request){
+    public  function update_tbl_area_b_nature_reserve(Request $request){
         // return $request->all();
         $geom=json_decode($request->data['upgeom']);
 
@@ -562,8 +635,8 @@ class kn1 extends Controller
         return json_encode($q);
     }
 
-    public  function updat_tbl_area_a_and_b_combined(Request $request){
-        // echo "updat_tbl_area_a_and_b_combined";
+    public  function update_tbl_area_a_and_b_combined(Request $request){
+        // echo "update_tbl_area_a_and_b_combined";
         //  print_r($request->data);
         // exit();
         $geom=json_decode($request->data['upgeom']);
@@ -589,6 +662,55 @@ class kn1 extends Controller
             // exit();
             return json_encode(true);
         }
+    }
+
+    public  function zoombtn_tbl_area_a_and_b_combined($id){
+        $q = DB::select("SELECT st_x(st_centroid(geom))as x,st_y(st_centroid(geom))as y from public.tbl_area_a_and_b_combined where fid=$id;");          
+         return json_encode($q);
+    }
+    public  function zoombtn_tbl_area_a_area_b_naturereserve($id){
+        $q = DB::select("SELECT st_x(st_centroid(geom))as x,st_y(st_centroid(geom))as y from public.tbl_area_a_area_b_naturereserve where id=$id;");          
+         return json_encode($q);
+    }
+    public  function zoombtn_tbl_area_a_poly($id){
+        $q = DB::select("SELECT st_x(st_centroid(geom))as x,st_y(st_centroid(geom))as y from public.tbl_area_a_area_b_naturereserve where fid=$id;");          
+         return json_encode($q);
+    }
+    public  function zoombtn_tbl_area_b_nature_reserve($id){
+        $q = DB::select("SELECT st_x(st_centroid(geom))as x,st_y(st_centroid(geom))as y from public.tbl_area_b_nature_reserve where fid=$id;");          
+         return json_encode($q);
+    }
+    public  function zoombtn_tbl_area_b_poly($id){
+        $q = DB::select("SELECT st_x(st_centroid(geom))as x,st_y(st_centroid(geom))as y from public.tbl_area_b_poly where fid=$id;");          
+         return json_encode($q);
+    }
+    public  function zoombtn_tbl_area_b_violations($id){
+        $q = DB::select("SELECT st_x(st_centroid(geom))as x,st_y(st_centroid(geom))as y from public.tbl_area_b_violations where fid=$id;");          
+         return json_encode($q);
+    }
+    public  function zoombtn_tbl_expropriation_orders_ab($id){
+        $q = DB::select("SELECT st_x(st_centroid(geom))as x,st_y(st_centroid(geom))as y from public.tbl_expropriation_orders_ab where id=$id;");          
+         return json_encode($q);
+    }
+    public  function zoombtn_tbl_expropriation_orders_not_ab($id){
+        $q = DB::select("SELECT st_x(st_centroid(geom))as x,st_y(st_centroid(geom))as y from public.tbl_expropriation_orders_not_ab where id=$id;");          
+         return json_encode($q);
+    }
+    public  function zoombtn_tbl_expropriation_orders($id){
+        $q = DB::select("SELECT st_x(st_centroid(geom))as x,st_y(st_centroid(geom))as y from public.tbl_expropriation_orders where id=$id;");          
+         return json_encode($q);
+    }
+    public  function zoombtn_tbl_seizure_ab($id){
+        $q = DB::select("SELECT st_x(st_centroid(geom))as x,st_y(st_centroid(geom))as y from public.tbl_seizure_ab where id=$id;");          
+         return json_encode($q);
+    }
+    public  function zoombtn_tbl_seizure_all($id){
+        $q = DB::select("SELECT st_x(st_centroid(geom))as x,st_y(st_centroid(geom))as y from public.tbl_seizure_all where fid=$id;");          
+         return json_encode($q);
+    }
+    public  function zoombtn_tbl_settlements($id){
+        $q = DB::select("SELECT st_x(st_centroid(geom))as x,st_y(st_centroid(geom))as y from public.tbl_settlements where fid=$id;");          
+         return json_encode($q);
     }
 
 //tbl_area_a_area_b_naturereserve.....................
@@ -632,7 +754,7 @@ class kn1 extends Controller
          return json_encode($q);
     }
 
-    public  function updat_tbl_area_a_area_b_naturereserve(Request $request){
+    public  function update_tbl_area_a_area_b_naturereserve(Request $request){
         // return $request->all();
 
         $geom=json_decode($request->data['upgeom']);
@@ -653,11 +775,11 @@ class kn1 extends Controller
             return json_encode(true);
         }else{
             $q="UPDATE public.tbl_area_a_area_b_naturereserve
-            SET objectid=$objectid, class='$class', shape_leng=$shape_leng, shape_area=$shape_area, geom=geom=ST_Multi(ST_GeomFromGeoJSON('$geom'))
+            SET objectid=$objectid, class='$class', shape_leng=$shape_leng, shape_area=$shape_area, geom=ST_Multi(ST_GeomFromGeoJSON('$geom'))
             WHERE id=$id;";
-            // DB::update($q);
-            echo $q;
-            exit();
+            DB::update($q);
+            // echo $q;
+            // exit();
             return json_encode(true);
         }
     }
@@ -697,15 +819,15 @@ class kn1 extends Controller
         return json_encode($q);
     }
 
-    public  function updat_tbl_area_a_poly(Request $request){
+    public  function update_tbl_area_a_poly(Request $request){
         $geom=json_decode($request->data['upgeom']);
 
         $fid=($request->data['fid']);
 
         if(empty($geom)){
-            // $q="UPDATE public.tbl_area_a_poly
-            // WHERE fid=$fid;";
-            // DB::update($q);
+            $q="UPDATE public.tbl_area_a_poly
+            WHERE fid=$fid;";
+            DB::update($q);
             // // echo $q;
             // // exit();
             return json_encode(true);
@@ -755,13 +877,32 @@ class kn1 extends Controller
             return json_encode(true);
     }
 
+    public  function pageno_tbl_area_b_poly($pageno){
+        $offset=$pageno;
+        $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',fid,'geometry',ST_AsGeoJSON(geom)::json,
+                                'properties', json_build_object(
+                                'fid', fid,
+                                'areaupdt', areaupdt,
+                                'area', area,
+                                'shape_leng',shape_leng,
+                                'shape_area',shape_area ))))
+                        FROM (
+                            SELECT fid, geom, areaupdt, area, shape_leng, shape_area
+                                FROM public.tbl_area_b_poly LIMIT 10 OFFSET $offset) as tbl1;");
+
+            $arr = json_decode(json_encode($q), true);
+            $g=implode("",$arr[0]);
+            $geojson=json_encode($g);
+            return $geojson;
+            exit();
+    }
     public  function editbtn_tbl_area_b_poly($id){
         $q = DB::select("SELECT *
                             FROM public.tbl_area_b_poly where fid=$id;");
         return json_encode($q);
     }
 
-    public  function updat_tbl_area_b_poly(Request $request){
+    public  function update_tbl_area_b_poly(Request $request){
         // return $request->all();
         $geom=json_decode($request->data['upgeom']);
 
@@ -828,7 +969,7 @@ class kn1 extends Controller
         return json_encode($q);
     }
 
-    public  function updat_tbl_area_b_training(Request $request){
+    public  function update_tbl_area_b_training(Request $request){
         $geom=json_decode($request->data['upgeom']);
 
         $id=$request->data['id'];
@@ -891,7 +1032,7 @@ public  function editbtn_tbl_demolition_orders($id){
      return json_encode($q);
 }
 
-public  function updat_tbl_demolition_orders(Request $request){
+public  function update_tbl_demolition_orders(Request $request){
     // return $request->all();
     $geom=json_decode($request->data['upgeom']);
 
@@ -970,7 +1111,7 @@ public  function editbtn_tbl_expropriation_orders($id){
     return json_encode($q);
 }
 
-public  function updat_tbl_expropriation_orders(Request $request){
+public  function update_tbl_expropriation_orders(Request $request){
     // return $request->all();
     $geom=json_decode($request->data['upgeom']);
 
@@ -1052,7 +1193,7 @@ public  function updat_tbl_expropriation_orders(Request $request){
         return json_encode($q);
     }
 
-    public  function updat_tbl_expropriation_orders_ab(Request $request){
+    public  function update_tbl_expropriation_orders_ab(Request $request){
         // return $request->all();
         $geom=json_decode($request->data['upgeom']);
 
@@ -1117,17 +1258,17 @@ public  function updat_tbl_expropriation_orders(Request $request){
         return json_encode($q);
     }
 
-    public  function updat_tbl_expropriation_orders_not_ab(Request $request){
+    public  function update_tbl_expropriation_orders_not_ab(Request $request){
         // return $request->all();
         $geom=json_decode($request->data['upgeom']);
 
         $id=($request->data['id']);
 
         if(empty($geom)){
-            // $q="UPDATE public.tbl_expropriation_orders_not_ab
-            // SET objectid=$objectid, shape_leng=$shape_leng, shape_area=$shape_area
-            // WHERE id=$id;";
-            // DB::update($q);
+            $q="UPDATE public.tbl_expropriation_orders_not_ab
+            SET objectid=$objectid, shape_leng=$shape_leng, shape_area=$shape_area
+            WHERE id=$id;";
+            DB::update($q);
             // // echo $q;
             // // exit();
             return json_encode(true);
@@ -1182,7 +1323,7 @@ public  function updat_tbl_expropriation_orders(Request $request){
         return json_encode($q);
     }
 
-    public  function updat_tbl_security_orders(Request $request){
+    public  function update_tbl_security_orders(Request $request){
         // return $request->all();
         $geom=json_decode($request->data['upgeom']);
 
@@ -1248,17 +1389,17 @@ public  function updat_tbl_expropriation_orders(Request $request){
         return json_encode($q);
     }
 
-    public  function updat_tbl_seizure_ab(Request $request){
+    public  function update_tbl_seizure_ab(Request $request){
         // return $request->all();
         $geom=json_decode($request->data['upgeom']);
 
         $id=($request->data['id']);
 
         if(empty($geom)){
-            // $q="UPDATE public.tbl_seizure_ab
-            // SET objectid=$objectid, shape_leng=$shape_leng, shape_area=$shape_area
-            // WHERE id=$id;";
-            // DB::update($q);
+            $q="UPDATE public.tbl_seizure_ab
+            SET objectid=$objectid, shape_leng=$shape_leng, shape_area=$shape_area
+            WHERE id=$id;";
+            DB::update($q);
             // // echo $q;
             // // exit();
             return json_encode(true);
@@ -1314,7 +1455,7 @@ public  function editbtn_tbl_seizure_all($id){
     return json_encode($q);
 }
 
-public  function updat_tbl_seizure_all(Request $request){
+public  function update_tbl_seizure_all(Request $request){
     // return $request->all();
     $geom=json_decode($request->data['upgeom']);
 
@@ -1342,9 +1483,287 @@ public  function updat_tbl_seizure_all(Request $request){
         return json_encode(true);
     }
 }
+public  function pageno_tbl_seizure_all($pageno){
+    $offset=$pageno;
+    $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',fid,'geometry',ST_AsGeoJSON(geom)::json,
+                'properties', json_build_object(
+                'fid', fid,
+                'from_date', from_date,
+                'to_date', to_date,
+                'ar_num', ar_num,
+                'area', area
+                    ))))
+                    FROM (
+                SELECT fid, from_date, to_date, ar_num, area, geom
+                FROM public.tbl_seizure_all LIMIT 10 OFFSET $offset) as tbl1;");
+
+        $arr = json_decode(json_encode($q), true);
+        $g=implode("",$arr[0]);
+        $geojson=json_encode($g);
+        return $geojson;
+        exit();
+}
+
+
+//tbl_settlements.....................
+    public  function insert_tbl_settlements(Request $request){
+        $geom=json_decode($request->data['geom']);
+        
+        $objectid=$request->data['objectid'];
+        $id=($request->data['id']);
+        $name_hebrew=($request->data['name_hebrew']);
+        $name_english=($request->data['name_english']);
+        $et_id=($request->data['et_id']);
+        $shape_leng=($request->data['shape_leng']);
+        $shape_area=($request->data['shape_area']);
+        $gis_id=($request->data['gis_id']);
+        $type=($request->data['type']);
+        $area=($request->data['area']);
+        $name_arabic=($request->data['name_arabic']);
+
+        if(empty(DB::table('tbl_settlements')->count())){
+            $fid=1;
+        }else{
+            $q = DB::select("select max(fid) from public.tbl_settlements;");
+            $arr = json_decode(json_encode($q), true);
+            $fid=implode("",$arr[0])+1;
+        }
+
+        $iq="INSERT INTO public.tbl_settlements(
+                        fid, objectid, id, name_hebrew, name_english, et_id, shape_leng, shape_area, gis_id, type, area, name_arabic, geom)
+            VALUES ($fid, $objectid, $id, '$name_hebrew', '$name_english', $et_id, $shape_leng, $shape_area, $gis_id, '$type', $area, '$name_arabic', ST_Multi(ST_GeomFromGeoJSON('$geom')));";
+        // echo $iq;
+        // exit();
+        $q = DB::insert($iq);
+            return json_encode(true);
+    }
+
+    public  function deletebtn_tbl_settlements($data){
+        // echo $data;
+        // exit();
+        DB::delete("DELETE FROM public.tbl_settlements
+        WHERE fid=$data;");
+            return json_encode(true);
+    }
+
+    public  function editbtn_tbl_settlements($fid){
+        $q = DB::select("SELECT *
+                            FROM public.tbl_settlements where fid=$fid;");
+        return json_encode($q);
+    }
+
+    public  function update_tbl_settlements(Request $request){
+        // return $request->all();
+
+        $geom=json_decode($request->data['upgeom']);
+
+        $objectid=$request->data['objectid'];
+        $id=($request->data['id']);
+        $name_hebrew=($request->data['name_hebrew']);
+        $name_english=($request->data['name_english']);
+        $et_id=($request->data['et_id']);
+        $shape_leng=($request->data['shape_leng']);
+        $shape_area=($request->data['shape_area']);
+        $gis_id=($request->data['gis_id']);
+        $type=($request->data['type']);
+        $area=($request->data['area']);
+        $name_arabic=($request->data['name_arabic']);
+        $fid=($request->data['fid']);
+
+        if(empty($geom)){
+            $q="UPDATE public.tbl_settlements
+            SET objectid=$objectid, id=$id, name_hebrew='$name_hebrew', name_english='$name_english', et_id=$et_id, shape_leng=$shape_leng, shape_area=$shape_area, gis_id=$gis_id, type='$type', area=$area, name_arabic='$name_arabic'
+            WHERE fid=$fid;";
+            DB::update($q);
+            // echo $q;
+            // exit();
+            return json_encode(true);
+        }else{
+            $q="UPDATE public.tbl_settlements
+            SET objectid=$objectid, id=$id, name_hebrew='$name_hebrew', name_english='$name_english', et_id=$et_id, shape_leng=$shape_leng, shape_area=$shape_area, gis_id=$gis_id, type='$type', area=$area, name_arabic='$name_arabic', geom=ST_Multi(ST_GeomFromGeoJSON('$geom'))
+            WHERE fid=$fid;";
+            DB::update($q);
+            // echo $q;
+            // exit();
+            return json_encode(true);
+        }
+    }
 
 
 
+
+//tbl_area_b_violations.....................
+public  function insert_tbl_area_b_violations(Request $request){
+    $geom=json_decode($request->data['geom']);
+
+    $geom1 = json_decode($geom, true);
+    $x=$geom1['coordinates'][0];
+    $y=$geom1['coordinates'][1];
+
+    $fid_=$request->data['fid_'];
+    $picture_id=($request->data['picture_id']);
+    $categoryid=($request->data['categoryid']);
+    $cat_eng=($request->data['cat_eng']);
+    $desc_arb=($request->data['desc_arb']);
+    $desc_eng=($request->data['desc_eng']);
+    $desc_heb=($request->data['desc_heb']);
+    $set_heb=($request->data['set_heb']);
+    $set_arb=($request->data['set_arb']);
+    $set_eng=($request->data['set_eng']);
+    $pal_heb=($request->data['pal_heb']);
+    $pal_arb=($request->data['pal_arb']);
+    $pal_eng=($request->data['pal_eng']);
+    $art_heb=($request->data['art_heb']);
+    $art_eng=($request->data['art_eng']);
+    $art_arb=($request->data['art_arb']);
+    $titt_heb=($request->data['titt_heb']);
+    $titt_eng=($request->data['titt_eng']);
+    $titt_arb=($request->data['titt_arb']);
+    $artheb1=($request->data['artheb1']);
+    $arteng1=($request->data['arteng1']);
+    $artarb1=($request->data['artarb1']);
+    $tittheb1=($request->data['tittheb1']);
+    $titteng1=($request->data['titteng1']);
+    $tittarb1=($request->data['tittarb1']);
+
+    if(empty($fid_)){
+        $fid_=0;
+    }
+    if(empty($picture_id)){
+        $picture_id=0;
+    }
+    if(empty($categoryid)){
+        $categoryid=0;
+    }
+
+    if(empty(DB::table('tbl_area_b_violations')->count())){
+        $gid=1;
+    }else{
+        $q = DB::select("select max(gid) from public.tbl_area_b_violations;");
+        $arr = json_decode(json_encode($q), true);
+        $gid=implode("",$arr[0])+1;
+    }
+
+    $iq="INSERT INTO public.tbl_area_b_violations(
+                    gid, fid_, x, y, picture_id, categoryid, cat_eng, desc_arb, desc_eng, desc_heb, set_heb, set_arb, set_eng, pal_heb, pal_arb, pal_eng, art_heb, art_eng, art_arb, titt_heb, titt_eng, titt_arb, artheb1, arteng1, artarb1, tittheb1, titteng1, tittarb1, geom)
+        VALUES ('$gid', $fid_, $x, $y, $picture_id, $categoryid, '$cat_eng', '$desc_arb', '$desc_eng', '$desc_heb', '$set_heb', '$set_arb', '$set_eng', '$pal_heb', '$pal_arb', '$pal_eng', '$art_heb', '$art_eng', '$art_arb', '$titt_heb', '$titt_eng', '$titt_arb', '$artheb1', '$arteng1', '$artarb1', '$tittheb1', '$titteng1', '$tittarb1', ST_GeomFromGeoJSON('$geom'));";
+    $q = DB::insert($iq);
+        return json_encode(true);
+}
+
+public  function deletebtn_tbl_area_b_violations($data){
+    // echo $data;
+    // exit();
+    DB::delete("DELETE FROM public.tbl_area_b_violations
+    WHERE gid=$data;");
+        return json_encode(true);
+}
+
+public  function editbtn_tbl_area_b_violations($gid){
+    $q = DB::select("SELECT *
+                        FROM public.tbl_area_b_violations where gid=$gid;");
+    return json_encode($q);
+}
+
+public  function update_tbl_area_b_violations(Request $request){
+    // return $request->all();
+    // exit();
+
+    $geom = json_decode($request->data['upgeom'], true);
+     $geom1 = json_decode($geom, true);
+     $x=$geom1['coordinates'][0];
+     $y=$geom1['coordinates'][1];
+
+    $fid_=$request->data['fid_'];
+    $picture_id=($request->data['picture_id']);
+    $categoryid=($request->data['categoryid']);
+    $cat_eng=($request->data['cat_eng']);
+    $desc_arb=($request->data['desc_arb']);
+    $desc_eng=($request->data['desc_eng']);
+    $desc_heb=($request->data['desc_heb']);
+    $set_heb=($request->data['set_heb']);
+    $set_arb=($request->data['set_arb']);
+    $set_eng=($request->data['set_eng']);
+    $pal_heb=($request->data['pal_heb']);
+    $pal_arb=($request->data['pal_arb']);
+    $pal_eng=($request->data['pal_eng']);
+    $art_heb=($request->data['art_heb']);
+    $art_eng=($request->data['art_eng']);
+    $art_arb=($request->data['art_arb']);
+    $titt_heb=($request->data['titt_heb']);
+    $titt_eng=($request->data['titt_eng']);
+    $titt_arb=($request->data['titt_arb']);
+    $artheb1=($request->data['artheb1']);
+    $arteng1=($request->data['arteng1']);
+    $artarb1=($request->data['artarb1']);
+    $tittheb1=($request->data['tittheb1']);
+    $titteng1=($request->data['titteng1']);
+    $tittarb1=($request->data['tittarb1']);
+    $gid=($request->data['gid']);
+
+    if(empty($geom)){
+        $q="UPDATE public.tbl_area_b_violations
+        SET fid_=$fid_, picture_id=$picture_id, categoryid=$categoryid, cat_eng='$cat_eng', desc_arb='$desc_arb', desc_eng='$desc_eng', desc_heb='$desc_heb', set_heb='$set_heb', set_arb='$set_arb', set_eng='$set_eng', pal_heb='$pal_heb', pal_arb='$pal_arb', pal_eng='.".$pal_eng.".', art_heb='$art_heb', art_eng='$art_eng', art_arb='$art_arb', titt_heb='$titt_heb', titt_eng='$titt_eng', titt_arb='$titt_arb', artheb1='$artheb1', arteng1='$arteng1', artarb1='$artarb1', tittheb1='$tittheb1', titteng1='$titteng1', tittarb1='$tittarb1'
+        WHERE gid=$gid;";
+        // DB::update($q);
+        echo $q;
+        exit();
+        return json_encode(true);
+    }else{
+        $q="UPDATE public.tbl_area_b_violations
+        SET fid_=$fid_, x=$x, y=$y, picture_id=$picture_id, categoryid=$categoryid, cat_eng='$cat_eng', desc_arb='$desc_arb', desc_eng='$desc_eng', desc_heb='$desc_heb', set_heb='$set_heb', set_arb='$set_arb', set_eng='$set_eng', pal_heb='$pal_heb', pal_arb='$pal_arb', pal_eng='$pal_eng', art_heb='$art_heb', art_eng='$art_eng', art_arb='$art_arb', titt_heb='$titt_heb', titt_eng='$titt_eng', titt_arb='$titt_arb', artheb1='$artheb1', arteng1='$arteng1', artarb1='$artarb1', tittheb1='$tittheb1', titteng1='$titteng1', tittarb1='$tittarb1', geom=ST_GeomFromGeoJSON('$geom')
+        WHERE gid=$gid;";
+        DB::update($q);
+        // echo $q;
+        // exit();
+        return json_encode(true);
+    }
+}
+// public  function pageno_tbl_area_b_violations($pageno){
+//     $offset=$pageno;
+//     $q = DB::select("SELECT json_build_object('type', 'FeatureCollection','crs',  json_build_object('type','name', 'properties', json_build_object('name', 'EPSG:4326'  )),'features', json_agg(json_build_object('type','Feature','id',gid,'geometry',ST_AsGeoJSON(geom)::json,
+//                             'properties', json_build_object(
+//                             'gid', gid,
+//                             'fid_', fid_,
+//                             'x', x,
+//                             'y', y,
+//                             'picture_id', picture_id,
+//                             'categoryid', categoryid,
+//                             'cat_eng', cat_eng,
+//                             'desc_arb', desc_arb,
+//                             'desc_eng', desc_eng,
+//                             'desc_heb', desc_heb,
+//                             'set_heb', set_heb,
+//                             'set_arb', set_arb,
+//                             'set_eng', set_eng,
+//                             'pal_heb', pal_heb,
+//                             'pal_arb', pal_arb,
+//                             'pal_eng', pal_eng,
+//                             'art_heb', art_heb,
+//                             'art_eng', art_eng,
+//                             'art_arb', art_arb,
+//                             'titt_heb', titt_heb,
+//                             'titt_eng', titt_eng,
+//                             'titt_arb', titt_arb,
+//                             'artheb1', artheb1,
+//                             'arteng1', arteng1,
+//                             'artarb1', artarb1,
+//                             'tittheb1', tittheb1,
+//                             'titteng1', titteng1,
+//                             'tittarb1', tittarb1
+//                                 ))))
+//                                 FROM (
+//                             SELECT gid, fid_, x, y, picture_id, categoryid, cat_eng, desc_arb, desc_eng, desc_heb, set_heb, 
+//                                 set_arb, set_eng, pal_heb, pal_arb, pal_eng, art_heb, art_eng, art_arb, titt_heb, titt_eng, 
+//                                 titt_arb, artheb1, arteng1, artarb1, tittheb1, titteng1, tittarb1, geom
+//                                 FROM public.tbl_area_b_violations LIMIT 10 OFFSET $offset) as tbl1;");
+
+//         $arr = json_decode(json_encode($q), true);
+//         $g=implode("",$arr[0]);
+//         $geojson=json_encode($g);
+//         return $geojson;
+//         exit();
+// }
 
 
 
@@ -1368,6 +1787,13 @@ public  function updat_tbl_seizure_all(Request $request){
             VALUES ($fid, '$a->entity', '$a->entity', '$a->layer', $a->color, '$a->linetype', '$a->elevation', $a->linewt, '$a->refname', '$a->angle');");
             return json_encode(true);
     }
+
+
+
+
+
+
+
 
     public  function shaperead(Request $request){
         // print_r($request->all());
@@ -1833,6 +2259,35 @@ public  function updat_tbl_seizure_all(Request $request){
                     // exit();
                     $q.="(";
                     $q.=$data['FID'].", ". "'".$data['FORM_DATE']."'" .", "."'".$data['TO_DATE']."'".", ".$data['AR_NUM'].", "."'".$data['AREA']."'".", ".$data['תקף'].", ".$data['שימוש'].", ".$data['פונקצ'].", ".$data['הערו_1'].", ".$data['הערות'].", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                    $q.="), ";
+            }
+            // $fq = rtrim($q, ',');
+            $qf= rtrim($q, " ,");
+            // echo $qf;
+            // exit();
+            $pgq=DB::insert($qf);
+            if($pgq){
+                echo json_encode(true);
+                exit();
+            }
+            else{
+                echo json_encode(pg_result_error($pgq));
+            }
+        }elseif($tbl_name == 'settlements'){
+            $q="INSERT INTO public.tbl_settlements(
+               fid, objectid, id, name_hebrew, name_english, et_id, shape_leng, shape_area, gis_id, type, area, name_arabic, geom)
+                VALUES";
+            while ($Geometry = $Shapefile->fetchRecord()) {
+                    // Skip the record if marked as "deleted"
+                    if ($Geometry->isDeleted()) {
+                        continue;
+                    }
+                    $geom=$Geometry->getWKT();
+                    $data=$Geometry->getDataArray();
+                    // print_r($data);
+                    // exit();
+                    $q.="(";
+                    $q.=$data['FID'].", ". "'".$data['OBJECTID']."'" .", "."'".$data['ID']."'".", ".$data['NAME_HEBREW'].", "."'".$data['NAME_ENGLISH']."'".", ".$data['ET_ID'].", ".$data['SHAPE_LENG'].", ".$data['SHAPE_AREA'].", ".$data['GIS_ID'].", ".$data['TYPE'].", ".$data['AREA'].", ".$data['NAME_ARABIC'].", ".\DB::raw("ST_GeomFromText('$geom',4326)");
                     $q.="), ";
             }
             // $fq = rtrim($q, ',');

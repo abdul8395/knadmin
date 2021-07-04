@@ -165,7 +165,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class=" btn btn-warning" onclick="updat_tbl_expropriation_orders()" id="updatedata" style="color:white;">Update</button>
+                <button type="button" class=" btn btn-warning" onclick="update_tbl_expropriation_orders()" id="updatedata" style="color:white;">Update</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -182,120 +182,121 @@
     }
 </style>
 
-<table class="table table-striped" id="tbl" style="width:100%;">
-    <thead>
-        <tr>
-            <th>
-                id 
-            </th>
-
-            <th>
-                reason
-            </th>
-
-            <th>
-                title
-            </th>
-
-            <th>
-                sign_date
-            </th>
-
-            <th>
-                district
-            </th>
-            <th>
-            remark
-            </th>
-            <th>
-            created_us
-            </th>
-            <th>
-            created_da
-            </th>
-            <th>
-            last_edite
-            </th>
-            <th>
-            last_edi_1
-            </th>
-            <th>
-            shape_leng
-            </th>
-            <th>
-            shape_area
-            </th>
-            <th>
-            d_reason
-            </th>
-            <th>
-            d_district
-            </th>
-           
-            <th>
-                Action
-            </th>
-
-
-        </tr>
-    </thead>
-    <tbody>
-    @foreach ($tbldata as $p)
+    <table class="table table-striped" id="tbl" style="width:100%;">
+        <thead>
             <tr>
-                <td>
-                    {{$p->id}}
-                </td>
+                <th>
+                    id 
+                </th>
 
-                <td>
-                    {{$p->reason}}
-                </td>
+                <th>
+                    reason
+                </th>
 
-                <td>
-                    {{$p->title}}
-                </td>
+                <th>
+                    title
+                </th>
 
-                <td>
-                    {{$p->sign_date}}
-                </td>
-                <td>
-                    {{$p->district}}
-                </td>
-                <td>
-                    {{$p->remark}}
-                </td>
-                <td>
-                    {{$p->created_us}}
-                </td>
-                <td>
-                    {{$p->created_da}}
-                </td>
-                <td>
-                    {{$p->last_edite}}
-                </td>
-                <td>
-                    {{$p->last_edi_1}}
-                </td>
-                <td>
-                    {{$p->shape_leng}}
-                </td>
-                <td>
-                    {{$p->shape_area}}
-                </td>
-                <td>
-                    {{$p->d_reason}}
-                </td>
-                <td>
-                    {{$p->d_district}}
-                </td>
-                <td>
-                    <input type="hidden" id="hidData" value="{{$geojson}}" />
-                    <input type="button" class="btn btn-warning"  value="Edit" onclick="editbtn_tbl_expropriation_orders({{$p->id}})" />    
-                    <input type="button" class="btn btn-danger" style="margin-top: 2px !important;" value="Delete" onclick="deletebtn_tbl_expropriation_orders({{$p->id}})" />    
-                </td>
+                <th>
+                    sign_date
+                </th>
+
+                <th>
+                    district
+                </th>
+                <th>
+                remark
+                </th>
+                <th>
+                created_us
+                </th>
+                <th>
+                created_da
+                </th>
+                <th>
+                last_edite
+                </th>
+                <th>
+                last_edi_1
+                </th>
+                <th>
+                shape_leng
+                </th>
+                <th>
+                shape_area
+                </th>
+                <th>
+                d_reason
+                </th>
+                <th>
+                d_district
+                </th>
+            
+                <th>
+                    Action
+                </th>
+
+
             </tr>
-    @endforeach
-          
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+        @foreach ($tbldata as $p)
+                <tr>
+                    <td>
+                        {{$p->id}}
+                    </td>
+
+                    <td>
+                        {{$p->reason}}
+                    </td>
+
+                    <td>
+                        {{$p->title}}
+                    </td>
+
+                    <td>
+                        {{$p->sign_date}}
+                    </td>
+                    <td>
+                        {{$p->district}}
+                    </td>
+                    <td>
+                        {{$p->remark}}
+                    </td>
+                    <td>
+                        {{$p->created_us}}
+                    </td>
+                    <td>
+                        {{$p->created_da}}
+                    </td>
+                    <td>
+                        {{$p->last_edite}}
+                    </td>
+                    <td>
+                        {{$p->last_edi_1}}
+                    </td>
+                    <td>
+                        {{$p->shape_leng}}
+                    </td>
+                    <td>
+                        {{$p->shape_area}}
+                    </td>
+                    <td>
+                        {{$p->d_reason}}
+                    </td>
+                    <td>
+                        {{$p->d_district}}
+                    </td>
+                    <td>
+                        <input type="hidden" id="hidData" value="{{$geojson}}" />
+                        <input type="button" class="btn btn-warning"  value="Edit" onclick="editbtn_tbl_expropriation_orders({{$p->id}})" />    
+                        <input type="button" class="btn btn-danger" style="margin-top: 2px !important;" value="Delete" onclick="deletebtn_tbl_expropriation_orders({{$p->id}})" /> 
+                        <input type="button" class="btn btn-success" style="margin-top: 2px !important;" value="Zoom" onclick="zoombtn_tbl_expropriation_orders({{$p->id}})" />    
+                    </td>
+                </tr>
+        @endforeach
+            
+        </tbody>
+    </table>
 
 @endsection

@@ -19,7 +19,7 @@ use App\Http\Controllers\HomeController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/login');
 });
 // Route::get('/kn22' , [kn1::class,'index']);
 
@@ -35,69 +35,93 @@ Route::get('/switch_layre/switch_layre/deletebtn_tbl_area_b_demolitions/{id}' , 
    
 Route::post('/switch_layre/switch_layre/insert_tbl_area_b_nature_reserve' , [kn1::class,'insert_tbl_area_b_nature_reserve']);
 Route::get('/switch_layre/switch_layre/editbtn_tbl_area_b_nature_reserve/{id}' , [kn1::class,'editbtn_tbl_area_b_nature_reserve'])->middleware('auth');
-Route::post('/switch_layre/switch_layre/updat_tbl_area_b_nature_reserve' , [kn1::class,'updat_tbl_area_b_nature_reserve'])->middleware('auth');
+Route::post('/switch_layre/switch_layre/update_tbl_area_b_nature_reserve' , [kn1::class,'update_tbl_area_b_nature_reserve'])->middleware('auth');
 Route::get('/switch_layre/switch_layre/deletebtn_tbl_area_b_nature_reserve/{id}' , [kn1::class,'deletebtn_tbl_area_b_nature_reserve'])->middleware('auth');
+Route::get('/switch_layre/switch_layre/zoombtn_tbl_area_b_nature_reserve/{id}' , [kn1::class,'zoombtn_tbl_area_b_nature_reserve'])->middleware('auth');
 
 Route::post('/switch_layre/switch_layre/insert_tbl_area_a_and_b_combined' , [kn1::class,'insert_tbl_area_a_and_b_combined']);
 Route::get('/switch_layre/switch_layre/editbtn_tbl_area_a_and_b_combined/{id}' , [kn1::class,'editbtn_tbl_area_a_and_b_combined'])->middleware('auth');
-Route::post('/switch_layre/switch_layre/updat_tbl_area_a_and_b_combined' , [kn1::class,'updat_tbl_area_a_and_b_combined'])->middleware('auth');
+Route::post('/switch_layre/switch_layre/update_tbl_area_a_and_b_combined' , [kn1::class,'update_tbl_area_a_and_b_combined'])->middleware('auth');
 Route::get('/switch_layre/switch_layre/deletebtn_tbl_area_a_and_b_combined/{id}' , [kn1::class,'deletebtn_tbl_area_a_and_b_combined'])->middleware('auth');
+Route::get('/switch_layre/switch_layre/zoombtn_tbl_area_a_and_b_combined/{id}' , [kn1::class,'zoombtn_tbl_area_a_and_b_combined'])->middleware('auth');
 
 Route::post('/switch_layre/switch_layre/insert_tbl_area_a_area_b_naturereserve' , [kn1::class,'insert_tbl_area_a_area_b_naturereserve']);
 Route::get('/switch_layre/switch_layre/editbtn_tbl_area_a_area_b_naturereserve/{id}' , [kn1::class,'editbtn_tbl_area_a_area_b_naturereserve'])->middleware('auth');
-Route::post('/switch_layre/switch_layre/updat_tbl_area_a_area_b_naturereserve' , [kn1::class,'updat_tbl_area_a_area_b_naturereserve'])->middleware('auth');
+Route::post('/switch_layre/switch_layre/update_tbl_area_a_area_b_naturereserve' , [kn1::class,'update_tbl_area_a_area_b_naturereserve'])->middleware('auth');
 Route::get('/switch_layre/switch_layre/deletebtn_tbl_area_a_area_b_naturereserve/{id}' , [kn1::class,'deletebtn_tbl_area_a_area_b_naturereserve'])->middleware('auth');
+Route::get('/switch_layre/switch_layre/zoombtn_tbl_area_a_area_b_naturereserve/{id}' , [kn1::class,'zoombtn_tbl_area_a_area_b_naturereserve'])->middleware('auth');
 
 Route::post('/switch_layre/switch_layre/insert_tbl_area_a_poly' , [kn1::class,'insert_tbl_area_a_poly']);
 Route::get('/switch_layre/switch_layre/editbtn_tbl_area_a_poly/{id}' , [kn1::class,'editbtn_tbl_area_a_poly'])->middleware('auth');
-Route::post('/switch_layre/switch_layre/updat_tbl_area_a_poly' , [kn1::class,'updat_tbl_area_a_poly'])->middleware('auth');
+Route::post('/switch_layre/switch_layre/update_tbl_area_a_poly' , [kn1::class,'update_tbl_area_a_poly'])->middleware('auth');
 Route::get('/switch_layre/switch_layre/deletebtn_tbl_area_a_poly/{id}' , [kn1::class,'deletebtn_tbl_area_a_poly'])->middleware('auth');
+Route::get('/switch_layre/switch_layre/zoombtn_tbl_area_a_poly/{id}' , [kn1::class,'zoombtn_tbl_area_a_poly'])->middleware('auth');
 
 Route::post('/switch_layre/switch_layre/insert_tbl_area_b_poly' , [kn1::class,'insert_tbl_area_b_poly']);
 Route::get('/switch_layre/switch_layre/editbtn_tbl_area_b_poly/{id}' , [kn1::class,'editbtn_tbl_area_b_poly'])->middleware('auth');
-Route::post('/switch_layre/switch_layre/updat_tbl_area_b_poly' , [kn1::class,'updat_tbl_area_b_poly'])->middleware('auth');
+Route::post('/switch_layre/switch_layre/update_tbl_area_b_poly' , [kn1::class,'update_tbl_area_b_poly'])->middleware('auth');
 Route::get('/switch_layre/switch_layre/deletebtn_tbl_area_b_poly/{id}' , [kn1::class,'deletebtn_tbl_area_b_poly'])->middleware('auth');
+Route::get('/switch_layre/switch_layre/zoombtn_tbl_area_b_poly/{id}' , [kn1::class,'zoombtn_tbl_area_b_poly'])->middleware('auth');
+Route::get('/switch_layre/switch_layre/pageno_tbl_area_b_poly/{id}' , [kn1::class,'pageno_tbl_area_b_poly']);
 
 Route::post('/switch_layre/switch_layre/insert_tbl_area_b_training' , [kn1::class,'insert_tbl_area_b_training']);
 Route::get('/switch_layre/switch_layre/editbtn_tbl_area_b_training/{id}' , [kn1::class,'editbtn_tbl_area_b_training'])->middleware('auth');
-Route::post('/switch_layre/switch_layre/updat_tbl_area_b_training' , [kn1::class,'updat_tbl_area_b_training'])->middleware('auth');
+Route::post('/switch_layre/switch_layre/update_tbl_area_b_training' , [kn1::class,'update_tbl_area_b_training'])->middleware('auth');
 Route::get('/switch_layre/switch_layre/deletebtn_tbl_area_b_training/{id}' , [kn1::class,'deletebtn_tbl_area_b_training'])->middleware('auth');
 
 Route::post('/switch_layre/switch_layre/insert_tbl_demolition_orders' , [kn1::class,'insert_tbl_demolition_orders']);
 Route::get('/switch_layre/switch_layre/editbtn_tbl_demolition_orders/{id}' , [kn1::class,'editbtn_tbl_demolition_orders'])->middleware('auth');
-Route::post('/switch_layre/switch_layre/updat_tbl_demolition_orders' , [kn1::class,'updat_tbl_demolition_orders'])->middleware('auth');
+Route::post('/switch_layre/switch_layre/update_tbl_demolition_orders' , [kn1::class,'update_tbl_demolition_orders'])->middleware('auth');
 Route::get('/switch_layre/switch_layre/deletebtn_tbl_demolition_orders/{id}' , [kn1::class,'deletebtn_tbl_demolition_orders'])->middleware('auth');
+
 
 Route::post('/switch_layre/switch_layre/insert_tbl_expropriation_orders' , [kn1::class,'insert_tbl_expropriation_orders']);
 Route::get('/switch_layre/switch_layre/editbtn_tbl_expropriation_orders/{id}' , [kn1::class,'editbtn_tbl_expropriation_orders'])->middleware('auth');
-Route::post('/switch_layre/switch_layre/updat_tbl_expropriation_orders' , [kn1::class,'updat_tbl_expropriation_orders'])->middleware('auth');
+Route::post('/switch_layre/switch_layre/update_tbl_expropriation_orders' , [kn1::class,'update_tbl_expropriation_orders'])->middleware('auth');
 Route::get('/switch_layre/switch_layre/deletebtn_tbl_expropriation_orders/{id}' , [kn1::class,'deletebtn_tbl_expropriation_orders'])->middleware('auth');
+Route::get('/switch_layre/switch_layre/zoombtn_tbl_expropriation_orders/{id}' , [kn1::class,'zoombtn_tbl_expropriation_orders'])->middleware('auth');
 
 Route::post('/switch_layre/switch_layre/insert_tbl_expropriation_orders_ab' , [kn1::class,'insert_tbl_expropriation_orders_ab']);
 Route::get('/switch_layre/switch_layre/editbtn_tbl_expropriation_orders_ab/{id}' , [kn1::class,'editbtn_tbl_expropriation_orders_ab'])->middleware('auth');
-Route::post('/switch_layre/switch_layre/updat_tbl_expropriation_orders_ab' , [kn1::class,'updat_tbl_expropriation_orders_ab'])->middleware('auth');
+Route::post('/switch_layre/switch_layre/update_tbl_expropriation_orders_ab' , [kn1::class,'update_tbl_expropriation_orders_ab'])->middleware('auth');
 Route::get('/switch_layre/switch_layre/deletebtn_tbl_expropriation_orders_ab/{id}' , [kn1::class,'deletebtn_tbl_expropriation_orders_ab'])->middleware('auth');
+Route::get('/switch_layre/switch_layre/zoombtn_tbl_expropriation_orders_ab/{id}' , [kn1::class,'zoombtn_tbl_expropriation_orders_ab'])->middleware('auth');
 
 Route::post('/switch_layre/switch_layre/insert_tbl_expropriation_orders_not_ab' , [kn1::class,'insert_tbl_expropriation_orders_not_ab']);
 Route::get('/switch_layre/switch_layre/editbtn_tbl_expropriation_orders_not_ab/{id}' , [kn1::class,'editbtn_tbl_expropriation_orders_not_ab'])->middleware('auth');
-Route::post('/switch_layre/switch_layre/updat_tbl_expropriation_orders_not_ab' , [kn1::class,'updat_tbl_expropriation_orders_not_ab'])->middleware('auth');
+Route::post('/switch_layre/switch_layre/update_tbl_expropriation_orders_not_ab' , [kn1::class,'update_tbl_expropriation_orders_not_ab'])->middleware('auth');
 Route::get('/switch_layre/switch_layre/deletebtn_tbl_expropriation_orders_not_ab/{id}' , [kn1::class,'deletebtn_tbl_expropriation_orders_not_ab'])->middleware('auth');
+Route::get('/switch_layre/switch_layre/zoombtn_tbl_expropriation_orders_not_ab/{id}' , [kn1::class,'zoombtn_tbl_expropriation_orders_not_ab'])->middleware('auth');
 
 Route::post('/switch_layre/switch_layre/insert_tbl_security_orders' , [kn1::class,'insert_tbl_security_orders']);
 Route::get('/switch_layre/switch_layre/editbtn_tbl_security_orders/{id}' , [kn1::class,'editbtn_tbl_security_orders'])->middleware('auth');
-Route::post('/switch_layre/switch_layre/updat_tbl_security_orders' , [kn1::class,'updat_tbl_security_orders'])->middleware('auth');
+Route::post('/switch_layre/switch_layre/update_tbl_security_orders' , [kn1::class,'update_tbl_security_orders'])->middleware('auth');
 Route::get('/switch_layre/switch_layre/deletebtn_tbl_security_orders/{id}' , [kn1::class,'deletebtn_tbl_security_orders'])->middleware('auth');
 
 Route::post('/switch_layre/switch_layre/insert_tbl_seizure_ab' , [kn1::class,'insert_tbl_seizure_ab']);
 Route::get('/switch_layre/switch_layre/editbtn_tbl_seizure_ab/{id}' , [kn1::class,'editbtn_tbl_seizure_ab'])->middleware('auth');
-Route::post('/switch_layre/switch_layre/updat_tbl_seizure_ab' , [kn1::class,'updat_tbl_seizure_ab'])->middleware('auth');
+Route::post('/switch_layre/switch_layre/update_tbl_seizure_ab' , [kn1::class,'update_tbl_seizure_ab'])->middleware('auth');
 Route::get('/switch_layre/switch_layre/deletebtn_tbl_seizure_ab/{id}' , [kn1::class,'deletebtn_tbl_seizure_ab'])->middleware('auth');
+Route::get('/switch_layre/switch_layre/zoombtn_tbl_seizure_ab/{id}' , [kn1::class,'zoombtn_tbl_seizure_ab'])->middleware('auth');
 
 Route::post('/switch_layre/switch_layre/insert_tbl_seizure_all' , [kn1::class,'insert_tbl_seizure_all']);
 Route::get('/switch_layre/switch_layre/editbtn_tbl_seizure_all/{id}' , [kn1::class,'editbtn_tbl_seizure_all'])->middleware('auth');
-Route::post('/switch_layre/switch_layre/updat_tbl_seizure_all' , [kn1::class,'updat_tbl_seizure_all'])->middleware('auth');
+Route::post('/switch_layre/switch_layre/update_tbl_seizure_all' , [kn1::class,'update_tbl_seizure_all'])->middleware('auth');
 Route::get('/switch_layre/switch_layre/deletebtn_tbl_seizure_all/{id}' , [kn1::class,'deletebtn_tbl_seizure_all'])->middleware('auth');
+Route::get('/switch_layre/switch_layre/zoombtn_tbl_seizure_all/{id}' , [kn1::class,'zoombtn_tbl_seizure_all'])->middleware('auth');
+Route::get('/switch_layre/switch_layre/pageno_tbl_seizure_all/{id}' , [kn1::class,'pageno_tbl_seizure_all'])->middleware('auth');
 
+Route::post('/switch_layre/switch_layre/insert_tbl_settlements' , [kn1::class,'insert_tbl_settlements']);
+Route::get('/switch_layre/switch_layre/editbtn_tbl_settlements/{id}' , [kn1::class,'editbtn_tbl_settlements'])->middleware('auth');
+Route::post('/switch_layre/switch_layre/update_tbl_settlements' , [kn1::class,'update_tbl_settlements'])->middleware('auth');
+Route::get('/switch_layre/switch_layre/deletebtn_tbl_settlements/{id}' , [kn1::class,'deletebtn_tbl_settlements'])->middleware('auth');
+Route::get('/switch_layre/switch_layre/zoombtn_tbl_settlements/{id}' , [kn1::class,'zoombtn_tbl_settlements'])->middleware('auth');
+
+Route::post('/switch_layre/switch_layre/insert_tbl_area_b_violations' , [kn1::class,'insert_tbl_area_b_violations']);
+Route::get('/switch_layre/switch_layre/editbtn_tbl_area_b_violations/{id}' , [kn1::class,'editbtn_tbl_area_b_violations'])->middleware('auth');
+Route::post('/switch_layre/switch_layre/update_tbl_area_b_violations' , [kn1::class,'update_tbl_area_b_violations'])->middleware('auth');
+Route::get('/switch_layre/switch_layre/deletebtn_tbl_area_b_violations/{id}' , [kn1::class,'deletebtn_tbl_area_b_violations'])->middleware('auth');
+// Route::get('/switch_layre/switch_layre/pageno_tbl_area_b_violations/{id}' , [kn1::class,'pageno_tbl_area_b_violations'])->middleware('auth');
 
 
 // // ------------Upload Shape File rooute----------------

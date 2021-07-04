@@ -43,136 +43,79 @@
             }
         </style>
     </head>
-    <body >
-    <input type="hidden" id="hidngeom" >
-    <input type="hidden" id="hidnupdatedgeom" >
-    <div class="wrapper" >
-        @include('sidebarlayres')
-        <!-- Page Content  -->
-        <div id="content">
+<body >
+<input type="hidden" id="hidngeom" >
+<input type="hidden" id="hidnupdatedgeom" >
+<div class="wrapper" >
 
-            <div class="row">
-                <div class="col">
-      <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid"> -->
-<!--
-                    <button type="button" id="sidebarCollapse" class="btn btn-info">
-                        <i class="fas fa-align-left"></i>
-                        <span>Toggle Sidebar</span>
-                    </button>
-                    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fas fa-align-justify"></i>
-                    </button> -->
-
-                    <!-- <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="nav navbar-nav ml-auto">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="#">Page</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Page</a>
-                            </li>
-                        </ul>
-                    </div> -->
-                <!-- </div>
-            </nav> -->
-            <!-- <hr style="margin-top 0px !important; height:10px;border-width:0;color:gray;background-color:#7386D5;"> -->
-
-
-
-            <div id="map" >
+    @include('sidebarlayres')
+    <!-- Page Content  -->
+    <div id="content">
+        <div class="row">
+            <div class="col">
+                <div id="map" >
                     <div id="shpfileuploadmodal" class="modal">
                         <div class="modal-dialog modal-dialog-centered modal-lg ">
                             <div id='form' class="modal-content col-md-12 col-md-offset-6 ">
                             <form method="POST" action="" enctype="multipart/form-data" id="myForm">
 
-                                    <div class="modal-header">
-                                    <h4 class="modal-title">Choose Table Name for Shape File Insertion</h4>
-                                    <button type="button" id="close_btn" class="close" data-dismiss="modal">&times;</button>
+                                <div class="modal-header">
+                                <h4 class="modal-title">Choose Table Name for Shape File Insertion</h4>
+                                <button type="button" id="close_btn" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+
+                                <div class="modal-body" >
+                                    <div class="form-group row">
+                                        <div class="col-sm-12">
+                                            <select id="tablename" class="form-control" name="tablename">
+                                                <option style="color:red" selected disabled>--Select Table Name--</option>
+                                                <option value="area_b_nature_reserve">Area B Nature Reserve</option>
+                                                <option value="area_b_demolitions">Area B Demolitions</option>
+                                                <option value="Area_AB_Combined">Area A&B Combined</option>
+                                                <option value="Area_AB_Naturereserve">Area A&B Naturereserve</option>
+                                                <option value="area_a_poly">Area A Poly</option>
+                                                <option value="area_b_poly">Area B Poly</option>
+                                                <option value="area_b_training">Area B Tranining</option>
+                                                <option value="demolitions_orders">Demolitions Orders</option>
+                                                <option value="expropriation_orders">Expropriation Orders</option>
+                                                <option value="expropriation_orders_AB">Expropriation Orders AB</option>
+                                                <option value="expropriation_orders_not_AB">Expropriation Orders Not AB</option>
+                                                <option value="security_orders">Security Orders</option>
+                                                <option value="Seizure_AB">Seizure AB</option>
+                                                <option value="Seizure_All">Seizure All</option>
+                                                <option value="settlements">Settlements</option>
+                                                <option value="area_b_violations">area_b_violations</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                    <div class="modal-body" >
-                                        <!-- <div class="form-group row">
-                                            <div class="col-sm-12">
-                                                <input type="text" class="form-control" id="name" name="name" placeholder="Data Name" required>
-                                            </div>
+                                    <div class="form-group" id="choose">
+                                        <div class="col-md-4">
+                                        <input type="file" name="file" id="shp" class="" accept=".zip" required>
                                         </div>
-                                        <div class="form-group row">
-                                            <div class="col-sm-12">
-                                                <input type="text" class="form-control" id="des" name="des" placeholder="Data Discription" required>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="col-sm-12">
-                                                <input type="text" class="form-control" id="crs" name="crs" placeholder="CRS:4326" required>
-                                            </div>
-                                        </div> -->
-                                        <div class="form-group row">
-                                            <div class="col-sm-12">
-                                                <select id="tablename" class="form-control" name="tablename">
-                                                    <option style="color:red" selected disabled>--Select Table Name--</option>
-                                                    <option value="area_b_nature_reserve">Area B Nature Reserve</option>
-                                                    <option value="area_b_demolitions">Area B Demolitions</option>
-                                                    <option value="Area_AB_Combined">Area A&B Combined</option>
-                                                    <option value="Area_AB_Naturereserve">Area A&B Naturereserve</option>
-                                                    <option value="area_a_poly">Area A Poly</option>
-                                                    <option value="area_b_poly">Area B Poly</option>
-                                                    <option value="area_b_training">Area B Tranining</option>
-                                                    <option value="demolitions_orders">Demolitions Orders</option>
-                                                    <option value="expropriation_orders">Expropriation Orders</option>
-                                                    <option value="expropriation_orders_AB">Expropriation Orders AB</option>
-                                                    <option value="expropriation_orders_not_AB">Expropriation Orders Not AB</option>
-                                                    <option value="security_orders">Security Orders</option>
-                                                    <option value="Seizure_AB">Seizure AB</option>
-                                                    <option value="Seizure_All">Seizure All</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group" id="choose">
-                                            <div class="col-md-4">
-                                            <input type="file" name="file" id="shp" class="" accept=".zip" required>
-                                            </div>
-                                        </div>
-
-
                                     </div>
-                                    <div id="exl_btn" class="modal-footer">
-                                        <button id="btnsave" type="submit" class="btn btn-success pull-right">Save</button>
-                                        <!-- <button id="close_btn"  class="btn btn-danger pull-right">Cancel</button> -->
-                                        <!--                <button class="btn btn-danger btnCancel">Cancel</button>-->
-                                    </div>
+                                </div>
+                                
+                                <div id="exl_btn" class="modal-footer">
+                                    <button id="btnsave" type="submit" class="btn btn-success pull-right">Save</button>
+                                </div>
 
-                                </form>
+                            </form>
                             </div>
                         </div>
                     </div>
-            </div>
-            </div>
-            </div>
-
-                <div class="col" style="margin-bottom:10px !important;">
-                <div class="clearfix"></div><br />
-                    @yield('content')
                 </div>
             </div>
         </div>
 
+        <div class="col" style="margin-bottom:10px !important;">
+            <div class="clearfix"></div><br />
+            
+                @yield('content')
 
-
-
-
-
-
-
-
+        </div>
     </div>
-    </body>
+</div>
+</body>
 </html>
 <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Turf.js/0.0.124/turf.min.js"></script>
@@ -190,6 +133,7 @@
 <script>
    var tbl_name;
    var geojsonfromhiddenfld;
+   var dtable
    
 
             var map = L.map('map').setView([31.807491554, 35.341034188], 8);
@@ -264,6 +208,12 @@
             else if(tbl_name=='tbl_seizure_all'){
                 $("#insert_modal").modal("show");
             }
+            else if(tbl_name=='tbl_settlements'){
+                $("#insert_modal").modal("show");
+            }
+            else if(tbl_name=='tbl_area_b_violations'){
+                $("#insert_modal").modal("show");
+            }
 
 
 
@@ -279,7 +229,7 @@
                 // console.log(data);
                 var updated_geom=data.features[0].geometry;
                 var id=data.features[0].id
-                alert(id);
+                // alert(id);
                 // console.log(updated_geom);
             if(tbl_name=='tbl_area_b_demolitions'){
                 editgeom_tbl_area_b_demolitions(id, updated_geom)
@@ -323,51 +273,59 @@
             else if(tbl_name=='tbl_seizure_all'){
                 editgeom_tbl_seizure_all(id, updated_geom)
             }
+            else if(tbl_name=='tbl_settlements'){
+                editgeom_tbl_settlements(id, updated_geom)
+            }
+            else if(tbl_name=='tbl_area_b_violations'){
+                editgeom_tbl_area_b_violations(id, updated_geom)
+            }
 
 
 
 
         });
-
-    setTimeout(function(){
+    function loadgeojsontomap(){
         //L.geoJSON(JSON.parse(geojsonfromhiddenfld)).addTo(this.map);
-        // console.log(geojsonfromhiddenfld);
-        var result_set=JSON.parse(geojsonfromhiddenfld);
-        if(result_set.features[0].geometry.type=='MultiPolygon'){
-              for(var j=0;j<result_set.features.length;j++) {
-                  result_set.features[j].geometry.coordinates.forEach(function (shapeCoords, i) {
-                      var polygon = {type: "Polygon", coordinates: shapeCoords};
-                      polygon.properties={}
-                      polygon.properties.id=result_set.features[j].id
+            // console.log(geojsonfromhiddenfld);
+            var result_set=JSON.parse(geojsonfromhiddenfld);
+            if(result_set.features[0].geometry.type=='MultiPolygon'){
+                for(var j=0;j<result_set.features.length;j++) {
+                    result_set.features[j].geometry.coordinates.forEach(function (shapeCoords, i) {
+                        var polygon = {type: "Polygon", coordinates: shapeCoords};
+                        polygon.properties={}
+                        polygon.properties.id=result_set.features[j].id
 
-                      L.geoJson(polygon, {
-                          id:result_set.features[j].id,
-                          onEachFeature: function (feature, layer) {
-                              layer.on('click', function (e) {
-                           //   layer.options = layer.options||{};
-                              layer.feature.properties.id=layer.feature.geometry.properties.id
-                              layer.feature.id=layer.feature.geometry.properties.id
-                              drawnItems.addLayer(layer);
-                             // layer.editing.enable();
-                              });
-                          }
-                      }).addTo(this.map);
-                  })
-              }
-        }else {
-            L.geoJSON(result_set, {
-                onEachFeature: function (feature, layer) {
-                    layer.on('click', function (e) {
-                        drawnItems.addLayer(layer);
-                        // var tbl= '<table class="table_draw" id="tbl_Info"></table>' +
-                        //     '<table><tr><td></td><td></td><td></td><td></table>';
-                        // layer.bindPopup(tbl, {
-                        //     minWidth : 300
-                        // });
-                    });
+                        L.geoJson(polygon, {
+                            id:result_set.features[j].id,
+                            onEachFeature: function (feature, layer) {
+                                layer.on('click', function (e) {
+                            //   layer.options = layer.options||{};
+                                layer.feature.properties.id=layer.feature.geometry.properties.id
+                                layer.feature.id=layer.feature.geometry.properties.id
+                                drawnItems.addLayer(layer);
+                                // layer.editing.enable();
+                                });
+                            }
+                        }).addTo(this.map);
+                    })
                 }
-            }).addTo(this.map);
-        }
+            }else {
+                L.geoJSON(result_set, {
+                    onEachFeature: function (feature, layer) {
+                        layer.on('click', function (e) {
+                            drawnItems.addLayer(layer);
+                            // var tbl= '<table class="table_draw" id="tbl_Info"></table>' +
+                            //     '<table><tr><td></td><td></td><td></td><td></table>';
+                            // layer.bindPopup(tbl, {
+                            //     minWidth : 300
+                            // });
+                        });
+                    }
+                }).addTo(this.map);
+            }
+    }
+    setTimeout(function(){
+        loadgeojsontomap()
     }, 2000);
 
 
@@ -395,10 +353,193 @@
             $('#sidebar').toggleClass('active');
         });
 
-        $('#tbl').DataTable( {
-        "lengthMenu": [[2, 10, 25, -1], [2, 10, 25, "All"]]
+        dtable = $('#tbl').DataTable( {
+        "lengthMenu": [[2, 5, 10], [2, 5, 10]],
+        "targets": 'no-sort',
+        "bSort": false,
         } );
     });
+
+    
+    $('#tbl').on( 'page.dt', function () {
+    var info = dtable.page.info();
+        if(tbl_name=='tbl_area_b_poly'){
+            $.ajax({
+                type: "get",
+                url: "switch_layre/pageno_tbl_area_b_poly/"+info.page,
+                success: function (res) {
+                     // setTimeout(function(){
+                    // }, 2000);
+                        geojsonfromhiddenfld=JSON.parse(res)
+                        loadgeojsontomap()
+                }
+            });
+        }
+        else if(tbl_name=='tbl_seizure_all'){
+            $.ajax({
+                type: "get",
+                url: "switch_layre/pageno_tbl_seizure_all/"+info.page,
+                success: function (res) {
+                     // setTimeout(function(){
+                    // }, 2000);
+                        geojsonfromhiddenfld=JSON.parse(res)
+                        loadgeojsontomap()
+                }
+            });
+        }
+        // else if(tbl_name=='tbl_area_b_violations'){
+        //     $.ajax({
+        //         type: "get",
+        //         url: "switch_layre/pageno_tbl_area_b_violations/"+info.page,
+        //         success: function (res) {
+        //              // setTimeout(function(){
+        //             // }, 2000);
+        //                 geojsonfromhiddenfld=JSON.parse(res)
+        //                 loadgeojsontomap()
+        //         }
+        //     });
+        // }
+    // alert(info.page)
+    // $('#pageInfo').html( 'Showing page: '+info.page+' of '+info.pages );
+    } );
+
+    function zoombtn_tbl_area_b_demolitions(fid){
+       gj= JSON.parse(geojsonfromhiddenfld)
+        for(var i=0;i<gj.features.length;i++){if(gj.features[i].properties.fid==fid){map.setView([gj.features[i].geometry.coordinates[1],gj.features[i].geometry.coordinates[0]],17)}}
+        // console.log(fid)
+        // console.log(geojsonfromhiddenfld)
+        
+    }
+    function zoombtn_tbl_area_b_training(fid){
+       gj= JSON.parse(geojsonfromhiddenfld)
+        for(var i=0;i<gj.features.length;i++){if(gj.features[i].properties.fid==fid){map.setView([gj.features[i].geometry.coordinates[1],gj.features[i].geometry.coordinates[0]],17)}}
+    }
+    function zoombtn_tbl_demolition_orders(fid){
+       gj= JSON.parse(geojsonfromhiddenfld)
+        for(var i=0;i<gj.features.length;i++){if(gj.features[i].properties.fid==fid){map.setView([gj.features[i].geometry.coordinates[1],gj.features[i].geometry.coordinates[0]],17)}}
+    }
+    function zoombtn_tbl_security_orders(fid){
+       gj= JSON.parse(geojsonfromhiddenfld)
+        for(var i=0;i<gj.features.length;i++){if(gj.features[i].properties.fid==fid){map.setView([gj.features[i].geometry.coordinates[1],gj.features[i].geometry.coordinates[0]],17)}}
+    }
+    function zoombtn_tbl_area_b_violations(gid){
+       gj= JSON.parse(geojsonfromhiddenfld)
+       console.log(gj)
+        for(var i=0;i<gj.features.length;i++){if(gj.features[i].properties.gid==gid){map.setView([gj.features[i].geometry.coordinates[1],gj.features[i].geometry.coordinates[0]],17)}
+        // console.log(map.setView([gj.features[i].geometry.coordinates[1],gj.features[i].geometry.coordinates[0]],17))
+        }
+    }
+    function zoombtn_tbl_area_a_and_b_combined(fid){
+        $.ajax({
+                type: "get",
+                url: "switch_layre/zoombtn_tbl_area_a_and_b_combined/"+fid,
+                success: function (res) {
+                    var r=JSON.parse(res)
+                    map.setView([r[0].y,r[0].x],15)
+                }
+            });
+    }
+    function zoombtn_tbl_area_a_area_b_naturereserve(fid){
+        $.ajax({
+                type: "get",
+                url: "switch_layre/zoombtn_tbl_area_a_area_b_naturereserve/"+fid,
+                success: function (res) {
+                    var r=JSON.parse(res)
+                    map.setView([r[0].y,r[0].x],16)
+                }
+            });
+    }
+    function zoombtn_tbl_area_a_poly(fid){
+        $.ajax({
+                type: "get",
+                url: "switch_layre/zoombtn_tbl_area_a_poly/"+fid,
+                success: function (res) {
+                    var r=JSON.parse(res)
+                    map.setView([r[0].y,r[0].x],16)
+                }
+            });
+    }
+    function zoombtn_tbl_area_b_nature_reserve(fid){
+        $.ajax({
+                type: "get",
+                url: "switch_layre/zoombtn_tbl_area_b_nature_reserve/"+fid,
+                success: function (res) {
+                    var r=JSON.parse(res)
+                    map.setView([r[0].y,r[0].x],16)
+                }
+            });
+    }
+    function zoombtn_tbl_area_b_poly(fid){
+        $.ajax({
+                type: "get",
+                url: "switch_layre/zoombtn_tbl_area_b_poly/"+fid,
+                success: function (res) {
+                    var r=JSON.parse(res)
+                    map.setView([r[0].y,r[0].x],16)
+                }
+            });
+    }
+
+    function zoombtn_tbl_expropriation_orders_ab(fid){
+        $.ajax({
+                type: "get",
+                url: "switch_layre/zoombtn_tbl_expropriation_orders_ab/"+fid,
+                success: function (res) {
+                    var r=JSON.parse(res)
+                    map.setView([r[0].y,r[0].x],16)
+                }
+            });
+    }
+    function zoombtn_tbl_expropriation_orders_not_ab(fid){
+        $.ajax({
+                type: "get",
+                url: "switch_layre/zoombtn_tbl_expropriation_orders_not_ab/"+fid,
+                success: function (res) {
+                    var r=JSON.parse(res)
+                    map.setView([r[0].y,r[0].x],16)
+                }
+            });
+    }
+    function zoombtn_tbl_expropriation_orders(fid){
+        $.ajax({
+                type: "get",
+                url: "switch_layre/zoombtn_tbl_expropriation_orders/"+fid,
+                success: function (res) {
+                    var r=JSON.parse(res)
+                    map.setView([r[0].y,r[0].x],16)
+                }
+            });
+    }
+    function zoombtn_tbl_seizure_ab(fid){
+        $.ajax({
+                type: "get",
+                url: "switch_layre/zoombtn_tbl_seizure_ab/"+fid,
+                success: function (res) {
+                    var r=JSON.parse(res)
+                    map.setView([r[0].y,r[0].x],16)
+                }
+            });
+    }
+    function zoombtn_tbl_seizure_all(fid){
+        $.ajax({
+                type: "get",
+                url: "switch_layre/zoombtn_tbl_seizure_all/"+fid,
+                success: function (res) {
+                    var r=JSON.parse(res)
+                    map.setView([r[0].y,r[0].x],16)
+                }
+            });
+    }
+    function zoombtn_tbl_settlements(fid){
+        $.ajax({
+                type: "get",
+                url: "switch_layre/zoombtn_tbl_settlements/"+fid,
+                success: function (res) {
+                    var r=JSON.parse(res)
+                    map.setView([r[0].y,r[0].x],16)
+                }
+            });
+    }
 
     // table tbl_area_b_demolitions insert/update/delete
 
@@ -626,7 +767,7 @@
             });
     }
 
-    function updat_tbl_area_b_nature_reserve() {
+    function update_tbl_area_b_nature_reserve() {
         var hidnupdatedgeom=$('#hidnupdatedgeom').val()
         var reqdata={
             objectid:$('#objectid').val(),
@@ -638,7 +779,7 @@
         };
         $.ajax({
             type: "post",
-            url: "switch_layre/updat_tbl_area_b_nature_reserve",
+            url: "switch_layre/update_tbl_area_b_nature_reserve",
             data:{data:reqdata},
             // dataType : "json",
             success: function (res) {
@@ -731,7 +872,7 @@
                 }
             });
     }
-    function updat_tbl_area_a_and_b_combined() {
+    function update_tbl_area_a_and_b_combined() {
         var hidnupdatedgeom=$('#hidnupdatedgeom').val()
         var reqdata={
             class:$('#class').val(),
@@ -740,7 +881,7 @@
         };
         $.ajax({
             type: "post",
-            url: "switch_layre/updat_tbl_area_a_and_b_combined",
+            url: "switch_layre/update_tbl_area_a_and_b_combined",
             data:{data:reqdata},
             // dataType : "json",
             success: function (res) {
@@ -845,7 +986,7 @@
         });
     }
 
-    function updat_tbl_area_a_area_b_naturereserve() {
+    function update_tbl_area_a_area_b_naturereserve() {
         var hidnupdatedgeom=$('#hidnupdatedgeom').val()
         var reqdata={
             objectid:$('#objectid').val(),
@@ -857,7 +998,7 @@
         };
         $.ajax({
             type: "post",
-            url: "switch_layre/updat_tbl_area_a_area_b_naturereserve",
+            url: "switch_layre/update_tbl_area_a_area_b_naturereserve",
             data:{data:reqdata},
             // dataType : "json",
             success: function (res) {
@@ -943,7 +1084,7 @@
             }
         });
     }
-    function updat_tbl_area_a_poly() {
+    function update_tbl_area_a_poly() {
         var hidnupdatedgeom=$('#hidnupdatedgeom').val()
         var reqdata={
             fid:$('#hidnfid').val(),
@@ -951,7 +1092,7 @@
         };
         $.ajax({
             type: "post",
-            url: "switch_layre/updat_tbl_area_a_poly",
+            url: "switch_layre/update_tbl_area_a_poly",
             data:{data:reqdata},
             // dataType : "json",
             success: function (res) {
@@ -1055,7 +1196,7 @@
         });
     }
 
-    function updat_tbl_area_b_poly() {
+    function update_tbl_area_b_poly() {
         var hidnupdatedgeom=$('#hidnupdatedgeom').val()
         var reqdata={
             areaupdt:$('#areaupdt').val(),
@@ -1067,7 +1208,7 @@
         };
         $.ajax({
             type: "post",
-            url: "switch_layre/updat_tbl_area_b_poly",
+            url: "switch_layre/update_tbl_area_b_poly",
             data:{data:reqdata},
             // dataType : "json",
             success: function (res) {
@@ -1159,7 +1300,7 @@
         });
     }
 
-    function updat_tbl_area_b_training() {
+    function update_tbl_area_b_training() {
         var hidnupdatedgeom=$('#hidnupdatedgeom').val()
         var reqdata={
             id:$('#id').val(),
@@ -1168,7 +1309,7 @@
         };
         $.ajax({
             type: "post",
-            url: "switch_layre/updat_tbl_area_b_training",
+            url: "switch_layre/update_tbl_area_b_training",
             data:{data:reqdata},
             // dataType : "json",
             success: function (res) {
@@ -1267,7 +1408,7 @@
         });
     }
 
-    function updat_tbl_demolition_orders() {
+    function update_tbl_demolition_orders() {
         var hidnupdatedgeom=$('#hidnupdatedgeom').val()
         var reqdata={
             objectid:$('#objectid').val(),
@@ -1277,7 +1418,7 @@
         };
         $.ajax({
             type: "post",
-            url: "switch_layre/updat_tbl_demolition_orders",
+            url: "switch_layre/update_tbl_demolition_orders",
             data:{data:reqdata},
             // dataType : "json",
             success: function (res) {
@@ -1407,7 +1548,7 @@
         });
     }
 
-    function updat_tbl_expropriation_orders() {
+    function update_tbl_expropriation_orders() {
         var hidnupdatedgeom=$('#hidnupdatedgeom').val()
         var reqdata={
             reason:$('#reason').val(),
@@ -1428,7 +1569,7 @@
         };
         $.ajax({
             type: "post",
-            url: "switch_layre/updat_tbl_expropriation_orders",
+            url: "switch_layre/update_tbl_expropriation_orders",
             data:{data:reqdata},
             // dataType : "json",
             success: function (res) {
@@ -1534,7 +1675,7 @@
             });
     }
 
-    function updat_tbl_expropriation_orders_ab() {
+    function update_tbl_expropriation_orders_ab() {
         var hidnupdatedgeom=$('#hidnupdatedgeom').val()
         var reqdata={
             objectid:$('#objectid').val(),
@@ -1545,7 +1686,7 @@
         };
         $.ajax({
             type: "post",
-            url: "switch_layre/updat_tbl_expropriation_orders_ab",
+            url: "switch_layre/update_tbl_expropriation_orders_ab",
             data:{data:reqdata},
             // dataType : "json",
             success: function (res) {
@@ -1640,7 +1781,7 @@
             });
     }
 
-    function updat_tbl_expropriation_orders_not_ab() {
+    function update_tbl_expropriation_orders_not_ab() {
         var hidnupdatedgeom=$('#hidnupdatedgeom').val()
         var reqdata={
             id:$('#hidnfid').val(),
@@ -1648,7 +1789,7 @@
         };
         $.ajax({
             type: "post",
-            url: "switch_layre/updat_tbl_expropriation_orders_not_ab",
+            url: "switch_layre/update_tbl_expropriation_orders_not_ab",
             data:{data:reqdata},
             // dataType : "json",
             success: function (res) {
@@ -1747,7 +1888,7 @@ function insert_tbl_security_orders() {
             });
     }
 
-    function updat_tbl_security_orders() {
+    function update_tbl_security_orders() {
         var hidnupdatedgeom=$('#hidnupdatedgeom').val()
         var reqdata={
             id:$('#id').val(),
@@ -1756,7 +1897,7 @@ function insert_tbl_security_orders() {
         };
         $.ajax({
             type: "post",
-            url: "switch_layre/updat_tbl_security_orders",
+            url: "switch_layre/update_tbl_security_orders",
             data:{data:reqdata},
             // dataType : "json",
             success: function (res) {
@@ -1851,7 +1992,7 @@ function insert_tbl_seizure_ab() {
             });
     }
 
-    function updat_tbl_seizure_ab() {
+    function update_tbl_seizure_ab() {
         var hidnupdatedgeom=$('#hidnupdatedgeom').val()
         var reqdata={
             id:$('#hidnfid').val(),
@@ -1859,7 +2000,7 @@ function insert_tbl_seizure_ab() {
         };
         $.ajax({
             type: "post",
-            url: "switch_layre/updat_tbl_seizure_ab",
+            url: "switch_layre/update_tbl_seizure_ab",
             data:{data:reqdata},
             // dataType : "json",
             success: function (res) {
@@ -1967,7 +2108,7 @@ function insert_tbl_seizure_ab() {
             });
     }
 
-    function updat_tbl_seizure_all() {
+    function update_tbl_seizure_all() {
         var hidnupdatedgeom=$('#hidnupdatedgeom').val()
         var reqdata={
             from_date:$('#ins_from_date').val(),
@@ -1979,7 +2120,7 @@ function insert_tbl_seizure_ab() {
         };
         $.ajax({
             type: "post",
-            url: "switch_layre/updat_tbl_seizure_all",
+            url: "switch_layre/update_tbl_seizure_all",
             data:{data:reqdata},
             // dataType : "json",
             success: function (res) {
@@ -1995,6 +2136,382 @@ function insert_tbl_seizure_ab() {
             }
         });
     }
+
+// table tbl_settlements add/update/delete
+    function insert_tbl_settlements() {
+        var hgeom=$('#hidngeom').val()
+        var reqdata={
+            objectid:$('#ins_objectid').val(),
+            id:$('#ins_id').val(),
+            name_hebrew:$('#ins_name_hebrew').val(),
+            name_english:$('#ins_name_english').val(),
+            et_id:$('#ins_et_id').val(),
+            shape_leng:$('#ins_shape_leng').val(),
+            shape_area:$('#ins_shape_area').val(),
+            gis_id:$('#ins_gis_id').val(),
+            type:$('#ins_type').val(),
+            area:$('#ins_area').val(),
+            name_arabic:$('#ins_name_arabic').val(),
+            geom:JSON.stringify(hgeom)
+        };
+        $.ajax({
+            type: "post",
+            url: "switch_layre/insert_tbl_settlements",
+            // dataType : "json",
+            data:{data:reqdata},
+            success: function (res) {
+                var r=JSON.parse(res)
+                if(r == true){
+                    toastr.success("inserted Successfully");
+                    $("#insert_modal").modal("hide");
+                    $('#hidngeom').val('');
+                }
+                else {
+                    toastr.error("can't insert Error");
+                }
+            }
+        });
+    }
+
+    function editgeom_tbl_settlements(id,updatedgeom) {
+        // console.log(id)
+        // console.log(updatedgeom)
+        var hiddengeom=JSON.stringify(updatedgeom)
+
+        $.ajax({
+            type: "get",
+            url: "switch_layre/editbtn_tbl_settlements/"+id,
+            // dataType : "json",
+            success: function (res) {
+                var r=JSON.parse(res)
+                // console.log(r);
+                // alert(r[0].entity)
+                    $('#objectid').val(r[0].objectid)
+                    $('#id').val(r[0].id)
+                    $('#name_hebrew').val(r[0].name_hebrew)
+                    $('#name_english').val(r[0].name_english)
+                    $('#et_id').val(r[0].et_id)
+                    $('#shape_leng').val(r[0].shape_leng)
+                    $('#shape_area').val(r[0].shape_area)
+                    $('#gis_id').val(r[0].gis_id)
+                    $('#type').val(r[0].type)
+                    $('#area').val(r[0].area)
+                    $('#name_arabic').val(r[0].name_arabic)
+                    $('#hidnfid').val(r[0].fid);
+                    $('#hidnupdatedgeom').val(hiddengeom);
+                    $("#edit_modal").modal("show");
+            }
+        });
+    }
+
+    function deletebtn_tbl_settlements(id){
+            $.ajax({
+                type : "GET",
+                url : 'switch_layre/deletebtn_tbl_settlements/'+id,
+                success:function(res){
+                    var r=JSON.parse(res)
+                    if(r == true){
+                        toastr.success("Deleted Successfully");
+                        location.reload();
+                    }
+                    else {
+                        toastr.error("can't Delete ");
+                    }
+                }
+            });
+        }
+    function editbtn_tbl_settlements(id) {
+
+            $.ajax({
+                type: "get",
+                url: "switch_layre/editbtn_tbl_settlements/"+id,
+                // dataType : "json",
+                success: function (res) {
+                    var r=JSON.parse(res)
+                    // console.log(r);
+                    // alert(r[0].entity)
+                        $('#objectid').val(r[0].objectid)
+                        $('#id').val(r[0].id)
+                        $('#name_hebrew').val(r[0].name_hebrew)
+                        $('#name_english').val(r[0].name_english)
+                        $('#et_id').val(r[0].et_id)
+                        $('#shape_leng').val(r[0].shape_leng)
+                        $('#shape_area').val(r[0].shape_area)
+                        $('#gis_id').val(r[0].gis_id)
+                        $('#type').val(r[0].type)
+                        $('#area').val(r[0].area)
+                        $('#name_arabic').val(r[0].name_arabic)
+                        $('#hidnfid').val(r[0].fid);
+                        $("#edit_modal").modal("show");
+                }
+            });
+    }
+
+    function update_tbl_settlements() {
+        var hidnupdatedgeom=$('#hidnupdatedgeom').val()
+        var reqdata={
+            objectid:$('#ins_objectid').val(),
+            id:$('#ins_id').val(),
+            name_hebrew:$('#ins_name_hebrew').val(),
+            name_english:$('#ins_name_english').val(),
+            et_id:$('#ins_et_id').val(),
+            shape_leng:$('#ins_shape_leng').val(),
+            shape_area:$('#ins_shape_area').val(),
+            gis_id:$('#ins_gis_id').val(),
+            type:$('#ins_type').val(),
+            area:$('#ins_area').val(),
+            name_arabic:$('#ins_name_arabic').val(),
+            fid:$('#hidnfid').val(),
+            upgeom:JSON.stringify(hidnupdatedgeom)
+        };
+        $.ajax({
+            type: "post",
+            url: "switch_layre/update_tbl_settlements",
+            data:{data:reqdata},
+            // dataType : "json",
+            success: function (res) {
+                var r=JSON.parse(res)
+                if(r == true){
+                    toastr.success("Updated Successfully");
+                    $("#edit_modal").modal("hide");
+                    $('#hidnupdatedgeom').val();
+                }
+                else {
+                    toastr.error("can't Update Error");
+                }
+            }
+        });
+    }
+
+
+
+// table tbl_area_b_violations add/update/delete
+function insert_tbl_area_b_violations() {
+        var hgeom=$('#hidngeom').val()
+        var reqdata={
+            fid_:$('#ins_fid_').val(),
+            picture_id:$('#ins_picture_id').val(),
+            categoryid:$('#ins_categoryid').val(),
+            cat_eng:$('#ins_cat_eng').val(),
+            desc_arb:$('#ins_desc_arb').val(),
+            desc_eng:$('#ins_desc_eng').val(),
+            desc_heb:$('#ins_desc_heb').val(),
+            set_heb:$('#ins_set_heb').val(),
+            set_arb:$('#ins_set_arb').val(),
+            set_eng:$('#ins_set_eng').val(),
+            pal_heb:$('#ins_pal_heb').val(),
+            pal_arb:$('#ins_pal_arb').val(),
+            pal_eng:$('#ins_pal_eng').val(),
+            art_heb:$('#ins_art_heb').val(),
+            art_eng:$('#ins_art_eng').val(),
+            art_arb:$('#ins_art_arb').val(),
+            titt_heb:$('#ins_titt_heb').val(),
+            titt_eng:$('#ins_titt_eng').val(),
+            titt_arb:$('#ins_titt_arb').val(),
+            artheb1:$('#ins_artheb1').val(),
+            arteng1:$('#ins_arteng1').val(),
+            artarb1:$('#ins_artarb1').val(),
+            tittheb1:$('#ins_tittheb1').val(),
+            titteng1:$('#ins_titteng1').val(),
+            tittarb1:$('#ins_tittarb1').val(),
+            geom:JSON.stringify(hgeom)
+        };
+        $.ajax({
+            type: "post",
+            url: "switch_layre/insert_tbl_area_b_violations",
+            // dataType : "json",
+            data:{data:reqdata},
+            success: function (res) {
+                var r=JSON.parse(res)
+                if(r == true){
+                    toastr.success("inserted Successfully");
+                    $("#insert_modal").modal("hide");
+                    $('#hidngeom').val('');
+                }
+                else {
+                    toastr.error("can't insert Error");
+                }
+            }
+        });
+    }
+
+    function editgeom_tbl_area_b_violations(id,updatedgeom) {
+        // console.log(id)
+        // console.log(updatedgeom)
+        var hiddengeom=JSON.stringify(updatedgeom)
+
+        $.ajax({
+            type: "get",
+            url: "switch_layre/editbtn_tbl_area_b_violations/"+id,
+            // dataType : "json",
+            success: function (res) {
+                var r=JSON.parse(res)
+                console.log(r);
+                // alert(r[0].entity)
+                    $('#fid_').val(r[0].fid_)
+                    $('#picture_id').val(r[0].picture_id)
+                    $('#categoryid').val(r[0].categoryid)
+                    $('#cat_eng').val(r[0].cat_eng)
+                    $('#desc_arb').val(r[0].desc_arb)
+                    $('#desc_eng').val(r[0].desc_eng)
+                    $('#desc_heb').val(r[0].desc_heb)
+                    $('#set_heb').val(r[0].set_heb)
+                    $('#set_arb').val(r[0].set_arb)
+                    $('#set_eng').val(r[0].set_eng)
+                    $('#pal_heb').val(r[0].pal_heb)
+                    $('#pal_arb').val(r[0].pal_arb);
+                    $('#pal_eng').val(r[0].pal_eng);
+                    $('#art_heb').val(r[0].art_heb);
+                    $('#art_eng').val(r[0].art_eng);
+                    $('#art_arb').val(r[0].art_arb);
+                    $('#titt_heb').val(r[0].titt_heb);
+                    $('#titt_eng').val(r[0].titt_eng);
+                    $('#titt_arb').val(r[0].titt_arb);
+                    $('#artheb1').val(r[0].artheb1);
+                    $('#arteng1').val(r[0].arteng1);
+                    $('#artarb1').val(r[0].artarb1);
+                    $('#tittheb1').val(r[0].tittheb1);
+                    $('#titteng1').val(r[0].titteng1);
+                    $('#tittarb1').val(r[0].tittarb1);
+                    $('#hidnfid').val(r[0].gid);
+                    $('#hidnupdatedgeom').val(hiddengeom);
+                    $("#edit_modal").modal("show");
+            }
+        });
+    }
+
+    function deletebtn_tbl_area_b_violations(id){
+            $.ajax({
+                type : "GET",
+                url : 'switch_layre/deletebtn_tbl_area_b_violations/'+id,
+                success:function(res){
+                    var r=JSON.parse(res)
+                    if(r == true){
+                        toastr.success("Deleted Successfully");
+                        location.reload();
+                    }
+                    else {
+                        toastr.error("can't Delete ");
+                    }
+                }
+            });
+        }
+    function editbtn_tbl_area_b_violations(id) {
+
+            $.ajax({
+                type: "get",
+                url: "switch_layre/editbtn_tbl_area_b_violations/"+id,
+                // dataType : "json",
+                success: function (res) {
+                    var r=JSON.parse(res)
+                    // console.log(r);
+                    // alert(r[0].entity)
+                    $('#fid_').val(r[0].fid_)
+                    $('#picture_id').val(r[0].picture_id)
+                    $('#categoryid').val(r[0].categoryid)
+                    $('#cat_eng').val(r[0].cat_eng)
+                    $('#desc_arb').val(r[0].desc_arb)
+                    $('#desc_eng').val(r[0].desc_eng)
+                    $('#desc_heb').val(r[0].desc_heb)
+                    $('#set_heb').val(r[0].set_heb)
+                    $('#set_arb').val(r[0].set_arb)
+                    $('#set_eng').val(r[0].set_eng)
+                    $('#pal_heb').val(r[0].pal_heb)
+                    $('#pal_arb').val(r[0].pal_arb);
+                    $('#pal_eng').val(r[0].pal_eng);
+                    $('#art_heb').val(r[0].art_heb);
+                    $('#art_eng').val(r[0].art_eng);
+                    $('#art_arb').val(r[0].art_arb);
+                    $('#titt_heb').val(r[0].titt_heb);
+                    $('#titt_eng').val(r[0].titt_eng);
+                    $('#titt_arb').val(r[0].titt_arb);
+                    $('#artheb1').val(r[0].artheb1);
+                    $('#arteng1').val(r[0].arteng1);
+                    $('#artarb1').val(r[0].artarb1);
+                    $('#tittheb1').val(r[0].tittheb1);
+                    $('#titteng1').val(r[0].titteng1);
+                    $('#tittarb1').val(r[0].tittarb1);
+                    $('#hidnfid').val(r[0].gid);
+                        $("#edit_modal").modal("show");
+                }
+            });
+    }
+
+    function update_tbl_area_b_violations() {
+        var hidnupdatedgeom=$('#hidnupdatedgeom').val()
+        var reqdata={
+            fid_:$('#fid_').val(),
+            picture_id:$('#picture_id').val(),
+            categoryid:$('#categoryid').val(),
+            cat_eng:$('#cat_eng').val(),
+            desc_arb:$('#desc_arb').val(),
+            desc_eng:$('#desc_eng').val(),
+            desc_heb:$('#desc_heb').val(),
+            set_heb:$('#set_heb').val(),
+            set_arb:$('#set_arb').val(),
+            set_eng:$('#set_eng').val(),
+            pal_heb:$('#pal_heb').val(),
+            pal_arb:$('#pal_arb').val(),
+            pal_eng:$('#pal_eng').val(),
+            art_heb:$('#art_heb').val(),
+            art_eng:$('#art_eng').val(),
+            art_arb:$('#art_arb').val(),
+            titt_heb:$('#titt_heb').val(),
+            titt_eng:$('#titt_eng').val(),
+            titt_arb:$('#titt_arb').val(),
+            artheb1:$('#artheb1').val(),
+            arteng1:$('#arteng1').val(),
+            artarb1:$('#artarb1').val(),
+            tittheb1:$('#tittheb1').val(),
+            titteng1:$('#titteng1').val(),
+            tittarb1:$('#tittarb1').val(),
+            gid:$('#hidnfid').val(),
+            upgeom:JSON.stringify(hidnupdatedgeom)
+        };
+        $.ajax({
+            type: "post",
+            url: "switch_layre/update_tbl_area_b_violations",
+            data:{data:reqdata},
+            // dataType : "json",
+            success: function (res) {
+                var r=JSON.parse(res)
+                if(r == true){
+                    toastr.success("Updated Successfully");
+                    $("#edit_modal").modal("hide");
+                    $('#hidnupdatedgeom').val();
+                    location.reload();
+                }
+                else {
+                    toastr.error("can't Update Error");
+                }
+            }
+        });
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         function savedata() {
                 var reqdata={

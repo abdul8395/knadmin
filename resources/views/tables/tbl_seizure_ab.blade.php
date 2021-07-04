@@ -52,7 +52,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class=" btn btn-warning" onclick="updat_tbl_seizure_ab()" id="updatedata" style="color:white;">Update</button>
+                <button type="button" class=" btn btn-warning" onclick="update_tbl_seizure_ab()" id="updatedata" style="color:white;">Update</button>
                 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
         </div>
@@ -94,7 +94,8 @@
                 <td>
                     <input type="hidden" id="hidData" value="{{$geojson}}" />
                     <input type="button" class="btn btn-warning"  value="Edit" onclick="editbtn_tbl_seizure_ab({{$p->id}})" />    
-                    <input type="button" class="btn btn-danger" style="margin-top: 2px !important;" value="Delete" onclick="deletebtn_tbl_seizure_ab({{$p->id}})" />    
+                    <input type="button" class="btn btn-danger" style="margin-top: 2px !important;" value="Delete" onclick="deletebtn_tbl_seizure_ab({{$p->id}})" /> 
+                    <input type="button" class="btn btn-success" style="margin-top: 2px !important;" value="Zoom" onclick="zoombtn_tbl_seizure_ab({{$p->id}})" />    
                 </td>
             </tr>
     @endforeach

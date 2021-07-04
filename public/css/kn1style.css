@@ -81,12 +81,12 @@ a:focus {
 }
 
 #sidebar .sidebar-header {
-    padding: 20px;
+    padding: 10px;
     background: #6d7fcc;
 }
 
 #sidebar ul.components {
-    padding: 20px 0;
+    /* padding: 20px 0; */
     border-bottom: 1px solid #47748b;
 }
 
@@ -96,8 +96,9 @@ a:focus {
 }
 
 #sidebar ul li a {
+    margin-left: 10px;
     padding: 5px;
-    font-size: 1.1em;
+    font-size: 0.99em;
     display: block;
 }
 
@@ -249,3 +250,13 @@ a.article:hover {
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
   }
+
+
+th,
+td
+{
+	padding: 8px !important;
+    font-size: 10px !important;
+}
+
+

@@ -4,23 +4,22 @@
             <div class="sidebar-header">
             
                 <h3 style="text-align:center;">KN 1 Admin</h3>
-                        @guest
-                            @if (Route::has('login'))
-                            <ul id="login_li">
-                                <a href="{{ route('login') }}">Login</a>
-                            </ul>   
-                            @endif
-
-                            @else
-                            <ul id="login_li" style="margin-left:15%;">
+                        
+                            <ul id="login_li" style="margin-right:1%;">
+                            <!-- <i class="fas fa-plus" style="font-size:18px; color:#ffc107;"></i>
+                                <a  href="{{ route('register') }}" style="text-align:left;  font-size:18px; color:#ffc107">Register</a>&nbsp&nbsp -->
                             <i class="fas fa-sign-out-alt" style="font-size:18px; color:#ffc107;"></i>
                                 <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();" style="text-align:center;  font-size:18px; color:#ffc107">Logout</a>
+                                document.getElementById('logout-form').submit();" style="text-align:right;  font-size:18px; color:#ffc107">Logout</a>
+                                
                             </ul>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                        @endguest
+                                @csrf
+                            </form>
+                        
+
+                            
+                        </ul>
             </div>
 
          
@@ -100,6 +99,12 @@
 
                 <li class="{{ Request::is('switch_layre/Seizure_All') ? 'active' : '' }}">
                     <a href="/switch_layre/{{'Seizure_All'}}">Seizure All</a>
+                </li>
+                <li class="{{ Request::is('switch_layre/Settlements') ? 'active' : '' }}">
+                    <a href="/switch_layre/{{'Settlements'}}">Settlements</a>
+                </li>
+                <li class="{{ Request::is('switch_layre/area_b_violations') ? 'active' : '' }}">
+                    <a href="/switch_layre/{{'area_b_violations'}}">Area_b_violations</a>
                 </li>
                
             </ul>
