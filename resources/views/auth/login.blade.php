@@ -37,14 +37,28 @@
   margin-left: 20%; ">
   <!-- Tab 1 -->
   <input type="radio" name="tabset" id="tab1" aria-controls="marzen" checked>
-  <label for="tab1" style="color:#fff">Login</label>
+    @guest
+        @if (Route::has('login'))
+        <label for="tab1" style="color:#fff">Login</label>
+        @endif
+
+        @else
+        <a  href="{{ url('/switch_layre/area_b_demolitions') }}" type="button" class="btn btn-warning"onclick="event.preventDefault();
+            document.getElementById('logout-form').submit();">Logout</a>
+        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+            @csrf
+        </form>
+
+
+    @endguest
+ 
   <!-- Tab 2 -->
   <!-- <input type="radio" name="tabset" id="tab2" aria-controls="rauchbier">
   <label for="tab2" style="color:#fff">Login As KN2</label> -->
     <!-- Tab 3 -->
-    <input type="radio" name="tabset" id="tab3" aria-controls="t3">
+    <!-- <input type="radio" name="tabset" id="tab3" aria-controls="t3">
 
-    <label for="tab3" style="color:#fff">Register Admin</label>
+    <label for="tab3" style="color:#fff">Register Admin</label> -->
    <!-- Tab 4 -->
    
   
@@ -116,12 +130,7 @@
 
      </section>
     
-    <section id="t3" class="tab-panel">
-    <h1 style="text-align:center; color:#9db034">Welcome To KN Admin</h1>
-    <p style="text-align:center; color:#fff">Register A New <b style="color:#9db034">Admin</b></p>
-        @include('auth.register')
-    </section>
-    
+
   </div>
   
 </div>

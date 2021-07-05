@@ -27,6 +27,9 @@ Route::get('/', function () {
 Auth::routes();
 // ------------area_b_demolation    rooutes----------------
 Route::get('/switch_layre/{name}' , [kn1::class,'switch_layre'])->name('switch_layre')->middleware('auth');
+
+Route::match(['get','post'], '/switch_layre/switch_layre/registerpage', [kn1::class, 'registerpage'])->name('registerpage')->middleware('auth');
+Route::match(['get','post'], '/switch_layre/switch_layre/storeadmin', [kn1::class, 'storeadmin'])->name('storeadmin')->middleware('auth');
 // ------------kn1 rooutes----------------
 Route::post('/switch_layre/switch_layre/insert_area_b_demolation' , [kn1::class,'insert_area_b_demolation']);
 Route::get('/switch_layre/switch_layre/editbtn_tbl_area_b_demolitions/{id}' , [kn1::class,'editbtn_tbl_area_b_demolitions'])->middleware('auth');
@@ -122,6 +125,7 @@ Route::get('/switch_layre/switch_layre/editbtn_tbl_area_b_violations/{id}' , [kn
 Route::post('/switch_layre/switch_layre/update_tbl_area_b_violations' , [kn1::class,'update_tbl_area_b_violations'])->middleware('auth');
 Route::get('/switch_layre/switch_layre/deletebtn_tbl_area_b_violations/{id}' , [kn1::class,'deletebtn_tbl_area_b_violations'])->middleware('auth');
 // Route::get('/switch_layre/switch_layre/pageno_tbl_area_b_violations/{id}' , [kn1::class,'pageno_tbl_area_b_violations'])->middleware('auth');
+
 
 
 // // ------------Upload Shape File rooute----------------

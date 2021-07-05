@@ -6,8 +6,12 @@
                 <h3 style="text-align:center;">KN 1 Admin</h3>
                         
                             <ul id="login_li" style="margin-right:1%;">
-                            <!-- <i class="fas fa-plus" style="font-size:18px; color:#ffc107;"></i>
-                                <a  href="{{ route('register') }}" style="text-align:left;  font-size:18px; color:#ffc107">Register</a>&nbsp&nbsp -->
+                            
+                                @if(Auth::user()->name=='kn1')
+                                <i class="fas fa-plus" style="font-size:18px; color:#ffc107;"></i>
+                                <a  href="{{ url('/switch_layre/switch_layre/registerpage') }}" style="text-align:left;  font-size:18px; color:#ffc107">Register</a>
+                                @endif
+                                &nbsp&nbsp
                             <i class="fas fa-sign-out-alt" style="font-size:18px; color:#ffc107;"></i>
                                 <a href="{{ route('logout') }}" onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();" style="text-align:right;  font-size:18px; color:#ffc107">Logout</a>

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 use Auth;
 use DB;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 
 use Shapefile\Shapefile;
@@ -22,6 +24,35 @@ class kn1 extends Controller
     {
         $this->middleware('auth');
     }
+
+    public  function registerpage(){
+        return view('register_admin');
+    } 
+
+    public  function storeadmin(Request $request){
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 
+            'min:8',            // must be at least 8 characters in length
+            'regex:/[a-z]/',      // must contain at least one lowercase letter
+            'regex:/[A-Z]/',      // must contain at least one uppercase letter
+            'regex:/[0-9]/',  
+            'confirmed'],
+        ]);
+        // return $request->all();
+        
+
+        $utb = new User();
+        $utb->name = $request->name;
+        $utb->email = $request->email;
+        $utb->password =Hash::make($request->password);
+        $utb->role = 1;
+        $utb->save();
+        return back()->with('success', 'Admin has been Created succesfuly.');
+        // return redirect()->route('/');
+    } 
+
 
     public function switch_layre($name)
     {
