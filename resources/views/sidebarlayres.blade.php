@@ -7,7 +7,7 @@
                         
                             <ul id="login_li" style="margin-right:1%;">
                             
-                                @if(Auth::user()->name=='kn1')
+                                @if(Auth::user()->name=='simcha_levental')
                                 <i class="fas fa-plus" style="font-size:18px; color:#ffc107;"></i>
                                 <a  href="{{ url('/switch_layre/switch_layre/registerpage') }}" style="text-align:left;  font-size:18px; color:#ffc107">Register</a>
                                 @endif
