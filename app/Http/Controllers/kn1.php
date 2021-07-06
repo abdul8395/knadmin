@@ -764,7 +764,7 @@ class kn1 extends Controller
 
         $iq="INSERT INTO public.tbl_area_a_area_b_naturereserve(
                         id, objectid, class, shape_leng, shape_area, geom)
-            VALUES ($id, $objectid, '$class', $shape_leng, $shape_area, ST_Multi(ST_GeomFromGeoJSON('$geom')));";
+            VALUES ($id, NULLIF('$objectid','')::integer, '$class', NULLIF('$shape_leng','')::integer, NULLIF('$shape_area','')::integer, ST_Multi(ST_GeomFromGeoJSON('$geom')));";
         // echo $iq;
         // exit();
         $q = DB::insert($iq);
@@ -798,7 +798,7 @@ class kn1 extends Controller
 
         if(empty($geom)){
             $q="UPDATE public.tbl_area_a_area_b_naturereserve
-            SET objectid=$objectid, class='$class', shape_leng=$shape_leng, shape_area=$shape_area
+            SET objectid=NULLIF('$objectid','')::integer, class='$class', shape_leng=NULLIF('$shape_leng','')::integer, shape_area=NULLIF('$shape_area','')::integer
             WHERE id=$id;";
             DB::update($q);
             // echo $q;
@@ -806,7 +806,7 @@ class kn1 extends Controller
             return json_encode(true);
         }else{
             $q="UPDATE public.tbl_area_a_area_b_naturereserve
-            SET objectid=$objectid, class='$class', shape_leng=$shape_leng, shape_area=$shape_area, geom=ST_Multi(ST_GeomFromGeoJSON('$geom'))
+            SET objectid=NULLIF('$objectid','')::integer, class='$class', shape_leng=NULLIF('$shape_leng','')::integer, shape_area=NULLIF('$shape_area','')::integer, geom=ST_Multi(ST_GeomFromGeoJSON('$geom'))
             WHERE id=$id;";
             DB::update($q);
             // echo $q;
@@ -893,7 +893,7 @@ class kn1 extends Controller
 
         $iq="INSERT INTO public.tbl_area_b_poly(
                         fid, areaupdt, area, shape_leng, shape_area, geom)
-            VALUES ($fid, $areaupdt, $area, $shape_leng, $shape_area, ST_Multi(ST_GeomFromGeoJSON('$geom')));";
+            VALUES ($fid, NULLIF('$areaupdt','')::integer, NULLIF('$area','')::integer, NULLIF('$shape_leng','')::integer, NULLIF('$shape_area','')::integer, ST_Multi(ST_GeomFromGeoJSON('$geom')));";
         // echo $iq;
         // exit();
         $q = DB::insert($iq);
@@ -945,7 +945,7 @@ class kn1 extends Controller
 
         if(empty($geom)){
             $q="UPDATE public.tbl_area_b_poly
-            SET areaupdt=$areaupdt, area=$area, shape_leng=$shape_leng, shape_area=$shape_area
+            SET areaupdt=NULLIF('$areaupdt','')::integer, area=NULLIF('$area','')::integer, shape_leng=NULLIF('$shape_area','')::integer, shape_area=NULLIF('$shape_area','')::integer
             WHERE fid=$fid;";
             DB::update($q);
             // echo $q;
@@ -953,7 +953,7 @@ class kn1 extends Controller
             return json_encode(true);
         }else{
             $q="UPDATE public.tbl_area_b_poly
-            SET areaupdt=$areaupdt, area=$area, shape_leng=$shape_leng, shape_area=$shape_area, geom=ST_Multi(ST_GeomFromGeoJSON('$geom'))
+            SET areaupdt=NULLIF('$areaupdt','')::integer, area=NULLIF('$area','')::integer, shape_leng=NULLIF('$shape_area','')::integer, shape_area=NULLIF('$shape_area','')::integer, geom=ST_Multi(ST_GeomFromGeoJSON('$geom'))
             WHERE fid=$fid;";
             DB::update($q);
             // echo $q;
@@ -979,7 +979,7 @@ class kn1 extends Controller
 
         $iq="INSERT INTO public.tbl_area_b_training(
                         fid, id, geom)
-            VALUES ($fid, $id, ST_GeomFromGeoJSON('$geom'));";
+            VALUES ($fid, NULLIF('$id','')::integer, ST_GeomFromGeoJSON('$geom'));";
         // echo $iq;
         // exit();
         $q = DB::insert($iq);
@@ -1008,7 +1008,7 @@ class kn1 extends Controller
 
         if(empty($geom)){
             $q="UPDATE public.tbl_area_b_training
-            SET id=$id
+            SET id=NULLIF('$id','')::integer
             WHERE fid=$fid;";
             DB::update($q);
             // echo $q;
@@ -1016,7 +1016,7 @@ class kn1 extends Controller
             return json_encode(true);
         }else{
             $q="UPDATE public.tbl_area_b_training
-            SET id=$id, geom=ST_GeomFromGeoJSON('$geom')
+            SET id=NULLIF('$id','')::integer, geom=ST_GeomFromGeoJSON('$geom')
             WHERE fid=$fid;";
             DB::update($q);
             // echo $q;
@@ -1042,7 +1042,7 @@ public  function insert_tbl_demolition_orders(Request $request){
 
     $iq="INSERT INTO public.tbl_demolition_orders(
                     fid, objectid, id, geom)
-        VALUES ($fid, $objectid, $id, ST_GeomFromGeoJSON('$geom'));";
+        VALUES ($fid, NULLIF('$objectid','')::integer, NULLIF('$id','')::integer, ST_GeomFromGeoJSON('$geom'));";
     // echo $iq;
     // exit();
     $q = DB::insert($iq);
@@ -1073,7 +1073,7 @@ public  function update_tbl_demolition_orders(Request $request){
 
     if(empty($geom)){
         $q="UPDATE public.tbl_demolition_orders
-        SET objectid=$objectid, id=$id
+        SET objectid=NULLIF('$objectid','')::integer, id=NULLIF('$id','')::integer
         WHERE fid=$fid;";
         DB::update($q);
         // echo $q;
@@ -1081,7 +1081,7 @@ public  function update_tbl_demolition_orders(Request $request){
         return json_encode(true);
     }else{
         $q="UPDATE public.tbl_demolition_orders
-        SET objectid=$objectid, id=$id, geom=ST_GeomFromGeoJSON('$geom')
+        SET objectid=NULLIF('$objectid','')::integer, id=NULLIF('$id','')::integer, geom=ST_GeomFromGeoJSON('$geom')
         WHERE fid=$fid;";
         DB::update($q);
         // echo $q;
@@ -1121,7 +1121,7 @@ public  function insert_tbl_expropriation_orders(Request $request){
     $iq="INSERT INTO public.tbl_expropriation_orders(
                     id, reason, title, sign_date, district, 
     remark, created_us, created_da, last_edite, last_edi_1, shape_leng, shape_area, d_reason, d_district, geom)
-        VALUES ($id, $reason, '$title', '$sign_date', $district, '$remark', '$created_us', '$created_da', '$last_edite', '$last_edi_1', $shape_leng, $shape_area, '$d_reason', '$d_district', ST_Multi(ST_GeomFromGeoJSON('$geom')));";
+        VALUES ($id, NULLIF('$reason','')::integer, '$title', '$sign_date', NULLIF('$district','')::integer, '$remark', '$created_us', '$created_da', '$last_edite', '$last_edi_1', NULLIF('$shape_leng','')::integer, NULLIF('$shape_area','')::integer, NULLIF('$d_reason','')::integer, NULLIF('$d_district','')::integer, ST_Multi(ST_GeomFromGeoJSON('$geom')));";
     // echo $iq;
     // exit();
     $q = DB::insert($iq);
@@ -1163,8 +1163,8 @@ public  function update_tbl_expropriation_orders(Request $request){
 
     if(empty($geom)){
         $q="UPDATE public.tbl_expropriation_orders
-        SET reason=$reason, title='$title', sign_date='$sign_date', district=$district, remark='$remark', created_us='$created_us', created_da='$created_da', last_edite='$last_edite', last_edi_1='$last_edi_1', 
-            shape_leng=$shape_leng, shape_area=$shape_area, d_reason='$d_reason', d_district='$d_district'
+        SET reason=NULLIF('$reason','')::integer, title='$title', sign_date='$sign_date', district=NULLIF('$district','')::integer, remark='$remark', created_us='$created_us', created_da='$created_da', last_edite='$last_edite', last_edi_1='$last_edi_1', 
+            shape_leng=NULLIF('$shape_leng','')::integer, shape_area=NULLIF('$shape_area','')::integer, d_reason=NULLIF('$d_reason','')::integer, d_district=NULLIF('$d_district','')::integer
         WHERE id=$id;";
         DB::update($q);
         // echo $q;
@@ -1172,8 +1172,8 @@ public  function update_tbl_expropriation_orders(Request $request){
         return json_encode(true);
     }else{
         $q="UPDATE public.tbl_expropriation_orders
-        SET reason=$reason, title='$title', sign_date='$sign_date', district=$district, remark='$remark', created_us='$created_us', created_da='$created_da', last_edite='$last_edite', last_edi_1='$last_edi_1', 
-            shape_leng=$shape_leng, shape_area=$shape_area, d_reason='$d_reason', d_district='$d_district', geom=ST_Multi(ST_GeomFromGeoJSON('$geom'))
+        SET reason=NULLIF('$reason','')::integer, title='$title', sign_date='$sign_date', district=NULLIF('$district','')::integer, remark='$remark', created_us='$created_us', created_da='$created_da', last_edite='$last_edite', last_edi_1='$last_edi_1', 
+            shape_leng=NULLIF('$shape_leng','')::integer, shape_area=NULLIF('$shape_area','')::integer, d_reason=NULLIF('$d_reason','')::integer, d_district=NULLIF('$d_district','')::integer, geom=ST_Multi(ST_GeomFromGeoJSON('$geom'))
         WHERE id=$id;";
         DB::update($q);
         // echo $q;
@@ -1203,7 +1203,7 @@ public  function update_tbl_expropriation_orders(Request $request){
 
         $iq="INSERT INTO public.tbl_expropriation_orders_ab(
                         id, objectid, shape_leng, shape_area, geom)
-            VALUES ($id, $objectid, $shape_leng, $shape_area, ST_Multi(ST_GeomFromGeoJSON('$geom')));";
+            VALUES ($id, NULLIF('$objectid','')::integer, NULLIF('$shape_leng','')::integer, NULLIF('$shape_area','')::integer, ST_Multi(ST_GeomFromGeoJSON('$geom')));";
         // echo $iq;
         // exit();
         $q = DB::insert($iq);
@@ -1235,7 +1235,7 @@ public  function update_tbl_expropriation_orders(Request $request){
 
         if(empty($geom)){
             $q="UPDATE public.tbl_expropriation_orders_ab
-            SET objectid=$objectid, shape_leng=$shape_leng, shape_area=$shape_area
+            SET objectid=NULLIF('$objectid','')::integer, shape_leng=NULLIF('$shape_area','')::integer, shape_area=NULLIF('$shape_area','')::integer
             WHERE id=$id;";
             DB::update($q);
             // echo $q;
@@ -1333,7 +1333,7 @@ public  function update_tbl_expropriation_orders(Request $request){
 
         $iq="INSERT INTO public.tbl_security_orders(
                         fid, id, geom)
-            VALUES ($fid, $id, ST_Multi(ST_GeomFromGeoJSON('$geom')));";
+            VALUES ($fid, NULLIF('$id','')::integer, ST_Multi(ST_GeomFromGeoJSON('$geom')));";
         // echo $iq;
         // exit();
         $q = DB::insert($iq);
@@ -1363,7 +1363,7 @@ public  function update_tbl_expropriation_orders(Request $request){
 
         if(empty($geom)){
             $q="UPDATE public.tbl_security_orders
-            SET id=$id
+            SET id=NULLIF('$id','')::integer
             WHERE fid=$fid;";
             DB::update($q);
             // echo $q;
@@ -1371,7 +1371,7 @@ public  function update_tbl_expropriation_orders(Request $request){
             return json_encode(true);
         }else{
             $q="UPDATE public.tbl_security_orders
-            SET id=$id, geom=ST_GeomFromGeoJSON('$geom')
+            SET id=NULLIF('$id','')::integer, geom=ST_GeomFromGeoJSON('$geom')
             WHERE fid=$fid;";
             DB::update($q);
             // echo $q;
@@ -1465,7 +1465,7 @@ public  function insert_tbl_seizure_all(Request $request){
 
     $iq="INSERT INTO public.tbl_seizure_all(
                     fid, from_date, to_date, ar_num, area, geom)
-        VALUES ($fid, '$from_date', '$to_date', '$ar_num', $area, ST_Multi(ST_GeomFromGeoJSON('$geom')));";
+        VALUES ($fid, '$from_date', '$to_date', '$ar_num', NULLIF('$area','')::integer, ST_Multi(ST_GeomFromGeoJSON('$geom')));";
     // echo $iq;
     // exit();
     $q = DB::insert($iq);
@@ -1498,7 +1498,7 @@ public  function update_tbl_seizure_all(Request $request){
 
     if(empty($geom)){
         $q="UPDATE public.tbl_seizure_all
-        SET from_date='$from_date', to_date='$to_date', ar_num='$ar_num', area=$area
+        SET from_date='$from_date', to_date='$to_date', ar_num='$ar_num', area=NULLIF('$area','')::integer
         WHERE fid=$fid;";
         DB::update($q);
         // echo $q;
@@ -1506,7 +1506,7 @@ public  function update_tbl_seizure_all(Request $request){
         return json_encode(true);
     }else{
         $q="UPDATE public.tbl_seizure_all
-        SET from_date='$from_date', to_date='$to_date', ar_num='$ar_num', area=$area, geom=ST_Multi(ST_GeomFromGeoJSON('$geom'))
+        SET from_date='$from_date', to_date='$to_date', ar_num='$ar_num', area=NULLIF('$area','')::integer, geom=ST_Multi(ST_GeomFromGeoJSON('$geom'))
         WHERE fid=$fid;";
         DB::update($q);
         // echo $q;
@@ -1562,7 +1562,7 @@ public  function pageno_tbl_seizure_all($pageno){
 
         $iq="INSERT INTO public.tbl_settlements(
                         fid, objectid, id, name_hebrew, name_english, et_id, shape_leng, shape_area, gis_id, type, area, name_arabic, geom)
-            VALUES ($fid, $objectid, $id, '$name_hebrew', '$name_english', $et_id, $shape_leng, $shape_area, $gis_id, '$type', $area, '$name_arabic', ST_Multi(ST_GeomFromGeoJSON('$geom')));";
+            VALUES ($fid, NULLIF('$objectid','')::integer, NULLIF('$id','')::integer, '$name_hebrew', '$name_english', NULLIF('$et_id','')::integer, NULLIF('$shape_leng','')::integer, NULLIF('$shape_area','')::integer, NULLIF('$gis_id','')::integer, '$type', NULLIF('$area','')::integer, '$name_arabic', ST_Multi(ST_GeomFromGeoJSON('$geom')));";
         // echo $iq;
         // exit();
         $q = DB::insert($iq);
@@ -1601,9 +1601,10 @@ public  function pageno_tbl_seizure_all($pageno){
         $name_arabic=($request->data['name_arabic']);
         $fid=($request->data['fid']);
 
+
         if(empty($geom)){
             $q="UPDATE public.tbl_settlements
-            SET objectid=$objectid, id=$id, name_hebrew='$name_hebrew', name_english='$name_english', et_id=$et_id, shape_leng=$shape_leng, shape_area=$shape_area, gis_id=$gis_id, type='$type', area=$area, name_arabic='$name_arabic'
+            SET objectid=NULLIF('$objectid','')::integer, id=NULLIF('$id','')::integer, name_hebrew='$name_hebrew', name_english='$name_english', et_id=NULLIF('$et_id','')::integer, shape_leng=NULLIF('$shape_leng','')::integer, shape_area=NULLIF('$shape_area','')::integer, gis_id=NULLIF('$gis_id','')::integer, type='$type', area=NULLIF('$area','')::integer, name_arabic='$name_arabic'
             WHERE fid=$fid;";
             DB::update($q);
             // echo $q;
@@ -1611,7 +1612,7 @@ public  function pageno_tbl_seizure_all($pageno){
             return json_encode(true);
         }else{
             $q="UPDATE public.tbl_settlements
-            SET objectid=$objectid, id=$id, name_hebrew='$name_hebrew', name_english='$name_english', et_id=$et_id, shape_leng=$shape_leng, shape_area=$shape_area, gis_id=$gis_id, type='$type', area=$area, name_arabic='$name_arabic', geom=ST_Multi(ST_GeomFromGeoJSON('$geom'))
+             SET objectid=NULLIF('$objectid','')::integer, id=NULLIF('$id','')::integer, name_hebrew='$name_hebrew', name_english='$name_english', et_id=NULLIF('$et_id','')::integer, shape_leng=NULLIF('$shape_leng','')::integer, shape_area=NULLIF('$shape_area','')::integer, gis_id=NULLIF('$gis_id','')::integer, type='$type', area=NULLIF('$area','')::integer, name_arabic='$name_arabic', geom=ST_Multi(ST_GeomFromGeoJSON('$geom'))
             WHERE fid=$fid;";
             DB::update($q);
             // echo $q;
@@ -1696,6 +1697,9 @@ public  function editbtn_tbl_area_b_violations($gid){
     return json_encode($q);
 }
 
+
+    
+
 public  function update_tbl_area_b_violations(Request $request){
     // return $request->all();
     // exit();
@@ -1705,40 +1709,51 @@ public  function update_tbl_area_b_violations(Request $request){
      $x=$geom1['coordinates'][0];
      $y=$geom1['coordinates'][1];
 
+        // Function to remove the spacial 
+        function RemoveSpecialChar($str) {
+            // Using str_replace() function 
+            // to replace the word 
+            $res = str_replace( array( '\'', '"',
+            ',' , ';', '<', '>' ), ' ', $str);
+            // Returning the result 
+            return $res;
+        }
+
+
     $fid_=$request->data['fid_'];
-    $picture_id=($request->data['picture_id']);
-    $categoryid=($request->data['categoryid']);
-    $cat_eng=($request->data['cat_eng']);
-    $desc_arb=($request->data['desc_arb']);
-    $desc_eng=($request->data['desc_eng']);
-    $desc_heb=($request->data['desc_heb']);
-    $set_heb=($request->data['set_heb']);
-    $set_arb=($request->data['set_arb']);
-    $set_eng=($request->data['set_eng']);
-    $pal_heb=($request->data['pal_heb']);
-    $pal_arb=($request->data['pal_arb']);
-    $pal_eng=($request->data['pal_eng']);
-    $art_heb=($request->data['art_heb']);
-    $art_eng=($request->data['art_eng']);
-    $art_arb=($request->data['art_arb']);
-    $titt_heb=($request->data['titt_heb']);
-    $titt_eng=($request->data['titt_eng']);
-    $titt_arb=($request->data['titt_arb']);
-    $artheb1=($request->data['artheb1']);
-    $arteng1=($request->data['arteng1']);
-    $artarb1=($request->data['artarb1']);
-    $tittheb1=($request->data['tittheb1']);
-    $titteng1=($request->data['titteng1']);
-    $tittarb1=($request->data['tittarb1']);
-    $gid=($request->data['gid']);
+    $picture_id=$request->data['picture_id'];
+    $categoryid=$request->data['categoryid'];
+    $cat_eng= RemoveSpecialChar($request->data['cat_eng']);
+    $desc_arb=RemoveSpecialChar($request->data['desc_arb']);
+    $desc_eng=RemoveSpecialChar($request->data['desc_eng']);
+    $desc_heb=RemoveSpecialChar($request->data['desc_heb']);
+    $set_heb=RemoveSpecialChar($request->data['set_heb']);
+    $set_arb=RemoveSpecialChar($request->data['set_arb']);
+    $set_eng=RemoveSpecialChar($request->data['set_eng']);
+    $pal_heb=RemoveSpecialChar($request->data['pal_heb']);
+    $pal_arb=RemoveSpecialChar($request->data['pal_arb']);
+    $pal_eng=RemoveSpecialChar($request->data['pal_eng']);
+    $art_heb=RemoveSpecialChar($request->data['art_heb']);
+    $art_eng=RemoveSpecialChar($request->data['art_eng']);
+    $art_arb=RemoveSpecialChar($request->data['art_arb']);
+    $titt_heb=RemoveSpecialChar($request->data['titt_heb']);
+    $titt_eng=RemoveSpecialChar($request->data['titt_eng']);
+    $titt_arb=RemoveSpecialChar($request->data['titt_arb']);
+    $artheb1=RemoveSpecialChar($request->data['artheb1']);
+    $arteng1=RemoveSpecialChar($request->data['arteng1']);
+    $artarb1=RemoveSpecialChar($request->data['artarb1']);
+    $tittheb1=RemoveSpecialChar($request->data['tittheb1']);
+    $titteng1=RemoveSpecialChar($request->data['titteng1']);
+    $tittarb1=RemoveSpecialChar($request->data['tittarb1']);
+    $gid=$request->data['gid'];
 
     if(empty($geom)){
         $q="UPDATE public.tbl_area_b_violations
-        SET fid_=$fid_, picture_id=$picture_id, categoryid=$categoryid, cat_eng='$cat_eng', desc_arb='$desc_arb', desc_eng='$desc_eng', desc_heb='$desc_heb', set_heb='$set_heb', set_arb='$set_arb', set_eng='$set_eng', pal_heb='$pal_heb', pal_arb='$pal_arb', pal_eng='.".$pal_eng.".', art_heb='$art_heb', art_eng='$art_eng', art_arb='$art_arb', titt_heb='$titt_heb', titt_eng='$titt_eng', titt_arb='$titt_arb', artheb1='$artheb1', arteng1='$arteng1', artarb1='$artarb1', tittheb1='$tittheb1', titteng1='$titteng1', tittarb1='$tittarb1'
+        SET fid_=$fid_, picture_id=$picture_id, categoryid=$categoryid, cat_eng='$cat_eng', desc_arb='$desc_arb', desc_eng='$desc_eng', desc_heb='$desc_heb', set_heb='$set_heb', set_arb='$set_arb', set_eng='$set_eng', pal_heb='$pal_heb', pal_arb='$pal_arb', pal_eng='$pal_eng', art_heb='$art_heb', art_eng='$art_eng', art_arb='$art_arb', titt_heb='$titt_heb', titt_eng='$titt_eng', titt_arb='$titt_arb', artheb1='$artheb1', arteng1='$arteng1', artarb1='$artarb1', tittheb1='$tittheb1', titteng1='$titteng1', tittarb1='$tittarb1'
         WHERE gid=$gid;";
-        // DB::update($q);
-        echo $q;
-        exit();
+        DB::update($q);
+        // echo $q;
+        // exit();
         return json_encode(true);
     }else{
         $q="UPDATE public.tbl_area_b_violations

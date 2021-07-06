@@ -124,9 +124,12 @@
 <script src="{{URL::asset('shapefilelib/shp.js')}}"></script>
 <script src="{{URL::asset('shapefilelib/leaflet.shpfile.js')}}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
+
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
       <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
       <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+      
 
 
 
@@ -358,9 +361,13 @@
         "targets": 'no-sort',
         "bSort": false,
         } );
+
+        
+        
     });
 
-    
+   
+
     $('#tbl').on( 'page.dt', function () {
     var info = dtable.page.info();
         if(tbl_name=='tbl_area_b_poly'){
@@ -2361,6 +2368,7 @@ function insert_tbl_area_b_violations() {
                     $('#pal_heb').val(r[0].pal_heb)
                     $('#pal_arb').val(r[0].pal_arb);
                     $('#pal_eng').val(r[0].pal_eng);
+                    // encodeURIComponent($('#pal_eng').val(r[0].pal_eng).replace(/\'/g, "''"));
                     $('#art_heb').val(r[0].art_heb);
                     $('#art_eng').val(r[0].art_eng);
                     $('#art_arb').val(r[0].art_arb);
@@ -2419,6 +2427,7 @@ function insert_tbl_area_b_violations() {
                     $('#pal_heb').val(r[0].pal_heb)
                     $('#pal_arb').val(r[0].pal_arb);
                     $('#pal_eng').val(r[0].pal_eng);
+                    // encodeURIComponent($('#pal_eng').val(r[0].pal_eng).replace(/\'/g, "''"));
                     $('#art_heb').val(r[0].art_heb);
                     $('#art_eng').val(r[0].art_eng);
                     $('#art_arb').val(r[0].art_arb);
@@ -2451,8 +2460,8 @@ function insert_tbl_area_b_violations() {
             set_arb:$('#set_arb').val(),
             set_eng:$('#set_eng').val(),
             pal_heb:$('#pal_heb').val(),
-            pal_arb:$('#pal_arb').val(),
             pal_eng:$('#pal_eng').val(),
+            pal_arb:$('#pal_arb').val(),
             art_heb:$('#art_heb').val(),
             art_eng:$('#art_eng').val(),
             art_arb:$('#art_arb').val(),
@@ -2465,6 +2474,7 @@ function insert_tbl_area_b_violations() {
             tittheb1:$('#tittheb1').val(),
             titteng1:$('#titteng1').val(),
             tittarb1:$('#tittarb1').val(),
+            
             gid:$('#hidnfid').val(),
             upgeom:JSON.stringify(hidnupdatedgeom)
         };

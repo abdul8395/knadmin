@@ -13,7 +13,7 @@
                     <!-- <h4 class="modal-title">Marker Feature</h4> -->
                 </div>
                 <div class="modal-body">
-                    <form >
+                    <form id="modalform">
                     <div class="row">
                     <div class="col">
                             <div class="form-group">
@@ -69,7 +69,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class=" btn btn-success" onclick="insert_tbl_settlements()" id="insert" style="color:white;">insert</button>
+                    <button type="submit" class=" btn btn-success" onclick="insert_tbl_settlements()" id="insert" style="color:white;">insert</button>
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -87,7 +87,7 @@
                     <!-- <h4 class="modal-title">Marker Feature</h4> -->
                 </div>
                 <div class="modal-body">
-                    <form >
+                    <form id="modalform">
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
@@ -138,13 +138,11 @@
                             </div>
                         </div>
                     </div>
-                        
-                        
+                    <div class="modal-footer">
+                        <button type="submit" class=" btn btn-warning" onclick="update_tbl_settlements()" id="updatedata" style="color:white;">Update</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class=" btn btn-warning" onclick="update_tbl_settlements()" id="updatedata" style="color:white;">Update</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>

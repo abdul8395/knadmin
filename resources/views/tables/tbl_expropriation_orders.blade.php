@@ -66,11 +66,11 @@
                         </div>
                         <div class="form-group">
                         <label for="email">d_reason:</label>
-                        <input type="text" class="form-control" id="ins_d_reason"  name="d_reason" required>
+                        <input type="number" class="form-control" id="ins_d_reason"  name="d_reason" required>
                         </div>
                         <div class="form-group">
                         <label for="email">d_district:</label>
-                        <input type="text" class="form-control" id="ins_d_district"  name="d_district" required>
+                        <input type="number" class="form-control" id="ins_d_district"  name="d_district" required>
                         </div>
                         
                     </div>
@@ -150,11 +150,11 @@
                         </div>
                         <div class="form-group">
                         <label for="email">d_reason:</label>
-                        <input type="text" class="form-control" id="d_reason"  name="d_reason" required>
+                        <input type="number" class="form-control" id="d_reason"  name="d_reason" required>
                         </div>
                         <div class="form-group">
                         <label for="email">d_district:</label>
-                        <input type="text" class="form-control" id="d_district"  name="d_district" required>
+                        <input type="number" class="form-control" id="d_district"  name="d_district" required>
                         </div>
                         
                     </div>
