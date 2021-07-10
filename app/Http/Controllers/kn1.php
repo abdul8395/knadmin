@@ -1725,7 +1725,7 @@ public  function editbtn_tbl_area_b_violations($gid){
     $q = DB::select("SELECT * FROM public.tbl_area_b_violations where gid=$gid;");
     $imagenames= array();
     
-    if ($handle = opendir('uploads/imgs')) {
+    if ($handle = opendir('/var/www/html/kn/assets/img/SettlerViolation_Pictures/'.$gid)) {
         while (false !== ($entry = readdir($handle))) {
             if ($entry != "." && $entry != "..") {
                 $imagenames[]= $entry;

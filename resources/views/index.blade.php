@@ -2465,7 +2465,7 @@ function insert_tbl_area_b_violations() {
                     for(var i=0; i<res.imagenames.length; i++){
                         str=str+
                         '<div class="column imgcontainer">'+
-                            '<img  class="thumbimg" src="http://3.17.36.216/kn/assets/img/SettlerViolation_Pictures/'+res.data[0].picture_id+'/'+res.imagenames[i]+'")"><br>'+
+                            '<img  class="thumbimg" src="http://3.17.36.216/assets/img/SettlerViolation_Pictures/'+res.data[0].picture_id+'/'+res.imagenames[i]+'")"><br>'+
                             '<input type="checkbox" class="imgchkbox" name="img_name" value="'+res.imagenames[i]+'">'+
                             // '<a href="#" class="btn btn-danger btn-sm" onclick="removeimg('+"'"+res.imagenames[i]+"'"+','+res.data[0].picture_id+')">Remove</a>'+
                         '</div>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp'
