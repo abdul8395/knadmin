@@ -1786,8 +1786,10 @@ public  function update_tbl_area_b_violations(Request $request){
     }
     $geom = json_decode($request['upgeom'], true);
      $geom1 = json_decode($geom, true);
+	 if($geom1){
      $x=$geom1['coordinates'][0];
      $y=$geom1['coordinates'][1];
+	 }
      
         // Function to remove the spacial 
         function RemoveSpecialChar($str) {
