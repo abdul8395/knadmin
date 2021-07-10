@@ -13,7 +13,7 @@
                     <!-- <h4 class="modal-title">Marker Feature</h4> -->
                 <!-- </div> -->
                 <div class="modal-body">
-                    <form >
+                    <form>
                     <div class="row">
                         <div class="col-sm-3">
                             <div class="form-group">
@@ -92,6 +92,7 @@
                             <label for="email">titt_eng:</label>
                             <input type="text" class="form-control" id="ins_titt_eng"  name="titt_eng" required>
                             </div>
+                            
                         </div>
                         <div class="col-sm-3">
                             <div class="form-group">
@@ -123,6 +124,10 @@
                             <input type="text" class="form-control" id="ins_tittarb1"  name="tittarb1" required>
                             </div>
                         </div>
+                            <div class="form-group">
+                            <label for="file">Select image</label>
+                            <input type='file' id="ins_Data_Atachment" name="file" accept="image/*" class='btn btn-default' />
+                            </div>
                     </div>
                         
                         
@@ -147,7 +152,7 @@
                     <!-- <h4 class="modal-title">Marker Feature</h4> -->
                 <!-- </div> -->
                 <div class="modal-body">
-                    <form >
+                  
                     <div class="row">
                         <div class="col-sm-3">
                             <div class="form-group">
@@ -226,6 +231,7 @@
                             <label for="email">titt_eng:</label>
                             <input type="text" class="form-control" id="titt_eng"  name="titt_eng" required>
                             </div>
+                            
                         </div>
                         <div class="col-sm-3">
                             <div class="form-group">
@@ -257,10 +263,11 @@
                             <input type="text" class="form-control" id="tittarb1"  name="tittarb1" required>
                             </div>
                         </div>
+                        
+                        <div class="row" style="margin-left: 20px !important;" id="allimgs">
+                        </div>
+
                     </div>
-                        
-                        
-                    </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class=" btn btn-warning" onclick="update_tbl_area_b_violations()" id="updatedata" style="color:white;">Update</button>

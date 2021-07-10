@@ -259,4 +259,71 @@ td
     font-size: 10px !important;
 }
 
+.thumbimg {
+    border: 0px solid #ddd; /* Gray border */
+    border-radius: 4px;  /* Rounded border */
+    padding: 0px; /* Some padding */
+    width: 100px; /* Set a small width */
+  }
+  .imgcontainer {
+    position: relative;
+    width: 20%;
+    max-width: 400px;
+
+  }
+  .imgcontainer .imgchkbox {
+    position: absolute;
+    top: 5%;
+    left: 9%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background-color: rgb(104, 172, 87);
+    color: white;
+    font-size: 16px;
+    padding: 13px 13px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    text-align: center;
+     width: 10px;
+      height: 10px;
+  }
+
+  input[type="checkbox"]{
+    -webkit-appearance: initial;
+    appearance: initial;
+    background: rgb(114, 177, 108);
+    width: 5px;
+    height: 5px;
+    border: none;
+    position: relative;
+}
+input[type="checkbox"]:checked {
+    background: red;
+}
+input[type="checkbox"]:checked:after {
+    /* Heres your symbol replacement */
+    content: "X";
+    color: #fff;
+    /* The following positions my tick in the center, 
+     * but you could just overlay the entire box
+     * with a full after element with a background if you want to */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%,-50%);
+    -moz-transform: translate(-50%,-50%);
+    -ms-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
+    /*
+     * If you want to fully change the check appearance, use the following:
+     * content: " ";
+     * width: 100%;
+     * height: 100%;
+     * background: blue;
+     * top: 0;
+     * left: 0;
+     */
+}
+
 

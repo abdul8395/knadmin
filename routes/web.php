@@ -124,7 +124,7 @@ Route::post('/switch_layre/switch_layre/insert_tbl_area_b_violations' , [kn1::cl
 Route::get('/switch_layre/switch_layre/editbtn_tbl_area_b_violations/{id}' , [kn1::class,'editbtn_tbl_area_b_violations'])->middleware('auth');
 Route::post('/switch_layre/switch_layre/update_tbl_area_b_violations' , [kn1::class,'update_tbl_area_b_violations'])->middleware('auth');
 Route::get('/switch_layre/switch_layre/deletebtn_tbl_area_b_violations/{id}' , [kn1::class,'deletebtn_tbl_area_b_violations'])->middleware('auth');
-// Route::get('/switch_layre/switch_layre/pageno_tbl_area_b_violations/{id}' , [kn1::class,'pageno_tbl_area_b_violations'])->middleware('auth');
+Route::post('/switch_layre/switch_layre/removeimg_tbl_area_b_violations' , [kn1::class,'removeimg_tbl_area_b_violations'])->middleware('auth');
 
 
 

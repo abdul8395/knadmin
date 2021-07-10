@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Shapefile\Shapefile;
 use Shapefile\ShapefileException;
 use Shapefile\ShapefileReader;
+use Illuminate\Support\Facades\Storage;
 
 use VIPSoft\Unzip\Unzip;
 
@@ -1146,19 +1147,29 @@ public  function update_tbl_expropriation_orders(Request $request){
     // return $request->all();
     $geom=json_decode($request->data['upgeom']);
 
+     // Function to remove the spacial 
+     function RemoveSpecialChar($str) {
+        // Using str_replace() function 
+        // to replace the word 
+        $res = str_replace( array( '\'', '"',
+        ',' , ';', '<', '>' ), ' ', $str);
+        // Returning the result 
+        return $res;
+    }
+
     $reason=$request->data['reason'];
-    $title=($request->data['title']);
+    $title=RemoveSpecialChar($request->data['title']);
     $sign_date=($request->data['sign_date']);
     $district=($request->data['district']);
-    $remark=($request->data['remark']);
+    $remark=RemoveSpecialChar($request->data['remark']);
     $created_us=($request->data['created_us']);
     $created_da=($request->data['created_da']);
     $last_edite=($request->data['last_edite']);
     $last_edi_1=($request->data['last_edi_1']);
     $shape_leng=($request->data['shape_leng']);
     $shape_area=($request->data['shape_area']);
-    $d_reason=($request->data['d_reason']);
-    $d_district=($request->data['d_district']);
+    $d_reason=RemoveSpecialChar($request->data['d_reason']);
+    $d_district=RemoveSpecialChar($request->data['d_district']);
     $id=($request->data['id']);
 
     if(empty($geom)){
@@ -1586,11 +1597,21 @@ public  function pageno_tbl_seizure_all($pageno){
     public  function update_tbl_settlements(Request $request){
         // return $request->all();
 
+        // Function to remove the spacial 
+        function RemoveSpecialChar($str) {
+            // Using str_replace() function 
+            // to replace the word 
+            $res = str_replace( array( '\'', '"',
+            ',' , ';', '<', '>' ), ' ', $str);
+            // Returning the result 
+            return $res;
+        }
+
         $geom=json_decode($request->data['upgeom']);
 
         $objectid=$request->data['objectid'];
         $id=($request->data['id']);
-        $name_hebrew=($request->data['name_hebrew']);
+        $name_hebrew=RemoveSpecialChar($request->data['name_hebrew']);
         $name_english=($request->data['name_english']);
         $et_id=($request->data['et_id']);
         $shape_leng=($request->data['shape_leng']);
@@ -1626,47 +1647,54 @@ public  function pageno_tbl_seizure_all($pageno){
 
 //tbl_area_b_violations.....................
 public  function insert_tbl_area_b_violations(Request $request){
-    $geom=json_decode($request->data['geom']);
+//   return $request->all();
+//     exit();
+    $fileName = $request->image->getClientOriginalName(); 
+    $url=public_path('uploads/imgs');
+    $filePath = $request->image->move($url, $fileName);
+
+    $geom=json_decode($request['geom']);
 
     $geom1 = json_decode($geom, true);
     $x=$geom1['coordinates'][0];
     $y=$geom1['coordinates'][1];
 
-    $fid_=$request->data['fid_'];
-    $picture_id=($request->data['picture_id']);
-    $categoryid=($request->data['categoryid']);
-    $cat_eng=($request->data['cat_eng']);
-    $desc_arb=($request->data['desc_arb']);
-    $desc_eng=($request->data['desc_eng']);
-    $desc_heb=($request->data['desc_heb']);
-    $set_heb=($request->data['set_heb']);
-    $set_arb=($request->data['set_arb']);
-    $set_eng=($request->data['set_eng']);
-    $pal_heb=($request->data['pal_heb']);
-    $pal_arb=($request->data['pal_arb']);
-    $pal_eng=($request->data['pal_eng']);
-    $art_heb=($request->data['art_heb']);
-    $art_eng=($request->data['art_eng']);
-    $art_arb=($request->data['art_arb']);
-    $titt_heb=($request->data['titt_heb']);
-    $titt_eng=($request->data['titt_eng']);
-    $titt_arb=($request->data['titt_arb']);
-    $artheb1=($request->data['artheb1']);
-    $arteng1=($request->data['arteng1']);
-    $artarb1=($request->data['artarb1']);
-    $tittheb1=($request->data['tittheb1']);
-    $titteng1=($request->data['titteng1']);
-    $tittarb1=($request->data['tittarb1']);
+    $fid_=$request['fid_'];
+    $picture_id=$request['picture_id'];
+    $picture_id=$request['picture_id'];
+    $categoryid=$request['categoryid'];
+    $cat_eng=$request['cat_eng'];
+    $desc_arb=($request['desc_arb']);
+    $desc_eng=($request['desc_eng']);
+    $desc_heb=($request['desc_heb']);
+    $set_heb=($request['set_heb']);
+    $set_arb=($request['set_arb']);
+    $set_eng=($request['set_eng']);
+    $pal_heb=($request['pal_heb']);
+    $pal_arb=($request['pal_arb']);
+    $pal_eng=($request['pal_eng']);
+    $art_heb=($request['art_heb']);
+    $art_eng=($request['art_eng']);
+    $art_arb=($request['art_arb']);
+    $titt_heb=($request['titt_heb']);
+    $titt_eng=($request['titt_eng']);
+    $titt_arb=($request['titt_arb']);
+    $artheb1=($request['artheb1']);
+    $arteng1=($request['arteng1']);
+    $artarb1=($request['artarb1']);
+    $tittheb1=($request['tittheb1']);
+    $titteng1=($request['titteng1']);
+    $tittarb1=($request['tittarb1']);
 
-    if(empty($fid_)){
-        $fid_=0;
-    }
-    if(empty($picture_id)){
-        $picture_id=0;
-    }
-    if(empty($categoryid)){
-        $categoryid=0;
-    }
+    // if(empty($fid_)){
+    //     $fid_=0;
+    // }
+    // if(empty($picture_id)){
+    //     $picture_id=0;
+    // }
+    // if(empty($categoryid)){
+    //     $categoryid=0;
+    // }
 
     if(empty(DB::table('tbl_area_b_violations')->count())){
         $gid=1;
@@ -1678,8 +1706,10 @@ public  function insert_tbl_area_b_violations(Request $request){
 
     $iq="INSERT INTO public.tbl_area_b_violations(
                     gid, fid_, x, y, picture_id, categoryid, cat_eng, desc_arb, desc_eng, desc_heb, set_heb, set_arb, set_eng, pal_heb, pal_arb, pal_eng, art_heb, art_eng, art_arb, titt_heb, titt_eng, titt_arb, artheb1, arteng1, artarb1, tittheb1, titteng1, tittarb1, geom)
-        VALUES ('$gid', $fid_, $x, $y, $picture_id, $categoryid, '$cat_eng', '$desc_arb', '$desc_eng', '$desc_heb', '$set_heb', '$set_arb', '$set_eng', '$pal_heb', '$pal_arb', '$pal_eng', '$art_heb', '$art_eng', '$art_arb', '$titt_heb', '$titt_eng', '$titt_arb', '$artheb1', '$arteng1', '$artarb1', '$tittheb1', '$titteng1', '$tittarb1', ST_GeomFromGeoJSON('$geom'));";
-    $q = DB::insert($iq);
+        VALUES ($gid, NULLIF('$fid_','')::integer, $x, $y, NULLIF('$picture_id','')::integer, NULLIF('$categoryid','')::integer, '$cat_eng', '$desc_arb', '$desc_eng', '$desc_heb', '$set_heb', '$set_arb', '$set_eng', '$pal_heb', '$pal_arb', '$pal_eng', '$art_heb', '$art_eng', '$art_arb', '$titt_heb', '$titt_eng', '$titt_arb', '$artheb1', '$arteng1', '$artarb1', '$tittheb1', '$titteng1', '$tittarb1', ST_GeomFromGeoJSON('$geom'));";
+    //    echo $iq;
+    //    exit();
+   $q = DB::insert($iq);
         return json_encode(true);
 }
 
@@ -1692,9 +1722,45 @@ public  function deletebtn_tbl_area_b_violations($data){
 }
 
 public  function editbtn_tbl_area_b_violations($gid){
-    $q = DB::select("SELECT *
-                        FROM public.tbl_area_b_violations where gid=$gid;");
-    return json_encode($q);
+    $q = DB::select("SELECT * FROM public.tbl_area_b_violations where gid=$gid;");
+    $imagenames= array();
+    
+    if ($handle = opendir('uploads/imgs')) {
+        while (false !== ($entry = readdir($handle))) {
+            if ($entry != "." && $entry != "..") {
+                $imagenames[]= $entry;
+                // if($entry=='bda1.PNG'){
+                //     unlink('./uploads/imgs/'.$entry);
+                // }
+            }
+        }
+        closedir($handle);
+    }
+
+
+    return response()->json(['data' => $q, 'imagenames' => $imagenames]);
+
+    // return json_encode($q);
+}
+public  function removeimg_tbl_area_b_violations(Request $request){
+    // echo $request['pid'];
+    // echo $request['imgname'];
+//    return $request->all();
+    // exit();
+
+    if ($handle = opendir('uploads/imgs')) {
+        while (false !== ($entry = readdir($handle))) {
+            if ($entry != "." && $entry != "..") {
+                if($entry==$request['imgname']){
+                    unlink('./uploads/imgs/'.$entry);
+                }
+            }
+        }
+        closedir($handle);
+    }
+    exit();
+
+    // return json_encode($q);
 }
 
 
@@ -1703,12 +1769,26 @@ public  function editbtn_tbl_area_b_violations($gid){
 public  function update_tbl_area_b_violations(Request $request){
     // return $request->all();
     // exit();
-
-    $geom = json_decode($request->data['upgeom'], true);
+    $gid=$request['gid'];
+    $picture_id=$request['picture_id'];
+    $imgnamesarr=explode(",",$request['imgnamesarr']);
+    if ($handle = opendir('uploads/imgs')) {
+        while (false !== ($entry = readdir($handle))) {
+            if ($entry != "." && $entry != "..") {
+                for($i=0; $i<count($imgnamesarr); $i++){
+                    if($entry==$imgnamesarr[$i]){
+                        unlink('./uploads/imgs/'.$entry);
+                    }
+                }
+            }
+        }
+        closedir($handle);
+    }
+    $geom = json_decode($request['upgeom'], true);
      $geom1 = json_decode($geom, true);
      $x=$geom1['coordinates'][0];
      $y=$geom1['coordinates'][1];
-
+     
         // Function to remove the spacial 
         function RemoveSpecialChar($str) {
             // Using str_replace() function 
@@ -1720,32 +1800,31 @@ public  function update_tbl_area_b_violations(Request $request){
         }
 
 
-    $fid_=$request->data['fid_'];
-    $picture_id=$request->data['picture_id'];
-    $categoryid=$request->data['categoryid'];
-    $cat_eng= RemoveSpecialChar($request->data['cat_eng']);
-    $desc_arb=RemoveSpecialChar($request->data['desc_arb']);
-    $desc_eng=RemoveSpecialChar($request->data['desc_eng']);
-    $desc_heb=RemoveSpecialChar($request->data['desc_heb']);
-    $set_heb=RemoveSpecialChar($request->data['set_heb']);
-    $set_arb=RemoveSpecialChar($request->data['set_arb']);
-    $set_eng=RemoveSpecialChar($request->data['set_eng']);
-    $pal_heb=RemoveSpecialChar($request->data['pal_heb']);
-    $pal_arb=RemoveSpecialChar($request->data['pal_arb']);
-    $pal_eng=RemoveSpecialChar($request->data['pal_eng']);
-    $art_heb=RemoveSpecialChar($request->data['art_heb']);
-    $art_eng=RemoveSpecialChar($request->data['art_eng']);
-    $art_arb=RemoveSpecialChar($request->data['art_arb']);
-    $titt_heb=RemoveSpecialChar($request->data['titt_heb']);
-    $titt_eng=RemoveSpecialChar($request->data['titt_eng']);
-    $titt_arb=RemoveSpecialChar($request->data['titt_arb']);
-    $artheb1=RemoveSpecialChar($request->data['artheb1']);
-    $arteng1=RemoveSpecialChar($request->data['arteng1']);
-    $artarb1=RemoveSpecialChar($request->data['artarb1']);
-    $tittheb1=RemoveSpecialChar($request->data['tittheb1']);
-    $titteng1=RemoveSpecialChar($request->data['titteng1']);
-    $tittarb1=RemoveSpecialChar($request->data['tittarb1']);
-    $gid=$request->data['gid'];
+    $fid_=$request['fid_'];
+    $categoryid=$request['categoryid'];
+    $cat_eng= RemoveSpecialChar($request['cat_eng']);
+    $desc_arb=RemoveSpecialChar($request['desc_arb']);
+    $desc_eng=RemoveSpecialChar($request['desc_eng']);
+    $desc_heb=RemoveSpecialChar($request['desc_heb']);
+    $set_heb=RemoveSpecialChar($request['set_heb']);
+    $set_arb=RemoveSpecialChar($request['set_arb']);
+    $set_eng=RemoveSpecialChar($request['set_eng']);
+    $pal_heb=RemoveSpecialChar($request['pal_heb']);
+    $pal_arb=RemoveSpecialChar($request['pal_arb']);
+    $pal_eng=RemoveSpecialChar($request['pal_eng']);
+    $art_heb=RemoveSpecialChar($request['art_heb']);
+    $art_eng=RemoveSpecialChar($request['art_eng']);
+    $art_arb=RemoveSpecialChar($request['art_arb']);
+    $titt_heb=RemoveSpecialChar($request['titt_heb']);
+    $titt_eng=RemoveSpecialChar($request['titt_eng']);
+    $titt_arb=RemoveSpecialChar($request['titt_arb']);
+    $artheb1=RemoveSpecialChar($request['artheb1']);
+    $arteng1=RemoveSpecialChar($request['arteng1']);
+    $artarb1=RemoveSpecialChar($request['artarb1']);
+    $tittheb1=RemoveSpecialChar($request['tittheb1']);
+    $titteng1=RemoveSpecialChar($request['titteng1']);
+    $tittarb1=RemoveSpecialChar($request['tittarb1']);
+   
 
     if(empty($geom)){
         $q="UPDATE public.tbl_area_b_violations

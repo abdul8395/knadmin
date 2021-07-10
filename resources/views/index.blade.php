@@ -2294,40 +2294,51 @@ function insert_tbl_seizure_ab() {
 
 // table tbl_area_b_violations add/update/delete
 function insert_tbl_area_b_violations() {
+
         var hgeom=$('#hidngeom').val()
-        var reqdata={
-            fid_:$('#ins_fid_').val(),
-            picture_id:$('#ins_picture_id').val(),
-            categoryid:$('#ins_categoryid').val(),
-            cat_eng:$('#ins_cat_eng').val(),
-            desc_arb:$('#ins_desc_arb').val(),
-            desc_eng:$('#ins_desc_eng').val(),
-            desc_heb:$('#ins_desc_heb').val(),
-            set_heb:$('#ins_set_heb').val(),
-            set_arb:$('#ins_set_arb').val(),
-            set_eng:$('#ins_set_eng').val(),
-            pal_heb:$('#ins_pal_heb').val(),
-            pal_arb:$('#ins_pal_arb').val(),
-            pal_eng:$('#ins_pal_eng').val(),
-            art_heb:$('#ins_art_heb').val(),
-            art_eng:$('#ins_art_eng').val(),
-            art_arb:$('#ins_art_arb').val(),
-            titt_heb:$('#ins_titt_heb').val(),
-            titt_eng:$('#ins_titt_eng').val(),
-            titt_arb:$('#ins_titt_arb').val(),
-            artheb1:$('#ins_artheb1').val(),
-            arteng1:$('#ins_arteng1').val(),
-            artarb1:$('#ins_artarb1').val(),
-            tittheb1:$('#ins_tittheb1').val(),
-            titteng1:$('#ins_titteng1').val(),
-            tittarb1:$('#ins_tittarb1').val(),
-            geom:JSON.stringify(hgeom)
-        };
+
+        var formData = new FormData();
+        var Attachment = $('#ins_Data_Atachment')[0].files[0];
+        // console.log(Attachment)
+        formData.append("image", Attachment);
+
+        formData.append("fid_", $('#ins_fid_').val());
+        formData.append("picture_id", $('#ins_picture_id').val());
+        formData.append("categoryid", $('#ins_categoryid').val());
+        formData.append("cat_eng", $('#ins_cat_eng').val());
+        formData.append("desc_arb", $('#ins_desc_arb').val());
+        formData.append("desc_eng", $('#ins_desc_eng').val());
+        formData.append("desc_heb", $('#ins_desc_heb').val());
+        formData.append("set_heb", $('#ins_set_heb').val());
+        formData.append("set_arb", $('#ins_set_arb').val());
+        formData.append("set_eng", $('#ins_set_eng').val());
+        formData.append("pal_heb", $('#ins_pal_heb').val());
+        formData.append("pal_eng", $('#ins_pal_eng').val());
+        formData.append("pal_arb", $('#ins_pal_arb').val());
+        formData.append("art_heb", $('#ins_art_heb').val());
+        formData.append("art_eng", $('#ins_art_eng').val());
+        formData.append("art_arb", $('#ins_art_arb').val());
+        formData.append("titt_heb", $('#ins_titt_heb').val());
+        formData.append("titt_eng", $('#ins_titt_eng').val());
+        formData.append("titt_arb", $('#ins_titt_arb').val());
+        formData.append("artheb1", $('#ins_artheb1').val());
+        formData.append("arteng1", $('#ins_arteng1').val());
+        formData.append("artarb1", $('#ins_artarb1').val());
+        formData.append("tittheb1", $('#ins_tittheb1').val());
+        formData.append("titteng1", $('#ins_titteng1').val());
+        formData.append("tittarb1", $('#ins_tittarb1').val());
+
+        formData.append("geom", JSON.stringify(hgeom));
+
+
+     
         $.ajax({
             type: "post",
             url: "switch_layre/insert_tbl_area_b_violations",
             // dataType : "json",
-            data:{data:reqdata},
+            data: formData,
+            processData: false,
+            contentType: false,
             success: function (res) {
                 var r=JSON.parse(res)
                 if(r == true){
@@ -2352,37 +2363,44 @@ function insert_tbl_area_b_violations() {
             url: "switch_layre/editbtn_tbl_area_b_violations/"+id,
             // dataType : "json",
             success: function (res) {
-                var r=JSON.parse(res)
-                console.log(r);
-                // alert(r[0].entity)
-                    $('#fid_').val(r[0].fid_)
-                    $('#picture_id').val(r[0].picture_id)
-                    $('#categoryid').val(r[0].categoryid)
-                    $('#cat_eng').val(r[0].cat_eng)
-                    $('#desc_arb').val(r[0].desc_arb)
-                    $('#desc_eng').val(r[0].desc_eng)
-                    $('#desc_heb').val(r[0].desc_heb)
-                    $('#set_heb').val(r[0].set_heb)
-                    $('#set_arb').val(r[0].set_arb)
-                    $('#set_eng').val(r[0].set_eng)
-                    $('#pal_heb').val(r[0].pal_heb)
-                    $('#pal_arb').val(r[0].pal_arb);
-                    $('#pal_eng').val(r[0].pal_eng);
+                    $('#fid_').val(res.data[0].fid_)
+                    $('#picture_id').val(res.data[0].picture_id)
+                    $('#categoryid').val(res.data[0].categoryid)
+                    $('#cat_eng').val(res.data[0].cat_eng)
+                    $('#desc_arb').val(res.data[0].desc_arb)
+                    $('#desc_eng').val(res.data[0].desc_eng)
+                    $('#desc_heb').val(res.data[0].desc_heb)
+                    $('#set_heb').val(res.data[0].set_heb)
+                    $('#set_arb').val(res.data[0].set_arb)
+                    $('#set_eng').val(res.data[0].set_eng)
+                    $('#pal_heb').val(res.data[0].pal_heb)
+                    $('#pal_arb').val(res.data[0].pal_arb);
+                    $('#pal_eng').val(res.data[0].pal_eng);
                     // encodeURIComponent($('#pal_eng').val(r[0].pal_eng).replace(/\'/g, "''"));
-                    $('#art_heb').val(r[0].art_heb);
-                    $('#art_eng').val(r[0].art_eng);
-                    $('#art_arb').val(r[0].art_arb);
-                    $('#titt_heb').val(r[0].titt_heb);
-                    $('#titt_eng').val(r[0].titt_eng);
-                    $('#titt_arb').val(r[0].titt_arb);
-                    $('#artheb1').val(r[0].artheb1);
-                    $('#arteng1').val(r[0].arteng1);
-                    $('#artarb1').val(r[0].artarb1);
-                    $('#tittheb1').val(r[0].tittheb1);
-                    $('#titteng1').val(r[0].titteng1);
-                    $('#tittarb1').val(r[0].tittarb1);
-                    $('#hidnfid').val(r[0].gid);
+                    $('#art_heb').val(res.data[0].art_heb);
+                    $('#art_eng').val(res.data[0].art_eng);
+                    $('#art_arb').val(res.data[0].art_arb);
+                    $('#titt_heb').val(res.data[0].titt_heb);
+                    $('#titt_eng').val(res.data[0].titt_eng);
+                    $('#titt_arb').val(res.data[0].titt_arb);
+                    $('#artheb1').val(res.data[0].artheb1);
+                    $('#arteng1').val(res.data[0].arteng1);
+                    $('#artarb1').val(res.data[0].artarb1);
+                    $('#tittheb1').val(res.data[0].tittheb1);
+                    $('#titteng1').val(res.data[0].titteng1);
+                    $('#tittarb1').val(res.data[0].tittarb1);
+                    $('#hidnfid').val(res.data[0].gid);
                     $('#hidnupdatedgeom').val(hiddengeom);
+                    var str='';
+                    for(var i=0; i<res.imagenames.length; i++){
+                        str=str+
+                        '<div class="column imgcontainer">'+
+                            '<img  class="thumbimg" src="http://127.0.0.1:8000/uploads/imgs/'+res.imagenames[i]+'")"><br>'+
+                            '<input type="checkbox" class="imgchkbox" name="img_name" value="'+res.imagenames[i]+'">'+
+                            // '<a href="#" class="btn btn-danger btn-sm" onclick="removeimg('+"'"+res.imagenames[i]+"'"+','+res.data[0].picture_id+')">Remove</a>'+
+                        '</div>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp'
+                    }
+                    $('#allimgs').html(str);
                     $("#edit_modal").modal("show");
             }
         });
@@ -2411,77 +2429,142 @@ function insert_tbl_area_b_violations() {
                 url: "switch_layre/editbtn_tbl_area_b_violations/"+id,
                 // dataType : "json",
                 success: function (res) {
-                    var r=JSON.parse(res)
+                    console.log(res);
+                    console.log(res.imagenames[0]);
+                    // var r=JSON.parse(res)
                     // console.log(r);
                     // alert(r[0].entity)
-                    $('#fid_').val(r[0].fid_)
-                    $('#picture_id').val(r[0].picture_id)
-                    $('#categoryid').val(r[0].categoryid)
-                    $('#cat_eng').val(r[0].cat_eng)
-                    $('#desc_arb').val(r[0].desc_arb)
-                    $('#desc_eng').val(r[0].desc_eng)
-                    $('#desc_heb').val(r[0].desc_heb)
-                    $('#set_heb').val(r[0].set_heb)
-                    $('#set_arb').val(r[0].set_arb)
-                    $('#set_eng').val(r[0].set_eng)
-                    $('#pal_heb').val(r[0].pal_heb)
-                    $('#pal_arb').val(r[0].pal_arb);
-                    $('#pal_eng').val(r[0].pal_eng);
+                    $('#fid_').val(res.data[0].fid_)
+                    $('#picture_id').val(res.data[0].picture_id)
+                    $('#categoryid').val(res.data[0].categoryid)
+                    $('#cat_eng').val(res.data[0].cat_eng)
+                    $('#desc_arb').val(res.data[0].desc_arb)
+                    $('#desc_eng').val(res.data[0].desc_eng)
+                    $('#desc_heb').val(res.data[0].desc_heb)
+                    $('#set_heb').val(res.data[0].set_heb)
+                    $('#set_arb').val(res.data[0].set_arb)
+                    $('#set_eng').val(res.data[0].set_eng)
+                    $('#pal_heb').val(res.data[0].pal_heb)
+                    $('#pal_arb').val(res.data[0].pal_arb);
+                    $('#pal_eng').val(res.data[0].pal_eng);
                     // encodeURIComponent($('#pal_eng').val(r[0].pal_eng).replace(/\'/g, "''"));
-                    $('#art_heb').val(r[0].art_heb);
-                    $('#art_eng').val(r[0].art_eng);
-                    $('#art_arb').val(r[0].art_arb);
-                    $('#titt_heb').val(r[0].titt_heb);
-                    $('#titt_eng').val(r[0].titt_eng);
-                    $('#titt_arb').val(r[0].titt_arb);
-                    $('#artheb1').val(r[0].artheb1);
-                    $('#arteng1').val(r[0].arteng1);
-                    $('#artarb1').val(r[0].artarb1);
-                    $('#tittheb1').val(r[0].tittheb1);
-                    $('#titteng1').val(r[0].titteng1);
-                    $('#tittarb1').val(r[0].tittarb1);
-                    $('#hidnfid').val(r[0].gid);
-                        $("#edit_modal").modal("show");
+                    $('#art_heb').val(res.data[0].art_heb);
+                    $('#art_eng').val(res.data[0].art_eng);
+                    $('#art_arb').val(res.data[0].art_arb);
+                    $('#titt_heb').val(res.data[0].titt_heb);
+                    $('#titt_eng').val(res.data[0].titt_eng);
+                    $('#titt_arb').val(res.data[0].titt_arb);
+                    $('#artheb1').val(res.data[0].artheb1);
+                    $('#arteng1').val(res.data[0].arteng1);
+                    $('#artarb1').val(res.data[0].artarb1);
+                    $('#tittheb1').val(res.data[0].tittheb1);
+                    $('#titteng1').val(res.data[0].titteng1);
+                    $('#tittarb1').val(res.data[0].tittarb1);
+                    $('#hidnfid').val(res.data[0].gid);
+                    var str='';
+                    for(var i=0; i<res.imagenames.length; i++){
+                        str=str+
+                        '<div class="column imgcontainer">'+
+                            '<img  class="thumbimg" src="http://127.0.0.1:8000/uploads/imgs/'+res.imagenames[i]+'")"><br>'+
+                            '<input type="checkbox" class="imgchkbox" name="img_name" value="'+res.imagenames[i]+'">'+
+                            // '<a href="#" class="btn btn-danger btn-sm" onclick="removeimg('+"'"+res.imagenames[i]+"'"+','+res.data[0].picture_id+')">Remove</a>'+
+                        '</div>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp'
+                    }
+                    $('#allimgs').html(str);
+                    $("#edit_modal").modal("show");
                 }
             });
     }
+    // function removeimg(imgname,pid){
+    //     $.ajax({
+    //       type: "post",
+    //       url: "switch_layre/removeimg_tbl_area_b_violations",
+    //       data:{imgname:imgname,
+    //             pid:pid},
+    //       success: function (res) {
+    //           console.log("image deleted")
+    //       }
+    //     });
+    // }
 
     function update_tbl_area_b_violations() {
+
+        var imgnamesarr = [];
+            $.each($("input[name='img_name']:checked"), function(){            
+                imgnamesarr.push($(this).val());
+            });
+            // alert("imgnamesarr: " + imgnamesarr.join(", "));
+        console.log(imgnamesarr);
         var hidnupdatedgeom=$('#hidnupdatedgeom').val()
-        var reqdata={
-            fid_:$('#fid_').val(),
-            picture_id:$('#picture_id').val(),
-            categoryid:$('#categoryid').val(),
-            cat_eng:$('#cat_eng').val(),
-            desc_arb:$('#desc_arb').val(),
-            desc_eng:$('#desc_eng').val(),
-            desc_heb:$('#desc_heb').val(),
-            set_heb:$('#set_heb').val(),
-            set_arb:$('#set_arb').val(),
-            set_eng:$('#set_eng').val(),
-            pal_heb:$('#pal_heb').val(),
-            pal_eng:$('#pal_eng').val(),
-            pal_arb:$('#pal_arb').val(),
-            art_heb:$('#art_heb').val(),
-            art_eng:$('#art_eng').val(),
-            art_arb:$('#art_arb').val(),
-            titt_heb:$('#titt_heb').val(),
-            titt_eng:$('#titt_eng').val(),
-            titt_arb:$('#titt_arb').val(),
-            artheb1:$('#artheb1').val(),
-            arteng1:$('#arteng1').val(),
-            artarb1:$('#artarb1').val(),
-            tittheb1:$('#tittheb1').val(),
-            titteng1:$('#titteng1').val(),
-            tittarb1:$('#tittarb1').val(),
+        var formData = new FormData();
+
+        formData.append("imgnamesarr", imgnamesarr);
+
+        formData.append("fid_", $('#fid_').val());
+        formData.append("picture_id", $('#picture_id').val());
+        formData.append("categoryid", $('#categoryid').val());
+        formData.append("cat_eng", $('#cat_eng').val());
+        formData.append("desc_arb", $('#desc_arb').val());
+        formData.append("desc_eng", $('#desc_eng').val());
+        formData.append("desc_heb", $('#desc_heb').val());
+        formData.append("set_heb", $('#set_heb').val());
+        formData.append("set_arb", $('#set_arb').val());
+        formData.append("set_eng", $('#set_eng').val());
+        formData.append("pal_heb", $('#pal_heb').val());
+        formData.append("pal_eng", $('#pal_eng').val());
+        formData.append("pal_arb", $('#pal_arb').val());
+        formData.append("art_heb", $('#art_heb').val());
+        formData.append("art_eng", $('#art_eng').val());
+        formData.append("art_arb", $('#art_arb').val());
+        formData.append("titt_heb", $('#titt_heb').val());
+        formData.append("titt_eng", $('#titt_eng').val());
+        formData.append("titt_arb", $('#titt_arb').val());
+        formData.append("artheb1", $('#artheb1').val());
+        formData.append("arteng1", $('#arteng1').val());
+        formData.append("artarb1", $('#artarb1').val());
+        formData.append("tittheb1", $('#tittheb1').val());
+        formData.append("titteng1", $('#titteng1').val());
+        formData.append("tittarb1", $('#tittarb1').val());
+
+        formData.append("gid", $('#hidnfid').val());
+        formData.append("upgeom", JSON.stringify(hidnupdatedgeom));
+
+        // var reqdata={
+        //     fid_:$('#fid_').val(),
+        //     picture_id:$('#picture_id').val(),
+        //     categoryid:$('#categoryid').val(),
+        //     cat_eng:$('#cat_eng').val(),
+        //     desc_arb:$('#desc_arb').val(),
+        //     desc_eng:$('#desc_eng').val(),
+        //     desc_heb:$('#desc_heb').val(),
+        //     set_heb:$('#set_heb').val(),
+        //     set_arb:$('#set_arb').val(),
+        //     set_eng:$('#set_eng').val(),
+        //     pal_heb:$('#pal_heb').val(),
+        //     pal_eng:$('#pal_eng').val(),
+        //     pal_arb:$('#pal_arb').val(),
+        //     art_heb:$('#art_heb').val(),
+        //     art_eng:$('#art_eng').val(),
+        //     art_arb:$('#art_arb').val(),
+        //     titt_heb:$('#titt_heb').val(),
+        //     titt_eng:$('#titt_eng').val(),
+        //     titt_arb:$('#titt_arb').val(),
+        //     artheb1:$('#artheb1').val(),
+        //     arteng1:$('#arteng1').val(),
+        //     artarb1:$('#artarb1').val(),
+        //     tittheb1:$('#tittheb1').val(),
+        //     titteng1:$('#titteng1').val(),
+        //     tittarb1:$('#tittarb1').val(),
             
-            gid:$('#hidnfid').val(),
-            upgeom:JSON.stringify(hidnupdatedgeom)
-        };
+        //     gid:$('#hidnfid').val(),
+        //     upgeom:JSON.stringify(hidnupdatedgeom)
+        // };
         $.ajax({
-            type: "post",
+            type: "POST",
             url: "switch_layre/update_tbl_area_b_violations",
-            data:{data:reqdata},
+            data: formData,
+            processData: false,
+            contentType: false,
             // dataType : "json",
             success: function (res) {
                 var r=JSON.parse(res)
