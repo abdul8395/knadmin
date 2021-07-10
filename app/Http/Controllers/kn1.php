@@ -1650,7 +1650,7 @@ public  function insert_tbl_area_b_violations(Request $request){
 //   return $request->all();
 //     exit();
     $fileName = $request->image->getClientOriginalName(); 
-    $url=public_path('uploads/imgs');
+    $url=public_path('/var/www/html/kn/assets/img/SettlerViolation_Pictures/'.$request['picture_id']);
     $filePath = $request->image->move($url, $fileName);
 
     $geom=json_decode($request['geom']);
@@ -1772,12 +1772,12 @@ public  function update_tbl_area_b_violations(Request $request){
     $gid=$request['gid'];
     $picture_id=$request['picture_id'];
     $imgnamesarr=explode(",",$request['imgnamesarr']);
-    if ($handle = opendir('uploads/imgs')) {
+    if ($handle = opendir('/var/www/html/kn/assets/img/SettlerViolation_Pictures/'.$picture_id)) {
         while (false !== ($entry = readdir($handle))) {
             if ($entry != "." && $entry != "..") {
                 for($i=0; $i<count($imgnamesarr); $i++){
                     if($entry==$imgnamesarr[$i]){
-                        unlink('./uploads/imgs/'.$entry);
+                        unlink('./var/www/html/kn/assets/img/SettlerViolation_Pictures/'.$picture_id.'/'.$entry);
                     }
                 }
             }
