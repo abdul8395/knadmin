@@ -1780,7 +1780,7 @@ public  function update_tbl_area_b_violations(Request $request){
 
     // for imgs remove
     $imgnamesarr=explode(",",$imgarr);
-    print_r($imgnamesarr);
+    // print_r($imgnamesarr);
     $c=sizeof($imgnamesarr);
     // echo $c;
     //print_r($imgnamesarr);
@@ -1797,14 +1797,17 @@ public  function update_tbl_area_b_violations(Request $request){
         closedir($handle);
     }
     // for imgs uploads
-    $update_uploadFile_arr=$request['update_uploadFile'];
-    for($i=0; $i<count($update_uploadFile_arr); $i++){
-        $fileName = $update_uploadFile_arr[$i]->getClientOriginalName(); 
-        $url="/var/www/html/kn/assets/img/SettlerViolation_Pictures/$picture_id/";
-        if(!$url){
-            mkdir("/var/www/html/kn/assets/img/SettlerViolation_Pictures/$picture_id/", 0755);
+    $uploadsfilesarray=$request['update_uploadFile'];
+    if(sizeof($uploadsfilesarray)!=0){
+        $update_uploadFile_arr=$uploadsfilesarray;
+        for($i=0; $i<count($update_uploadFile_arr); $i++){
+            $fileName = $update_uploadFile_arr[$i]->getClientOriginalName(); 
+            $url="/var/www/html/kn/assets/img/SettlerViolation_Pictures/$picture_id/";
+            if(!$url){
+                mkdir("/var/www/html/kn/assets/img/SettlerViolation_Pictures/$picture_id/", 0755);
+            }
+            $filePath = $update_uploadFile_arr[$i]->move($url, $fileName);
         }
-        $filePath = $update_uploadFile_arr[$i]->move($url, $fileName);
     }
 
     $geom = json_decode($request['upgeom'], true);
