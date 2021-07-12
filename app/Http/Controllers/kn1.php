@@ -1775,10 +1775,11 @@ public  function update_tbl_area_b_violations(Request $request){
     // exit();
     $gid=$request['gid'];
     $picture_id=$request['picture_id'];
-    $imgnamesarr=$request['imgnamesarr'];
-    echo gettype($imgnamesarr);
+    $imgarr=$request['imgnamesarr'];
+
     // for imgs remove
-    $imgnamesarr=explode(",",$request['imgnamesarr']);
+    $imgnamesarr=explode(",",$imgarr);
+    print_r($imgnamesarr);
     if ($handle = opendir("/var/www/html/kn/assets/img/SettlerViolation_Pictures/$picture_id/")) {
         while (false !== ($entry = readdir($handle))) {
             if ($entry != "." && $entry != "..") {
