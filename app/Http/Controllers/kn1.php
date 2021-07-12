@@ -1650,6 +1650,7 @@ public  function insert_tbl_area_b_violations(Request $request){
 //   return $request->all();
 //     exit();
     $picture_id=$request['picture_id'];
+    
 
     if(empty($picture_id)){
         $q = DB::select("select max(picture_id) from public.tbl_area_b_violations;");
@@ -1737,20 +1738,28 @@ public  function deletebtn_tbl_area_b_violations($data){
 
 public  function editbtn_tbl_area_b_violations($gid){
     $q = DB::select("SELECT * FROM public.tbl_area_b_violations where gid=$gid;");
-    $imagenames= array();
     
-    if ($handle = opendir("/var/www/html/kn/assets/img/SettlerViolation_Pictures/$gid/")) {
-        while (false !== ($entry = readdir($handle))) {
-            if ($entry != "." && $entry != "..") {
-                $imagenames[]= $entry;
-                // if($entry=='bda1.PNG'){
-                //     unlink('./uploads/imgs/'.$entry);
-                // }
-            }
-        }
-        closedir($handle);
-    }
+    $pidq = DB::select("select picture_id from public.tbl_area_b_violationswhere gid=$gid;");
+    $arr = json_decode(json_encode($q), true);
+    $picture_id=implode("",$arr[0]);
 
+    $imagenames= array();
+    $durl="/var/www/html/kn/assets/img/SettlerViolation_Pictures/$picture_id/";
+    if(!$durl){
+        return response()->json(['data' => $q, 'imagenames' => $imagenames]);
+    }else{
+        if ($handle = opendir("/var/www/html/kn/assets/img/SettlerViolation_Pictures/$picture_id/")) {
+            while (false !== ($entry = readdir($handle))) {
+                if ($entry != "." && $entry != "..") {
+                    $imagenames[]= $entry;
+                    // if($entry=='bda1.PNG'){
+                    //     unlink('./uploads/imgs/'.$entry);
+                    // }
+                }
+            }
+            closedir($handle);
+        }
+    }
 
     return response()->json(['data' => $q, 'imagenames' => $imagenames]);
 

@@ -2388,6 +2388,7 @@ function insert_tbl_area_b_violations() {
             url: "switch_layre/editbtn_tbl_area_b_violations/"+id,
             // dataType : "json",
             success: function (res) {
+                    console.log(res)
                     $('#fid_').val(res.data[0].fid_)
                     $('#picture_id').val(res.data[0].picture_id)
                     $('#categoryid').val(res.data[0].categoryid)
@@ -2454,7 +2455,7 @@ function insert_tbl_area_b_violations() {
                 url: "switch_layre/editbtn_tbl_area_b_violations/"+id,
                 // dataType : "json",
                 success: function (res) {
-                    // console.log(res);
+                    console.log(res);
                     // console.log(res.imagenames[0]);
                     // var r=JSON.parse(res)
                     // console.log(r);
