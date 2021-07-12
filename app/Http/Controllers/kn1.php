@@ -1649,9 +1649,21 @@ public  function pageno_tbl_seizure_all($pageno){
 public  function insert_tbl_area_b_violations(Request $request){
 //   return $request->all();
 //     exit();
-    $fileName = $request->image->getClientOriginalName(); 
-    $url=public_path('/var/www/html/kn/assets/img/SettlerViolation_Pictures/'.$request['picture_id']);
-    $filePath = $request->image->move($url, $fileName);
+    $picture_id=$request['picture_id'];
+
+    if(empty($picture_id)){
+        $q = DB::select("select max(picture_id) from public.tbl_area_b_violations;");
+        $arr = json_decode(json_encode($q), true);
+        $picture_id=implode("",$arr[0])+1;
+    }
+
+    $ins_uploadFile_arr=$request['ins_uploadFile'];
+    for($i=0; $i<count($ins_uploadFile_arr); $i++){
+        $fileName = $ins_uploadFile_arr[$i]->getClientOriginalName(); 
+        $url=public_path('/var/www/html/kn/assets/img/SettlerViolation_Pictures/'.$request['picture_id']);
+        $filePath = $ins_uploadFile_arr[$i]->move($url, $fileName);
+    }
+
 
     $geom=json_decode($request['geom']);
 
@@ -1660,8 +1672,6 @@ public  function insert_tbl_area_b_violations(Request $request){
     $y=$geom1['coordinates'][1];
 
     $fid_=$request['fid_'];
-    $picture_id=$request['picture_id'];
-    $picture_id=$request['picture_id'];
     $categoryid=$request['categoryid'];
     $cat_eng=$request['cat_eng'];
     $desc_arb=($request['desc_arb']);
@@ -1725,7 +1735,7 @@ public  function editbtn_tbl_area_b_violations($gid){
     $q = DB::select("SELECT * FROM public.tbl_area_b_violations where gid=$gid;");
     $imagenames= array();
     
-    if ($handle = opendir('/var/www/html/kn/assets/img/SettlerViolation_Pictures/'.$gid)) {
+    if ($handle = opendir('uploads/imgs')) {
         while (false !== ($entry = readdir($handle))) {
             if ($entry != "." && $entry != "..") {
                 $imagenames[]= $entry;
@@ -1771,6 +1781,8 @@ public  function update_tbl_area_b_violations(Request $request){
     // exit();
     $gid=$request['gid'];
     $picture_id=$request['picture_id'];
+
+    // for imgs remove
     $imgnamesarr=explode(",",$request['imgnamesarr']);
     if ($handle = opendir('/var/www/html/kn/assets/img/SettlerViolation_Pictures/'.$picture_id)) {
         while (false !== ($entry = readdir($handle))) {
@@ -1784,12 +1796,18 @@ public  function update_tbl_area_b_violations(Request $request){
         }
         closedir($handle);
     }
+    // for imgs uploads
+    $update_uploadFile_arr=$request['update_uploadFile'];
+    for($i=0; $i<count($update_uploadFile_arr); $i++){
+        $fileName = $update_uploadFile_arr[$i]->getClientOriginalName(); 
+        $url=public_path('/var/www/html/kn/assets/img/SettlerViolation_Pictures/'.$picture_id);
+        $filePath = $update_uploadFile_arr[$i]->move($url, $fileName);
+    }
+
     $geom = json_decode($request['upgeom'], true);
      $geom1 = json_decode($geom, true);
-	 if($geom1){
      $x=$geom1['coordinates'][0];
      $y=$geom1['coordinates'][1];
-	 }
      
         // Function to remove the spacial 
         function RemoveSpecialChar($str) {

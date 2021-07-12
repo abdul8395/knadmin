@@ -2298,9 +2298,16 @@ function insert_tbl_area_b_violations() {
         var hgeom=$('#hidngeom').val()
 
         var formData = new FormData();
-        var Attachment = $('#ins_Data_Atachment')[0].files[0];
+        // var Attachment = $('#ins_Data_Atachment')[0].files[0];
         // console.log(Attachment)
-        formData.append("image", Attachment);
+         // Read selected files
+
+        var totalfiles = document.getElementById('ins_uploadFile').files.length;
+        for (var index = 0; index < totalfiles; index++) {
+            formData.append("ins_uploadFile[]", document.getElementById('ins_uploadFile').files[index]);
+        }
+
+        // formData.append("image", Attachment);
 
         formData.append("fid_", $('#ins_fid_').val());
         formData.append("picture_id", $('#ins_picture_id').val());
@@ -2337,6 +2344,7 @@ function insert_tbl_area_b_violations() {
             url: "switch_layre/insert_tbl_area_b_violations",
             // dataType : "json",
             data: formData,
+            dataType: 'json',
             processData: false,
             contentType: false,
             success: function (res) {
@@ -2352,7 +2360,23 @@ function insert_tbl_area_b_violations() {
             }
         });
     }
-
+    // style="margin: 5px;"
+    $("ins_uploadFile").change(function(){
+        $('#ins_imgPreview').html("");
+        var total_file=document.getElementById("ins_uploadFile").files.length;
+        for(var i=0;i<total_file;i++)
+        {
+        $('#ins_imgPreview').append("<img src='"+URL.createObjectURL(event.target.files[i])+"'>");
+        }
+    });
+    $("uploadFile").change(function(){
+        $('#imgPreview').html("");
+        var total_file=document.getElementById("uploadFile").files.length;
+        for(var i=0;i<total_file;i++)
+        {
+        $('#imgPreview').append("<img src='"+URL.createObjectURL(event.target.files[i])+"'>");
+        }
+    });
     function editgeom_tbl_area_b_violations(id,updatedgeom) {
         // console.log(id)
         // console.log(updatedgeom)
@@ -2395,8 +2419,8 @@ function insert_tbl_area_b_violations() {
                     for(var i=0; i<res.imagenames.length; i++){
                         str=str+
                         '<div class="column imgcontainer">'+
-                            '<img  class="thumbimg" src="http://3.17.36.216:8006/uploads/imgs/'+res.imagenames[i]+'")"><br>'+
-                            '<input type="checkbox" class="imgchkbox" name="img_name" value="'+res.imagenames[i]+'">'+
+                            '<img  class="thumbimg" src="http://3.17.36.216/assets/img/SettlerViolation_Pictures/'+id+'/'+res.imagenames[i]+'"><br>'+
+                            '<input type="checkbox" class="imgchkbox" name="img_chkbox" value="'+res.imagenames[i]+'">'+
                             // '<a href="#" class="btn btn-danger btn-sm" onclick="removeimg('+"'"+res.imagenames[i]+"'"+','+res.data[0].picture_id+')">Remove</a>'+
                         '</div>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp'
                     }
@@ -2429,8 +2453,8 @@ function insert_tbl_area_b_violations() {
                 url: "switch_layre/editbtn_tbl_area_b_violations/"+id,
                 // dataType : "json",
                 success: function (res) {
-                    console.log(res);
-                    console.log(res.imagenames[0]);
+                    // console.log(res);
+                    // console.log(res.imagenames[0]);
                     // var r=JSON.parse(res)
                     // console.log(r);
                     // alert(r[0].entity)
@@ -2465,8 +2489,8 @@ function insert_tbl_area_b_violations() {
                     for(var i=0; i<res.imagenames.length; i++){
                         str=str+
                         '<div class="column imgcontainer">'+
-                            '<img  class="thumbimg" src="http://3.17.36.216/assets/img/SettlerViolation_Pictures/'+id+'/'+res.imagenames[i]+'")"><br>'+
-                            '<input type="checkbox" class="imgchkbox" name="img_name" value="'+res.imagenames[i]+'">'+
+                            '<img  class="thumbimg" src="http://3.17.36.216/assets/img/SettlerViolation_Pictures/'+id+'/'+res.imagenames[i]+'"><br>'+
+                            '<input type="checkbox" class="imgchkbox" name="img_chkbox" value="'+res.imagenames[i]+'">'+
                             // '<a href="#" class="btn btn-danger btn-sm" onclick="removeimg('+"'"+res.imagenames[i]+"'"+','+res.data[0].picture_id+')">Remove</a>'+
                         '</div>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp'
                     }
@@ -2488,15 +2512,22 @@ function insert_tbl_area_b_violations() {
     // }
 
     function update_tbl_area_b_violations() {
-
-        var imgnamesarr = [];
-            $.each($("input[name='img_name']:checked"), function(){            
-                imgnamesarr.push($(this).val());
-            });
-            // alert("imgnamesarr: " + imgnamesarr.join(", "));
-        console.log(imgnamesarr);
-        var hidnupdatedgeom=$('#hidnupdatedgeom').val()
         var formData = new FormData();
+        // for img remove
+        var imgnamesarr = [];
+        $.each($("input[name='img_chkbox']:checked"), function(){            
+            imgnamesarr.push($(this).val());
+        });
+        console.log(imgnamesarr);
+        // for img upload
+        var totalfiles = document.getElementById('update_uploadFile').files.length;
+        for (var index = 0; index < totalfiles; index++) {
+            formData.append("update_uploadFile[]", document.getElementById('update_uploadFile').files[index]);
+        }
+
+
+        var hidnupdatedgeom=$('#hidnupdatedgeom').val()
+        
 
         formData.append("imgnamesarr", imgnamesarr);
 

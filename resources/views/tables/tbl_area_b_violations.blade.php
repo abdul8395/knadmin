@@ -122,12 +122,13 @@
                             <div class="form-group">
                             <label for="email">tittarb1:</label>
                             <input type="text" class="form-control" id="ins_tittarb1"  name="tittarb1" required>
-                            </div>
+                            </div>&nbsp&nbsp&nbsp&nbsp
                         </div>
                             <div class="form-group">
-                            <label for="file">Select image</label>
-                            <input type='file' id="ins_Data_Atachment" name="file" accept="image/*" class='btn btn-default' />
-                            </div>
+                            <label for="file">Select images</label>
+                            <input type='file' id="ins_uploadFile" accept="image/*" class='btn btn-default' name="ins_uploadFile[]" multiple/>
+                            </div>&nbsp&nbsp&nbsp&nbsp
+                            <div id="ins_imgPreview"></div>
                     </div>
                         
                         
@@ -266,6 +267,11 @@
                         
                         <div class="row" style="margin-left: 20px !important;" id="allimgs">
                         </div>
+                        <div class="form-group">
+                        <label for="file">Select images</label>
+                        <input type='file' id="update_uploadFile" accept="image/*" class='btn btn-default' name="update_uploadFile[]" multiple/>
+                        </div>
+                        <div id="imgPreview"></div>
 
                     </div>
                 </div>
