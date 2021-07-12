@@ -1653,8 +1653,8 @@ public  function insert_tbl_area_b_violations(Request $request){
     
 
     if(empty($picture_id)){
-        $q = DB::select("select max(picture_id) from public.tbl_area_b_violations;");
-        $arr = json_decode(json_encode($q), true);
+        $pq = DB::select("select max(picture_id) from public.tbl_area_b_violations;");
+        $arr = json_decode(json_encode($pq), true);
         $picture_id=implode("",$arr[0])+1;
     }
 

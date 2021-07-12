@@ -2388,6 +2388,7 @@ function insert_tbl_area_b_violations() {
             url: "switch_layre/editbtn_tbl_area_b_violations/"+id,
             // dataType : "json",
             success: function (res) {
+                var picture_id= res.data[0].picture_id
                     console.log(res)
                     $('#fid_').val(res.data[0].fid_)
                     $('#picture_id').val(res.data[0].picture_id)
@@ -2421,7 +2422,7 @@ function insert_tbl_area_b_violations() {
                     for(var i=0; i<res.imagenames.length; i++){
                         str=str+
                         '<div class="column imgcontainer">'+
-                            '<img  class="thumbimg" src="http://3.17.36.216/assets/img/SettlerViolation_Pictures/'+id+'/'+res.imagenames[i]+'"><br>'+
+                            '<img  class="thumbimg" src="http://3.17.36.216/assets/img/SettlerViolation_Pictures/'+picture_id+'/'+res.imagenames[i]+'"><br>'+
                             '<input type="checkbox" class="imgchkbox" name="img_chkbox" value="'+res.imagenames[i]+'">'+
                             // '<a href="#" class="btn btn-danger btn-sm" onclick="removeimg('+"'"+res.imagenames[i]+"'"+','+res.data[0].picture_id+')">Remove</a>'+
                         '</div>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp'
@@ -2455,6 +2456,7 @@ function insert_tbl_area_b_violations() {
                 url: "switch_layre/editbtn_tbl_area_b_violations/"+id,
                 // dataType : "json",
                 success: function (res) {
+                    var picture_id= res.data[0].picture_id
                     console.log(res);
                     // console.log(res.imagenames[0]);
                     // var r=JSON.parse(res)
@@ -2491,7 +2493,7 @@ function insert_tbl_area_b_violations() {
                     for(var i=0; i<res.imagenames.length; i++){
                         str=str+
                         '<div class="column imgcontainer">'+
-                            '<img  class="thumbimg" src="http://3.17.36.216/assets/img/SettlerViolation_Pictures/'+id+'/'+res.imagenames[i]+'"><br>'+
+                            '<img  class="thumbimg" src="http://3.17.36.216/assets/img/SettlerViolation_Pictures/'+picture_id+'/'+res.imagenames[i]+'"><br>'+
                             '<input type="checkbox" class="imgchkbox" name="img_chkbox" value="'+res.imagenames[i]+'">'+
                             // '<a href="#" class="btn btn-danger btn-sm" onclick="removeimg('+"'"+res.imagenames[i]+"'"+','+res.data[0].picture_id+')">Remove</a>'+
                         '</div>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp'
