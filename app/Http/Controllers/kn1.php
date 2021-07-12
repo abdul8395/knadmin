@@ -1741,7 +1741,7 @@ public  function editbtn_tbl_area_b_violations($gid){
 
     $pidq = DB::select("select picture_id from public.tbl_area_b_violations where gid=$gid;");
     $arr = json_decode(json_encode($q), true);
-    $picture_id=implode("",$arr[0]);
+    $picture_id=$arr[0];
 
     $imagenames= array();
     $durl="/var/www/html/kn/assets/img/SettlerViolation_Pictures/$picture_id/";
