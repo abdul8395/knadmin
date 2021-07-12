@@ -2522,6 +2522,7 @@ function insert_tbl_area_b_violations() {
         $.each($("input[name='img_chkbox']:checked"), function(){            
             imgnamesarr.push($(this).val());
         });
+        
         console.log(imgnamesarr);
         // for img upload
         var totalfiles = document.getElementById('update_uploadFile').files.length;
