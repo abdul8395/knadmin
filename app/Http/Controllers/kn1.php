@@ -1781,12 +1781,12 @@ public  function update_tbl_area_b_violations(Request $request){
     // for imgs remove
     $imgnamesarr=explode(",",$imgarr);
     $c=count($imgnamesarr);
-    echo $c;
+    // echo $c;
     //print_r($imgnamesarr);
     if ($handle = opendir("/var/www/html/kn/assets/img/SettlerViolation_Pictures/$picture_id/")) {
         while (false !== ($entry = readdir($handle))) {
             if ($entry != "." && $entry != "..") {
-                for($i=0; $i<=$c; $i++){
+                for($i=0; $i<$c; $i++){
                     if($entry==$imgnamesarr[$i]){
                         unlink("/var/www/html/kn/assets/img/SettlerViolation_Pictures/$picture_id/$entry");
                     }
