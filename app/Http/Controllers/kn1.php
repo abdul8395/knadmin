@@ -1857,15 +1857,15 @@ public  function update_tbl_area_b_violations(Request $request){
 
     if(empty($geom)){
         $q="UPDATE public.tbl_area_b_violations
-        SET fid_=$fid_, picture_id=$picture_id, categoryid=$categoryid, cat_eng='$cat_eng', desc_arb='$desc_arb', desc_eng='$desc_eng', desc_heb='$desc_heb', set_heb='$set_heb', set_arb='$set_arb', set_eng='$set_eng', pal_heb='$pal_heb', pal_arb='$pal_arb', pal_eng='$pal_eng', art_heb='$art_heb', art_eng='$art_eng', art_arb='$art_arb', titt_heb='$titt_heb', titt_eng='$titt_eng', titt_arb='$titt_arb', artheb1='$artheb1', arteng1='$arteng1', artarb1='$artarb1', tittheb1='$tittheb1', titteng1='$titteng1', tittarb1='$tittarb1'
+        SET fid_=$fid_, picture_id=NULLIF('$picture_id','')::integer, categoryid=NULLIF('$categoryid','')::integer, cat_eng='$cat_eng', desc_arb='$desc_arb', desc_eng='$desc_eng', desc_heb='$desc_heb', set_heb='$set_heb', set_arb='$set_arb', set_eng='$set_eng', pal_heb='$pal_heb', pal_arb='$pal_arb', pal_eng='$pal_eng', art_heb='$art_heb', art_eng='$art_eng', art_arb='$art_arb', titt_heb='$titt_heb', titt_eng='$titt_eng', titt_arb='$titt_arb', artheb1='$artheb1', arteng1='$arteng1', artarb1='$artarb1', tittheb1='$tittheb1', titteng1='$titteng1', tittarb1='$tittarb1'
         WHERE gid=$gid;";
-        // DB::update($q);
-        echo $q;
-        exit();
+        DB::update($q);
+        // echo $q;
+        // exit();
         return json_encode(true);
     }else{
         $q="UPDATE public.tbl_area_b_violations
-        SET fid_=$fid_, x=$x, y=$y, picture_id=$picture_id, categoryid=$categoryid, cat_eng='$cat_eng', desc_arb='$desc_arb', desc_eng='$desc_eng', desc_heb='$desc_heb', set_heb='$set_heb', set_arb='$set_arb', set_eng='$set_eng', pal_heb='$pal_heb', pal_arb='$pal_arb', pal_eng='$pal_eng', art_heb='$art_heb', art_eng='$art_eng', art_arb='$art_arb', titt_heb='$titt_heb', titt_eng='$titt_eng', titt_arb='$titt_arb', artheb1='$artheb1', arteng1='$arteng1', artarb1='$artarb1', tittheb1='$tittheb1', titteng1='$titteng1', tittarb1='$tittarb1', geom=ST_GeomFromGeoJSON('$geom')
+        SET fid_=$fid_, x=$x, y=$y, picture_id=NULLIF('$picture_id','')::integer, categoryid=NULLIF('$categoryid','')::integer, cat_eng='$cat_eng', desc_arb='$desc_arb', desc_eng='$desc_eng', desc_heb='$desc_heb', set_heb='$set_heb', set_arb='$set_arb', set_eng='$set_eng', pal_heb='$pal_heb', pal_arb='$pal_arb', pal_eng='$pal_eng', art_heb='$art_heb', art_eng='$art_eng', art_arb='$art_arb', titt_heb='$titt_heb', titt_eng='$titt_eng', titt_arb='$titt_arb', artheb1='$artheb1', arteng1='$arteng1', artarb1='$artarb1', tittheb1='$tittheb1', titteng1='$titteng1', tittarb1='$tittarb1', geom=ST_GeomFromGeoJSON('$geom')
         WHERE gid=$gid;";
         DB::update($q);
         // echo $q;
