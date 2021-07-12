@@ -1738,8 +1738,8 @@ public  function deletebtn_tbl_area_b_violations($data){
 
 public  function editbtn_tbl_area_b_violations($gid){
     $q = DB::select("SELECT * FROM public.tbl_area_b_violations where gid=$gid;");
-    
-    $pidq = DB::select("select picture_id from public.tbl_area_b_violationswhere gid=$gid;");
+
+    $pidq = DB::select("select picture_id from public.tbl_area_b_violations where gid=$gid;");
     $arr = json_decode(json_encode($q), true);
     $picture_id=implode("",$arr[0]);
 
