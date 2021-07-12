@@ -1810,11 +1810,13 @@ public  function update_tbl_area_b_violations(Request $request){
             $filePath = $update_uploadFile_arr[$i]->move($url, $fileName);
         }
     }
-
-    $geom = json_decode($request['upgeom'], true);
-     $geom1 = json_decode($geom, true);
-     $x=$geom1['coordinates'][0];
-     $y=$geom1['coordinates'][1];
+    if(isset($geom)){
+        $geom = json_decode($request['upgeom'], true);
+        $geom1 = json_decode($geom, true);
+        $x=$geom1['coordinates'][0];
+        $y=$geom1['coordinates'][1];
+    }
+    
      
         // Function to remove the spacial 
         function RemoveSpecialChar($str) {
