@@ -1783,7 +1783,7 @@ public  function update_tbl_area_b_violations(Request $request){
             if ($entry != "." && $entry != "..") {
                 for($i=0; $i<count($imgnamesarr); $i++){
                     if($entry==$imgnamesarr[$i]){
-                        unlink("./var/www/html/kn/assets/img/SettlerViolation_Pictures/$picture_id/.$entry");
+                        unlink("./var/www/html/kn/assets/img/SettlerViolation_Pictures/$picture_id/$entry");
                     }
                 }
             }
