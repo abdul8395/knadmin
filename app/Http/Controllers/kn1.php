@@ -1735,7 +1735,7 @@ public  function editbtn_tbl_area_b_violations($gid){
     $q = DB::select("SELECT * FROM public.tbl_area_b_violations where gid=$gid;");
     $imagenames= array();
     
-    if ($handle = opendir('uploads/imgs')) {
+    if ($handle = opendir('/var/www/html/kn/assets/img/SettlerViolation_Pictures/'.$gis)) {
         while (false !== ($entry = readdir($handle))) {
             if ($entry != "." && $entry != "..") {
                 $imagenames[]= $entry;
@@ -1752,26 +1752,7 @@ public  function editbtn_tbl_area_b_violations($gid){
 
     // return json_encode($q);
 }
-public  function removeimg_tbl_area_b_violations(Request $request){
-    // echo $request['pid'];
-    // echo $request['imgname'];
-//    return $request->all();
-    // exit();
 
-    if ($handle = opendir('uploads/imgs')) {
-        while (false !== ($entry = readdir($handle))) {
-            if ($entry != "." && $entry != "..") {
-                if($entry==$request['imgname']){
-                    unlink('./uploads/imgs/'.$entry);
-                }
-            }
-        }
-        closedir($handle);
-    }
-    exit();
-
-    // return json_encode($q);
-}
 
 
     
