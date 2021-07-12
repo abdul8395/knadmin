@@ -1781,7 +1781,7 @@ public  function update_tbl_area_b_violations(Request $request){
     // for imgs remove
     $imgnamesarr=explode(",",$imgarr);
     print_r($imgnamesarr);
-    $c=count($imgnamesarr);
+    $c=sizeof($imgnamesarr);
     // echo $c;
     //print_r($imgnamesarr);
     if ($handle = opendir("/var/www/html/kn/assets/img/SettlerViolation_Pictures/$picture_id/")) {
