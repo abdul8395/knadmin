@@ -1661,9 +1661,9 @@ public  function insert_tbl_area_b_violations(Request $request){
     for($i=0; $i<count($ins_uploadFile_arr); $i++){
         $fileName = $ins_uploadFile_arr[$i]->getClientOriginalName(); 
         
-        $url=public_path('/var/www/html/kn/assets/img/SettlerViolation_Pictures/'.$request['picture_id']);
+        $url=public_path('/var/www/html/kn/assets/img/SettlerViolation_Pictures/'.$picture_id.'/');
         if(!$url){
-            mkdir('/var/www/html/kn/assets/img/SettlerViolation_Pictures/'.$request['picture_id'],0755);
+            mkdir('/var/www/html/kn/assets/img/SettlerViolation_Pictures/'.$picture_id.'/', 0755);
         }
         $filePath = $ins_uploadFile_arr[$i]->move($url, $fileName);
     }
