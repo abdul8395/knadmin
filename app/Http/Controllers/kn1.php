@@ -1660,7 +1660,11 @@ public  function insert_tbl_area_b_violations(Request $request){
     $ins_uploadFile_arr=$request['ins_uploadFile'];
     for($i=0; $i<count($ins_uploadFile_arr); $i++){
         $fileName = $ins_uploadFile_arr[$i]->getClientOriginalName(); 
+        
         $url=public_path('/var/www/html/kn/assets/img/SettlerViolation_Pictures/'.$request['picture_id']);
+        if(!$url){
+            mkdir('/var/www/html/kn/assets/img/SettlerViolation_Pictures/'.$request['picture_id'],0755);
+        }
         $filePath = $ins_uploadFile_arr[$i]->move($url, $fileName);
     }
 
