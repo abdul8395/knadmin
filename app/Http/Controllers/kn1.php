@@ -1780,6 +1780,7 @@ public  function update_tbl_area_b_violations(Request $request){
 
     // for imgs remove
     $imgnamesarr=explode(",",$imgarr);
+    print_r($imgnamesarr);
     $c=count($imgnamesarr);
     // echo $c;
     //print_r($imgnamesarr);
