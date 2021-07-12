@@ -1739,7 +1739,7 @@ public  function editbtn_tbl_area_b_violations($gid){
     $q = DB::select("SELECT * FROM public.tbl_area_b_violations where gid=$gid;");
     $imagenames= array();
     
-    if ($handle = opendir('/var/www/html/kn/assets/img/SettlerViolation_Pictures/'.$gid)) {
+    if ($handle = opendir("/var/www/html/kn/assets/img/SettlerViolation_Pictures/$gid/")) {
         while (false !== ($entry = readdir($handle))) {
             if ($entry != "." && $entry != "..") {
                 $imagenames[]= $entry;
@@ -1769,12 +1769,12 @@ public  function update_tbl_area_b_violations(Request $request){
 
     // for imgs remove
     $imgnamesarr=explode(",",$request['imgnamesarr']);
-    if ($handle = opendir('/var/www/html/kn/assets/img/SettlerViolation_Pictures/'.$picture_id)) {
+    if ($handle = opendir("/var/www/html/kn/assets/img/SettlerViolation_Pictures/$picture_id/")) {
         while (false !== ($entry = readdir($handle))) {
             if ($entry != "." && $entry != "..") {
                 for($i=0; $i<count($imgnamesarr); $i++){
                     if($entry==$imgnamesarr[$i]){
-                        unlink('./var/www/html/kn/assets/img/SettlerViolation_Pictures/'.$picture_id.'/'.$entry);
+                        unlink("./var/www/html/kn/assets/img/SettlerViolation_Pictures/$picture_id/$entry");
                     }
                 }
             }
@@ -1785,7 +1785,10 @@ public  function update_tbl_area_b_violations(Request $request){
     $update_uploadFile_arr=$request['update_uploadFile'];
     for($i=0; $i<count($update_uploadFile_arr); $i++){
         $fileName = $update_uploadFile_arr[$i]->getClientOriginalName(); 
-        $url=public_path('/var/www/html/kn/assets/img/SettlerViolation_Pictures/'.$picture_id);
+        $url="/var/www/html/kn/assets/img/SettlerViolation_Pictures/$picture_id/";
+        if(!$url){
+            mkdir("/var/www/html/kn/assets/img/SettlerViolation_Pictures/$picture_id/", 0755);
+        }
         $filePath = $update_uploadFile_arr[$i]->move($url, $fileName);
     }
 

@@ -2353,6 +2353,7 @@ function insert_tbl_area_b_violations() {
                     toastr.success("inserted Successfully");
                     $("#insert_modal").modal("hide");
                     $('#hidngeom').val('');
+                    location.reload();
                 }
                 else {
                     toastr.error("can't insert Error");
