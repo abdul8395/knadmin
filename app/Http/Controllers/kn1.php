@@ -1798,7 +1798,8 @@ public  function update_tbl_area_b_violations(Request $request){
     }
     // for imgs uploads
     $uploadsfilesarray=$request['update_uploadFile'];
-    if(sizeof($uploadsfilesarray)>0){
+    // echo gettype($uploadsfilesarray);
+    if(isset($uploadsfilesarray)){
         $update_uploadFile_arr=$uploadsfilesarray;
         for($i=0; $i<sizeof($update_uploadFile_arr); $i++){
             $fileName = $update_uploadFile_arr[$i]->getClientOriginalName(); 
