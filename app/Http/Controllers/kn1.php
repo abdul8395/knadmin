@@ -1798,9 +1798,9 @@ public  function update_tbl_area_b_violations(Request $request){
     }
     // for imgs uploads
     $uploadsfilesarray=$request['update_uploadFile'];
-    if(sizeof($uploadsfilesarray)!=0){
+    if(sizeof($uploadsfilesarray)>0){
         $update_uploadFile_arr=$uploadsfilesarray;
-        for($i=0; $i<count($update_uploadFile_arr); $i++){
+        for($i=0; $i<sizeof($update_uploadFile_arr); $i++){
             $fileName = $update_uploadFile_arr[$i]->getClientOriginalName(); 
             $url="/var/www/html/kn/assets/img/SettlerViolation_Pictures/$picture_id/";
             if(!$url){
