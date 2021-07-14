@@ -1612,14 +1612,14 @@ public  function pageno_tbl_seizure_all($pageno){
         $objectid=$request->data['objectid'];
         $id=($request->data['id']);
         $name_hebrew=RemoveSpecialChar($request->data['name_hebrew']);
-        $name_english=($request->data['name_english']);
+        $name_english=RemoveSpecialChar($request->data['name_english']);
         $et_id=($request->data['et_id']);
         $shape_leng=($request->data['shape_leng']);
         $shape_area=($request->data['shape_area']);
         $gis_id=($request->data['gis_id']);
         $type=($request->data['type']);
         $area=($request->data['area']);
-        $name_arabic=($request->data['name_arabic']);
+        $name_arabic=RemoveSpecialChar($request->data['name_arabic']);
         $fid=($request->data['fid']);
 
 
