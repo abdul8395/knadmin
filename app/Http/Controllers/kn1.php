@@ -1627,9 +1627,8 @@ public  function pageno_tbl_seizure_all($pageno){
             $q="UPDATE public.tbl_settlements
             SET objectid=NULLIF('$objectid','')::integer, id=NULLIF('$id','')::integer, name_hebrew='$name_hebrew', name_english='$name_english', et_id=NULLIF('$et_id','')::integer, shape_leng=NULLIF('$shape_leng','')::integer, shape_area=NULLIF('$shape_area','')::integer, gis_id=NULLIF('$gis_id','')::integer, type='$type', area=NULLIF('$area','')::integer, name_arabic='$name_arabic'
             WHERE fid=$fid;";
-            // DB::update($q);
-            echo $q;
-            exit();
+            DB::update($q);
+
             return json_encode(true);
         }else{
             $q="UPDATE public.tbl_settlements
