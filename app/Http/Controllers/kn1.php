@@ -1983,7 +1983,8 @@ public  function update_tbl_area_b_violations(Request $request){
         // echo $shpfilename;
         try {
             // Open Shapefile
-            $shppath=public_path('uploads\shapefiles\\'.$fname.'\\'.$shpfilename);
+            $shppath=public_path('uploads/shapefiles/'.$fname.'/'.$shpfilename);
+            
             // echo $shppath; C:\xampp\htdocs\KN_admin\public\uploads\shapefiles\tbl_area_b_demolitions\tbl_area_b_demolitions.shp
             // $shppath=storage_path('app\public'.'\\'.$fname.'\\'.$shpfilename);
             // echo $shppath;
