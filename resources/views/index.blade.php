@@ -2257,17 +2257,17 @@ function insert_tbl_seizure_ab() {
     function update_tbl_settlements() {
         var hidnupdatedgeom=$('#hidnupdatedgeom').val()
         var reqdata={
-            objectid:$('#ins_objectid').val(),
-            id:$('#ins_id').val(),
-            name_hebrew:$('#ins_name_hebrew').val(),
-            name_english:$('#ins_name_english').val(),
-            et_id:$('#ins_et_id').val(),
-            shape_leng:$('#ins_shape_leng').val(),
-            shape_area:$('#ins_shape_area').val(),
-            gis_id:$('#ins_gis_id').val(),
-            type:$('#ins_type').val(),
-            area:$('#ins_area').val(),
-            name_arabic:$('#ins_name_arabic').val(),
+            objectid:$('#objectid').val(),
+            id:$('#id').val(),
+            name_hebrew:$('#name_hebrew').val(),
+            name_english:$('#name_english').val(),
+            et_id:$('#et_id').val(),
+            shape_leng:$('#shape_leng').val(),
+            shape_area:$('#shape_area').val(),
+            gis_id:$('#gis_id').val(),
+            type:$('#type').val(),
+            area:$('#area').val(),
+            name_arabic:$('#name_arabic').val(),
             fid:$('#hidnfid').val(),
             upgeom:JSON.stringify(hidnupdatedgeom)
         };
