@@ -1955,7 +1955,7 @@ public  function update_tbl_area_b_violations(Request $request){
         $fileName = $request->file->getClientOriginalName();
         $fname=basename($fileName,".zip");
         // $filePath = $request->file->move(public_path('shapefiles'), $fileName);
-        $shpfilename;
+        $shpfilename='';
         if(isset($request->file)){
             $unzipper  = new Unzip();
             $filePath = $request->file->move(public_path('uploads/shapefiles'), $fileName);
@@ -2443,6 +2443,50 @@ public  function update_tbl_area_b_violations(Request $request){
                     $q.="(";
                     $q.=$data['FID'].", ". "'".$data['OBJECTID']."'" .", "."'".$data['ID']."'".", ".$data['NAME_HEBREW'].", "."'".$data['NAME_ENGLISH']."'".", ".$data['ET_ID'].", ".$data['SHAPE_LENG'].", ".$data['SHAPE_AREA'].", ".$data['GIS_ID'].", ".$data['TYPE'].", ".$data['AREA'].", ".$data['NAME_ARABIC'].", ".\DB::raw("ST_GeomFromText('$geom',4326)");
                     $q.="), ";
+            }
+            // $fq = rtrim($q, ',');
+            $qf= rtrim($q, " ,");
+            // echo $qf;
+            // exit();
+            $pgq=DB::insert($qf);
+            if($pgq){
+                echo json_encode(true);
+                exit();
+            }
+            else{
+                echo json_encode(pg_result_error($pgq));
+            }
+        }elseif($tbl_name == 'area_b_violations'){
+            
+          
+            $q="INSERT INTO public.tbl_area_b_violations(
+                fid_, x, y, picture_id, categoryid, cat_eng, desc_arb, desc_eng, desc_heb, set_heb, set_arb, set_eng, pal_heb, pal_arb, pal_eng, art_heb, art_eng, art_arb, titt_heb, titt_eng, titt_arb, artheb1, arteng1, artarb1, tittheb1, titteng1, tittarb1, geom)
+                VALUES";
+            while ($Geometry = $Shapefile->fetchRecord()) {
+                    // Skip the record if marked as "deleted"
+                    if ($Geometry->isDeleted()) {
+                        continue;
+                    }
+                    $geom=$Geometry->getWKT();
+                    $data=$Geometry->getDataArray();
+                    // print_r($data);
+                    // exit();
+                    $q.="(";
+                     $q.="'".(integer)$data['FID_']."'" .", "."'".(integer)$data['X']."'".", ".(integer)$data['Y'].", "."'".(integer)$data['PICTURE_ID']."'".", ".(integer)$data['CATEGORYID'].", '".str_replace("'","''",$data['CAT_ENG'])."', 
+                    '".str_replace("'","''",$data['DESC_ARB'])."', '".str_replace("'","''",$data['DESC_ENG'])."', 
+                    '".str_replace("'","''",$data['DESC_HEB'])."', '".str_replace("'","''",$data['SET_HEB'])."',
+                    '".str_replace("'","''",$data['SET_ARB'])."','".str_replace("'","''",$data['SET_ENG'])."',
+                    '".str_replace("'","''",$data['PAL_HEB'])."','".str_replace("'","''",$data['PAL_ARB'])."',
+                    '".str_replace("'","''",$data['PAL_ENG'])."','".str_replace("'","''",$data['ART_HEB'])."',
+                    '".str_replace("'","''",$data['ART_ENG'])."','".str_replace("'","''",$data['ART_ARB'])."',
+                    '".str_replace("'","''",$data['TITT_HEB'])."','".str_replace("'","''",$data['TITT_ENG'])."',
+                    '".str_replace("'","''",$data['TITT_ARB'])."','".str_replace("'","''",$data['ARTHEB1'])."',
+                    '".str_replace("'","''",$data['ARTENG1'])."','".str_replace("'","''",$data['ARTARB1'])."',
+                    '".str_replace("'","''",$data['TITTHEB1'])."','".str_replace("'","''",$data['TITTENG1'])."',
+                    '".str_replace("'","''",$data['TITTARB1'])."', ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                    $q.="), ";
+                    // echo $q;
+                    // exit();
             }
             // $fq = rtrim($q, ',');
             $qf= rtrim($q, " ,");
