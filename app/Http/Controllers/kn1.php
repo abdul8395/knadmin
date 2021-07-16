@@ -2036,7 +2036,7 @@ public  function update_tbl_area_b_violations(Request $request){
                     $data=$Geometry->getDataArray();
                     // print_r($data);
                     $q.="(";
-                    $q.=$data['FID'].", ". "'".$data['ENTITY']."'" .", "."'".$data['LAYER']."'".", ".$data['COLOR'].", "."'".$data['LINETYPE']."'".", ".$data['ELEVATION'].", ".$data['LINEWT'].", "."'".$data['REFNAME']."'".", ".$data['ANGLE'].", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                    $q.="'".str_replace("'","''",$data['ENTITY'])."','".str_replace("'","''",$data['LAYER'])."', "."'".(integer)$data['COLOR']."'".",'".str_replace("'","''",$data['LINETYPE'])."', "."'".(integer)$data['ELEVATION']."'".", "."'".(integer)$data['LINEWT']."'".",'".str_replace("'","''",$data['REFNAME'])."', "."'".(integer)$data['ANGLE']."'".", ".\DB::raw("ST_GeomFromText('$geom',4326)");
                     $q.="), ";
             }
             // $fq = rtrim($q, ',');
@@ -2064,7 +2064,7 @@ public  function update_tbl_area_b_violations(Request $request){
                     // print_r($data);
                     // exit();
                     $q.="(";
-                    $q.=$data['FID'].", ". "'".$data['OBJECTID']."'" .", "."'".$data['CLASS']."'".", ".$data['SHAPE_LENG'].", "."'".$data['SHAPE_AREA']."'".", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                    $q.="'".(integer)$data['OBJECTID']."'" .", '".str_replace("'","''",$data['CLASS'])."', ".(integer)$data['SHAPE_LENG'].", "."'".(integer)$data['SHAPE_AREA']."'".", ".\DB::raw("ST_GeomFromText('$geom',4326)");
                     $q.="), ";
             }
             // $fq = rtrim($q, ',');
@@ -2093,7 +2093,7 @@ public  function update_tbl_area_b_violations(Request $request){
                     // print_r($data);
                     // exit();
                     $q.="(";
-                    $q.=$data['FID'].", "."'".$data['CLASS']."'".", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                    $q.="'".str_replace("'","''",$data['CLASS'])."', ".\DB::raw("ST_GeomFromText('$geom',4326)");
                     $q.="), ";
             }
             // $fq = rtrim($q, ',');
@@ -2151,7 +2151,7 @@ public  function update_tbl_area_b_violations(Request $request){
                     // print_r($data);
                     // exit();
                     $q.="(";
-                    $q.=$data['FID'].", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                    $q.="'".(integer)$data['FID']."'" .", ".\DB::raw("ST_GeomFromText('$geom',4326)");
                     $q.="), ";
             }
             // $fq = rtrim($q, ',');
@@ -2180,7 +2180,7 @@ public  function update_tbl_area_b_violations(Request $request){
                     // print_r($data);
                     // exit();
                     $q.="(";
-                    $q.=$data['FID'].", ". "'".$data['AREAUPDT']."'" .", "."'".$data['AREA']."'".", ".$data['SHAPE_LENG'].", "."'".$data['SHAPE_AREA']."'".", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                     $q.="'".(integer)$data['FID']."'" .", "."'".(integer)$data['AREAUPDT']."'".", "."'".(integer)$data['AREA']."'".", "."'".(integer)$data['SHAPE_LENG']."'".", "."'".(integer)$data['SHAPE_AREA']."'".", ".\DB::raw("ST_GeomFromText('$geom',4326)");
                     $q.="), ";
             }
             // $fq = rtrim($q, ',');
@@ -2209,7 +2209,7 @@ public  function update_tbl_area_b_violations(Request $request){
                     // print_r($data);
                     // exit();
                     $q.="(";
-                    $q.=$data['FID'].", ".$data['ID'].", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                    $q.="'".(integer)$data['ID']."'" .", ".\DB::raw("ST_GeomFromText('$geom',4326)");
                     $q.="), ";
             }
             // $fq = rtrim($q, ',');
@@ -2238,7 +2238,7 @@ public  function update_tbl_area_b_violations(Request $request){
                     // print_r($data);
                     // exit();
                     $q.="(";
-                    $q.=$data['FID'].", ". "'".$data['OBJECTID']."'" .", ".$data['ID'].", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                    $q.="'".(integer)$data['OBJECTID']."'" .", "."'".(integer)$data['ID']."'".", ".\DB::raw("ST_GeomFromText('$geom',4326)");
                     $q.="), ";
             }
             // $fq = rtrim($q, ',');
@@ -2267,7 +2267,7 @@ public  function update_tbl_area_b_violations(Request $request){
                     // print_r($data);
                     // exit();
                     $q.="(";
-                    $q.=$data['FID'].", ". "'".$data['REASON']."'" .", "."'".$data['TITLE']."'".", ".$data['SIGN_DATE'].", "."'".$data['DISTRICT']."'".", "."'".$data['REMARK']."'".", "."'".$data['CREATED_US']."'".", "."'".$data['CREATED_DA']."'".", "."'".$data['LAST_EDITE']."'".", "."'".$data['LAST_EDI_1']."'".", "."'".$data['SHAPE_LENG']."'".", "."'".$data['SHAPE_AREA']."'".", "."'".$data['D_REASON']."'".", "."'".$data['D_DISTRICT']."'".", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                    $q.="'".(integer)$data['REASON']."'" .", '".str_replace("'","''",$data['TITLE'])."', '".str_replace("'","''",$data['SIGN_DATE'])."', "."'".(integer)$data['DISTRICT']."'".", '".str_replace("'","''",$data['REMARK'])."', '".str_replace("'","''",$data['CREATED_US'])."', '".str_replace("'","''",$data['CREATED_DA'])."', '".str_replace("'","''",$data['LAST_EDITE'])."', '".str_replace("'","''",$data['LAST_EDI_1'])."', ".(integer)$data['SHAPE_LENG'].", "."'".(integer)$data['SHAPE_LENG']."'".", ".(integer)$data['SHAPE_AREA'].", '".str_replace("'","''",$data['D_REASON'])."', '".str_replace("'","''",$data['D_DISTRICT'])."', ".\DB::raw("ST_GeomFromText('$geom',4326)");
                     $q.="), ";
             }
             // $fq = rtrim($q, ',');
@@ -2296,7 +2296,7 @@ public  function update_tbl_area_b_violations(Request $request){
                     // print_r($data);
                     // exit();
                     $q.="(";
-                    $q.=$data['ID'].", ". "'".$data['OBJECTID']."'" .", ".$data['SHAPE_LENG'].", "."'".$data['SHAPE_AREA']."'".", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                    $q.="'".(integer)$data['OBJECTID']."'" .", "."'".(integer)$data['SHAPE_LENG']."'".", "."'".(integer)$data['SHAPE_AREA']."'".", ".\DB::raw("ST_GeomFromText('$geom',4326)");
                     $q.="), ";
             }
             // $fq = rtrim($q, ',');
@@ -2325,7 +2325,7 @@ public  function update_tbl_area_b_violations(Request $request){
                     // print_r($data);
                     // exit();
                     $q.="(";
-                    $q.=$data['FID'].", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                    $q.="'".(integer)$data['ID']."'" .", ".\DB::raw("ST_GeomFromText('$geom',4326)");
                     $q.="), ";
             }
             // $fq = rtrim($q, ',');
@@ -2354,7 +2354,7 @@ public  function update_tbl_area_b_violations(Request $request){
                     // print_r($data);
                     // exit();
                     $q.="(";
-                    $q.=$data['FID'].", ".$data['ID'].", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                    $q.="'".(integer)$data['ID']."'" .", ".\DB::raw("ST_GeomFromText('$geom',4326)");
                     $q.="), ";
             }
             // $fq = rtrim($q, ',');
@@ -2383,7 +2383,7 @@ public  function update_tbl_area_b_violations(Request $request){
                     // print_r($data);
                     // exit();
                     $q.="(";
-                    $q.=$data['ID'].", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                    $q.="'".(integer)$data['ID']."'" .", ".\DB::raw("ST_GeomFromText('$geom',4326)");
                     $q.="), ";
             }
             // $fq = rtrim($q, ',');
@@ -2412,7 +2412,7 @@ public  function update_tbl_area_b_violations(Request $request){
                     // print_r($data);
                     // exit();
                     $q.="(";
-                    $q.=$data['FID'].", ". "'".$data['FORM_DATE']."'" .", "."'".$data['TO_DATE']."'".", ".$data['AR_NUM'].", "."'".$data['AREA']."'".", ".$data['תקף'].", ".$data['שימוש'].", ".$data['פונקצ'].", ".$data['הערו_1'].", ".$data['הערות'].", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                    $q.="'".str_replace("'","''",$data['FORM_DATE'])."', '".str_replace("'","''",$data['TO_DATE'])."', '".str_replace("'","''",$data['AR_NUM'])."', ".(integer)$data['AREA'].", "."'".(integer)$data['תקף']."'".", '".str_replace("'","''",$data['שימוש'])."', '".str_replace("'","''",$data['פונקצ'])."', '".str_replace("'","''",$data['הערו_1'])."', '".str_replace("'","''",$data['הערות'])."', ".\DB::raw("ST_GeomFromText('$geom',4326)");
                     $q.="), ";
             }
             // $fq = rtrim($q, ',');
@@ -2441,7 +2441,7 @@ public  function update_tbl_area_b_violations(Request $request){
                     // print_r($data);
                     // exit();
                     $q.="(";
-                    $q.=$data['FID'].", ". "'".$data['OBJECTID']."'" .", "."'".$data['ID']."'".", ".$data['NAME_HEBREW'].", "."'".$data['NAME_ENGLISH']."'".", ".$data['ET_ID'].", ".$data['SHAPE_LENG'].", ".$data['SHAPE_AREA'].", ".$data['GIS_ID'].", ".$data['TYPE'].", ".$data['AREA'].", ".$data['NAME_ARABIC'].", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                    $q.="'".(integer)$data['OBJECTID']."'" .", "."'".(integer)$data['ID']."'".", '".str_replace("'","''",$data['NAME_HEBREW'])."', '".str_replace("'","''",$data['NAME_ENGLISH'])."', ".(integer)$data['ET_ID'].", "."'".(integer)$data['SHAPE_LENG']."'".", ".(integer)$data['SHAPE_AREA'].", ".(integer)$data['GIS_ID'].", '".str_replace("'","''",$data['TYPE'])."', ".(integer)$data['AREA'].", '".str_replace("'","''",$data['NAME_ARABIC'])."', ".\DB::raw("ST_GeomFromText('$geom',4326)");
                     $q.="), ";
             }
             // $fq = rtrim($q, ',');
