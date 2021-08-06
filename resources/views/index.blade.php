@@ -137,6 +137,7 @@
    var tbl_name;
    var geojsonfromhiddenfld;
    var dtable
+   var feature_id
    
 
             var map = L.map('map').setView([31.807491554, 35.341034188], 8);
@@ -307,6 +308,9 @@
                                 layer.feature.id=layer.feature.geometry.properties.id
                                 drawnItems.addLayer(layer);
                                 // layer.editing.enable();
+                                // console.log(layer.toGeoJSON());
+                                feature_id=layer.toGeoJSON();
+                                dtable.search(feature_id.id).draw();  
                                 });
                             }
                         }).addTo(this.map);
@@ -317,6 +321,11 @@
                     onEachFeature: function (feature, layer) {
                         layer.on('click', function (e) {
                             drawnItems.addLayer(layer);
+
+                            // console.log(layer.toGeoJSON());
+                            feature_id=layer.toGeoJSON();
+                            dtable.search(feature_id.id).draw();    
+                            // alert(feature_id)
                             // var tbl= '<table class="table_draw" id="tbl_Info"></table>' +
                             //     '<table><tr><td></td><td></td><td></td><td></table>';
                             // layer.bindPopup(tbl, {
