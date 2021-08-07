@@ -13,7 +13,7 @@
 
 
       <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
-{{--        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />--}}
+       <!-- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" /> -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-draw@1.0.4/dist/leaflet.draw.css"/>
 
         
@@ -27,7 +27,7 @@
   <link href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" rel="stylesheet">
 
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-{{--  <link rel="stylesheet" href="{{URL::asset('draw/leaflet.draw.css')}}"/>--}}
+<link rel="stylesheet" href="{{URL::asset('draw/leaflet.draw.css')}}"/>
 
 
 
@@ -65,6 +65,9 @@
                                 </div>
 
                                 <div class="modal-body" >
+                                    <input type="radio" name="tbl_chkbox_val" id="insert_chkbox" value="delete_insert" style="width: 16px; height: 16px;" checked>  <b style="font-size: 20px;">Delete All Previous data & Insert New Data</b>
+                                    <br>
+                                    <input type="radio" name="tbl_chkbox_val" id="update_chkbox" value="insert" style="width: 16px; height: 16px;">  <b style="font-size: 20px;">Insert Data With Previous Data</b>
                                     <div class="form-group row">
                                         <div class="col-sm-12">
                                             <select id="tablename" class="form-control" name="tablename">
@@ -126,9 +129,9 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.js"></script>
 
- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-      <script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-      <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.js"></script>
       
 
 
@@ -2745,11 +2748,13 @@ function insert_tbl_area_b_violations() {
         $("#myForm").on('submit', function(e){
             e.preventDefault();
             var tablename= $("#tablename").val();
+            
             if(tablename)
             {
                 $("#shpfileuploadmodal").hide();
                 var formData = new FormData(this);
                 formData.append('action', 'savadata');
+                  
                 // console.log(formData)
                 $.ajax({
                     type: 'POST',

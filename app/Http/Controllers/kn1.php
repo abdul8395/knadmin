@@ -1951,6 +1951,7 @@ public  function update_tbl_area_b_violations(Request $request){
     public  function shaperead(Request $request){
         // print_r($request->all());
         $tbl_name=$request->tablename;
+        $tbl_chkbox_val=$request->tbl_chkbox_val;
 
         $fileName = $request->file->getClientOriginalName();
         $fname=basename($fileName,".zip");
@@ -1990,7 +1991,7 @@ public  function update_tbl_area_b_violations(Request $request){
             // echo $shppath;
             // exit();
             $Shapefile = new ShapefileReader($shppath);
-            $this->shp($tbl_name,$Shapefile);
+            $this->shp($tbl_chkbox_val,$tbl_name,$Shapefile);
             // Read all the records
             // while ($Geometry = $Shapefile->fetchRecord()) {
             //     // Skip the record if marked as "deleted"
@@ -2021,179 +2022,369 @@ public  function update_tbl_area_b_violations(Request $request){
         }
     }
     // Read all the records
-    public function shp($tbl_name,$Shapefile){
+    public function shp($tbl_chkbox_val,$tbl_name,$Shapefile){
 
         if($tbl_name == 'area_b_demolitions'){
-            $q="INSERT INTO public.tbl_area_b_demolitions(
-                fid, entity, layer, color, linetype, elevation, linewt, refname, angle, geom)
-                VALUES";
-            while ($Geometry = $Shapefile->fetchRecord()) {
-                    // Skip the record if marked as "deleted"
-                    if ($Geometry->isDeleted()) {
-                        continue;
-                    }
-                    $geom=$Geometry->getWKT();
-                    $data=$Geometry->getDataArray();
-                    // print_r($data);
-                    $q.="(";
-                    $q.="'".str_replace("'","''",$data['ENTITY'])."','".str_replace("'","''",$data['LAYER'])."', "."'".(integer)$data['COLOR']."'".",'".str_replace("'","''",$data['LINETYPE'])."', "."'".(integer)$data['ELEVATION']."'".", "."'".(integer)$data['LINEWT']."'".",'".str_replace("'","''",$data['REFNAME'])."', "."'".(integer)$data['ANGLE']."'".", ".\DB::raw("ST_GeomFromText('$geom',4326)");
-                    $q.="), ";
-            }
-            // $fq = rtrim($q, ',');
-            $qf= rtrim($q, " ,");
-            // echo $qf;
-            $pgq=DB::insert($qf);
-            if($pgq){
-                echo json_encode(true);
-                exit();
-            }
-            else{
-                echo json_encode(false);
+            if($tbl_chkbox_val=="delete_insert"){
+                DB::table('tbl_area_b_demolitions')->truncate();
+                $q="INSERT INTO public.tbl_area_b_demolitions(
+                    fid, entity, layer, color, linetype, elevation, linewt, refname, angle, geom)
+                    VALUES";
+                while ($Geometry = $Shapefile->fetchRecord()) {
+                        // Skip the record if marked as "deleted"
+                        if ($Geometry->isDeleted()) {
+                            continue;
+                        }
+                        $geom=$Geometry->getWKT();
+                        $data=$Geometry->getDataArray();
+                        // print_r($data);
+                        $q.="(";
+                        $q.="'".str_replace("'","''",$data['ENTITY'])."','".str_replace("'","''",$data['LAYER'])."', "."'".(integer)$data['COLOR']."'".",'".str_replace("'","''",$data['LINETYPE'])."', "."'".(integer)$data['ELEVATION']."'".", "."'".(integer)$data['LINEWT']."'".",'".str_replace("'","''",$data['REFNAME'])."', "."'".(integer)$data['ANGLE']."'".", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                        $q.="), ";
+                }
+                // $fq = rtrim($q, ',');
+                $qf= rtrim($q, " ,");
+                // echo $qf;
+                $pgq=DB::insert($qf);
+                if($pgq){
+                    echo json_encode(true);
+                    exit();
+                }
+                else{
+                    echo json_encode(false);
+                }
+            }else{
+                $q="INSERT INTO public.tbl_area_b_demolitions(
+                    fid, entity, layer, color, linetype, elevation, linewt, refname, angle, geom)
+                    VALUES";
+                while ($Geometry = $Shapefile->fetchRecord()) {
+                        // Skip the record if marked as "deleted"
+                        if ($Geometry->isDeleted()) {
+                            continue;
+                        }
+                        $geom=$Geometry->getWKT();
+                        $data=$Geometry->getDataArray();
+                        // print_r($data);
+                        $q.="(";
+                        $q.="'".str_replace("'","''",$data['ENTITY'])."','".str_replace("'","''",$data['LAYER'])."', "."'".(integer)$data['COLOR']."'".",'".str_replace("'","''",$data['LINETYPE'])."', "."'".(integer)$data['ELEVATION']."'".", "."'".(integer)$data['LINEWT']."'".",'".str_replace("'","''",$data['REFNAME'])."', "."'".(integer)$data['ANGLE']."'".", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                        $q.="), ";
+                }
+                // $fq = rtrim($q, ',');
+                $qf= rtrim($q, " ,");
+                // echo $qf;
+                $pgq=DB::insert($qf);
+                if($pgq){
+                    echo json_encode(true);
+                    exit();
+                }
+                else{
+                    echo json_encode(false);
+                }
             }
         }elseif($tbl_name == 'area_b_nature_reserve'){
-            $q="INSERT INTO public.tbl_area_b_nature_reserve(
-                fid, objectid, class, shape_leng, shape_area, geom)
-                VALUES";
-            while ($Geometry = $Shapefile->fetchRecord()) {
-                    // Skip the record if marked as "deleted"
-                    if ($Geometry->isDeleted()) {
-                        continue;
-                    }
-                    $geom=$Geometry->getWKT();
-                    $data=$Geometry->getDataArray();
-                    // print_r($data);
-                    // exit();
-                    $q.="(";
-                    $q.="'".(integer)$data['OBJECTID']."'" .", '".str_replace("'","''",$data['CLASS'])."', ".(integer)$data['SHAPE_LENG'].", "."'".(integer)$data['SHAPE_AREA']."'".", ".\DB::raw("ST_GeomFromText('$geom',4326)");
-                    $q.="), ";
-            }
-            // $fq = rtrim($q, ',');
-            $qf= rtrim($q, " ,");
-            // echo $qf;
-            // exit();
-            $pgq=DB::insert($qf);
-            if($pgq){
-                echo json_encode(true);
-                exit();
-            }
-            else{
-                echo json_encode(pg_result_error($pgq));
+            if($tbl_chkbox_val=="delete_insert"){
+                DB::table('tbl_area_b_nature_reserve')->truncate();
+                $q="INSERT INTO public.tbl_area_b_nature_reserve(
+                    fid, objectid, class, shape_leng, shape_area, geom)
+                    VALUES";
+                while ($Geometry = $Shapefile->fetchRecord()) {
+                        // Skip the record if marked as "deleted"
+                        if ($Geometry->isDeleted()) {
+                            continue;
+                        }
+                        $geom=$Geometry->getWKT();
+                        $data=$Geometry->getDataArray();
+                        // print_r($data);
+                        // exit();
+                        $q.="(";
+                        $q.="'".(integer)$data['OBJECTID']."'" .", '".str_replace("'","''",$data['CLASS'])."', ".(integer)$data['SHAPE_LENG'].", "."'".(integer)$data['SHAPE_AREA']."'".", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                        $q.="), ";
+                }
+                // $fq = rtrim($q, ',');
+                $qf= rtrim($q, " ,");
+                // echo $qf;
+                // exit();
+                $pgq=DB::insert($qf);
+                if($pgq){
+                    echo json_encode(true);
+                    exit();
+                }
+                else{
+                    echo json_encode(pg_result_error($pgq));
+                }
+            }else{
+                $q="INSERT INTO public.tbl_area_b_nature_reserve(
+                    fid, objectid, class, shape_leng, shape_area, geom)
+                    VALUES";
+                while ($Geometry = $Shapefile->fetchRecord()) {
+                        // Skip the record if marked as "deleted"
+                        if ($Geometry->isDeleted()) {
+                            continue;
+                        }
+                        $geom=$Geometry->getWKT();
+                        $data=$Geometry->getDataArray();
+                        // print_r($data);
+                        // exit();
+                        $q.="(";
+                        $q.="'".(integer)$data['OBJECTID']."'" .", '".str_replace("'","''",$data['CLASS'])."', ".(integer)$data['SHAPE_LENG'].", "."'".(integer)$data['SHAPE_AREA']."'".", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                        $q.="), ";
+                }
+                // $fq = rtrim($q, ',');
+                $qf= rtrim($q, " ,");
+                // echo $qf;
+                // exit();
+                $pgq=DB::insert($qf);
+                if($pgq){
+                    echo json_encode(true);
+                    exit();
+                }
+                else{
+                    echo json_encode(pg_result_error($pgq));
+                }
             }
         }elseif($tbl_name == 'Area_AB_Combined'){
-            $q="INSERT INTO public.tbl_area_a_and_b_combined(
-                fid, class, geom)
-                VALUES";
-            while ($Geometry = $Shapefile->fetchRecord()) {
-                    // Skip the record if marked as "deleted"
-                    if ($Geometry->isDeleted()) {
-                        continue;
-                    }
-                    $geom=$Geometry->getWKT();
-                    $data=$Geometry->getDataArray();
-                    // print_r($data);
-                    // exit();
-                    $q.="(";
-                    $q.="'".str_replace("'","''",$data['CLASS'])."', ".\DB::raw("ST_GeomFromText('$geom',4326)");
-                    $q.="), ";
-            }
-            // $fq = rtrim($q, ',');
-            $qf= rtrim($q, " ,");
-            // echo $qf;
-            // exit();
-            $pgq=DB::insert($qf);
-            if($pgq){
-                echo json_encode(true);
-                exit();
-            }
-            else{
-                echo json_encode(pg_result_error($pgq));
+            if($tbl_chkbox_val=="delete_insert"){
+                DB::table('tbl_area_a_and_b_combined')->truncate();
+                $q="INSERT INTO public.tbl_area_a_and_b_combined(
+                    fid, class, geom)
+                    VALUES";
+                while ($Geometry = $Shapefile->fetchRecord()) {
+                        // Skip the record if marked as "deleted"
+                        if ($Geometry->isDeleted()) {
+                            continue;
+                        }
+                        $geom=$Geometry->getWKT();
+                        $data=$Geometry->getDataArray();
+                        // print_r($data);
+                        // exit();
+                        $q.="(";
+                        $q.="'".str_replace("'","''",$data['CLASS'])."', ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                        $q.="), ";
+                }
+                // $fq = rtrim($q, ',');
+                $qf= rtrim($q, " ,");
+                // echo $qf;
+                // exit();
+                $pgq=DB::insert($qf);
+                if($pgq){
+                    echo json_encode(true);
+                    exit();
+                }
+                else{
+                    echo json_encode(pg_result_error($pgq));
+                }
+            }else{
+                $q="INSERT INTO public.tbl_area_a_and_b_combined(
+                    fid, class, geom)
+                    VALUES";
+                while ($Geometry = $Shapefile->fetchRecord()) {
+                        // Skip the record if marked as "deleted"
+                        if ($Geometry->isDeleted()) {
+                            continue;
+                        }
+                        $geom=$Geometry->getWKT();
+                        $data=$Geometry->getDataArray();
+                        // print_r($data);
+                        // exit();
+                        $q.="(";
+                        $q.="'".str_replace("'","''",$data['CLASS'])."', ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                        $q.="), ";
+                }
+                // $fq = rtrim($q, ',');
+                $qf= rtrim($q, " ,");
+                // echo $qf;
+                // exit();
+                $pgq=DB::insert($qf);
+                if($pgq){
+                    echo json_encode(true);
+                    exit();
+                }
+                else{
+                    echo json_encode(pg_result_error($pgq));
+                }
             }
         }elseif($tbl_name == 'Area_AB_Naturereserve'){
-            $q="INSERT INTO public.tbl_area_a_area_b_naturereserve(
-                id, objectid, class, shape_leng, shape_area, geom)
-                VALUES";
-            while ($Geometry = $Shapefile->fetchRecord()) {
-                    // Skip the record if marked as "deleted"
-                    if ($Geometry->isDeleted()) {
-                        continue;
-                    }
-                    $geom=$Geometry->getWKT();
-                    $data=$Geometry->getDataArray();
-                    // print_r($data);
-                    // exit();
-                    $q.="(";
-                    $q.=$data['ID'].", ". "'".$data['OBJECTID']."'" .", "."'".$data['CLASS']."'".", ".$data['SHAPE_LENG'].", "."'".$data['SHAPE_AREA']."'".", ".\DB::raw("ST_GeomFromText('$geom',4326)");
-                    $q.="), ";
-            }
-            // $fq = rtrim($q, ',');
-            $qf= rtrim($q, " ,");
-            // echo $qf;
-            // exit();
-            $pgq=DB::insert($qf);
-            if($pgq){
-                echo json_encode(true);
-                exit();
-            }
-            else{
-                echo json_encode(pg_result_error($pgq));
+            if($tbl_chkbox_val=="delete_insert"){
+                DB::table('tbl_area_a_area_b_naturereserve')->truncate();
+                $q="INSERT INTO public.tbl_area_a_area_b_naturereserve(
+                    id, objectid, class, shape_leng, shape_area, geom)
+                    VALUES";
+                while ($Geometry = $Shapefile->fetchRecord()) {
+                        // Skip the record if marked as "deleted"
+                        if ($Geometry->isDeleted()) {
+                            continue;
+                        }
+                        $geom=$Geometry->getWKT();
+                        $data=$Geometry->getDataArray();
+                        // print_r($data);
+                        // exit();
+                        $q.="(";
+                        $q.=$data['ID'].", ". "'".$data['OBJECTID']."'" .", "."'".$data['CLASS']."'".", ".$data['SHAPE_LENG'].", "."'".$data['SHAPE_AREA']."'".", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                        $q.="), ";
+                }
+                // $fq = rtrim($q, ',');
+                $qf= rtrim($q, " ,");
+                // echo $qf;
+                // exit();
+                $pgq=DB::insert($qf);
+                if($pgq){
+                    echo json_encode(true);
+                    exit();
+                }
+                else{
+                    echo json_encode(pg_result_error($pgq));
+                }
+            }else{
+                $q="INSERT INTO public.tbl_area_a_area_b_naturereserve(
+                    id, objectid, class, shape_leng, shape_area, geom)
+                    VALUES";
+                while ($Geometry = $Shapefile->fetchRecord()) {
+                        // Skip the record if marked as "deleted"
+                        if ($Geometry->isDeleted()) {
+                            continue;
+                        }
+                        $geom=$Geometry->getWKT();
+                        $data=$Geometry->getDataArray();
+                        // print_r($data);
+                        // exit();
+                        $q.="(";
+                        $q.=$data['ID'].", ". "'".$data['OBJECTID']."'" .", "."'".$data['CLASS']."'".", ".$data['SHAPE_LENG'].", "."'".$data['SHAPE_AREA']."'".", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                        $q.="), ";
+                }
+                // $fq = rtrim($q, ',');
+                $qf= rtrim($q, " ,");
+                // echo $qf;
+                // exit();
+                $pgq=DB::insert($qf);
+                if($pgq){
+                    echo json_encode(true);
+                    exit();
+                }
+                else{
+                    echo json_encode(pg_result_error($pgq));
+                }
             }
         }elseif($tbl_name == 'area_a_poly'){
-            $q="INSERT INTO public.tbl_area_a_poly(
-                fid, geom)
-                VALUES";
-            while ($Geometry = $Shapefile->fetchRecord()) {
-                    // Skip the record if marked as "deleted"
-                    if ($Geometry->isDeleted()) {
-                        continue;
-                    }
-                    $geom=$Geometry->getWKT();
-                    $data=$Geometry->getDataArray();
-                    // print_r($data);
-                    // exit();
-                    $q.="(";
-                    $q.="'".(integer)$data['FID']."'" .", ".\DB::raw("ST_GeomFromText('$geom',4326)");
-                    $q.="), ";
-            }
-            // $fq = rtrim($q, ',');
-            $qf= rtrim($q, " ,");
-            // echo $qf;
-            // exit();
-            $pgq=DB::insert($qf);
-            if($pgq){
-                echo json_encode(true);
-                exit();
-            }
-            else{
-                echo json_encode(pg_result_error($pgq));
+            if($tbl_chkbox_val=="delete_insert"){
+                DB::table('tbl_area_a_poly')->truncate();
+                $q="INSERT INTO public.tbl_area_a_poly(
+                    fid, geom)
+                    VALUES";
+                while ($Geometry = $Shapefile->fetchRecord()) {
+                        // Skip the record if marked as "deleted"
+                        if ($Geometry->isDeleted()) {
+                            continue;
+                        }
+                        $geom=$Geometry->getWKT();
+                        $data=$Geometry->getDataArray();
+                        // print_r($data);
+                        // exit();
+                        $q.="(";
+                        $q.="'".(integer)$data['FID']."'" .", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                        $q.="), ";
+                }
+                // $fq = rtrim($q, ',');
+                $qf= rtrim($q, " ,");
+                // echo $qf;
+                // exit();
+                $pgq=DB::insert($qf);
+                if($pgq){
+                    echo json_encode(true);
+                    exit();
+                }
+                else{
+                    echo json_encode(pg_result_error($pgq));
+                }
+            }else{
+                $q="INSERT INTO public.tbl_area_a_poly(
+                    fid, geom)
+                    VALUES";
+                while ($Geometry = $Shapefile->fetchRecord()) {
+                        // Skip the record if marked as "deleted"
+                        if ($Geometry->isDeleted()) {
+                            continue;
+                        }
+                        $geom=$Geometry->getWKT();
+                        $data=$Geometry->getDataArray();
+                        // print_r($data);
+                        // exit();
+                        $q.="(";
+                        $q.="'".(integer)$data['FID']."'" .", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                        $q.="), ";
+                }
+                // $fq = rtrim($q, ',');
+                $qf= rtrim($q, " ,");
+                // echo $qf;
+                // exit();
+                $pgq=DB::insert($qf);
+                if($pgq){
+                    echo json_encode(true);
+                    exit();
+                }
+                else{
+                    echo json_encode(pg_result_error($pgq));
+                }
             }
         }elseif($tbl_name == 'area_b_poly'){
-            $q="INSERT INTO public.tbl_area_b_poly(
-                fid, areaupdt, area, shape_leng, shape_area, geom)
-                VALUES";
-            while ($Geometry = $Shapefile->fetchRecord()) {
-                    // Skip the record if marked as "deleted"
-                    if ($Geometry->isDeleted()) {
-                        continue;
-                    }
-                    $geom=$Geometry->getWKT();
-                    $data=$Geometry->getDataArray();
-                    // print_r($data);
-                    // exit();
-                    $q.="(";
-                     $q.="'".(integer)$data['FID']."'" .", "."'".(integer)$data['AREAUPDT']."'".", "."'".(integer)$data['AREA']."'".", "."'".(integer)$data['SHAPE_LENG']."'".", "."'".(integer)$data['SHAPE_AREA']."'".", ".\DB::raw("ST_GeomFromText('$geom',4326)");
-                    $q.="), ";
-            }
-            // $fq = rtrim($q, ',');
-            $qf= rtrim($q, " ,");
-            // echo $qf;
-            // exit();
-            $pgq=DB::insert($qf);
-            if($pgq){
-                echo json_encode(true);
-                exit();
-            }
-            else{
-                echo json_encode(pg_result_error($pgq));
+            if($tbl_chkbox_val=="delete_insert"){
+                DB::table('tbl_area_b_poly')->truncate();
+                $q="INSERT INTO public.tbl_area_b_poly(
+                    fid, areaupdt, area, shape_leng, shape_area, geom)
+                    VALUES";
+                while ($Geometry = $Shapefile->fetchRecord()) {
+                        // Skip the record if marked as "deleted"
+                        if ($Geometry->isDeleted()) {
+                            continue;
+                        }
+                        $geom=$Geometry->getWKT();
+                        $data=$Geometry->getDataArray();
+                        // print_r($data);
+                        // exit();
+                        $q.="(";
+                        $q.="'".(integer)$data['FID']."'" .", "."'".(integer)$data['AREAUPDT']."'".", "."'".(integer)$data['AREA']."'".", "."'".(integer)$data['SHAPE_LENG']."'".", "."'".(integer)$data['SHAPE_AREA']."'".", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                        $q.="), ";
+                }
+                // $fq = rtrim($q, ',');
+                $qf= rtrim($q, " ,");
+                // echo $qf;
+                // exit();
+                $pgq=DB::insert($qf);
+                if($pgq){
+                    echo json_encode(true);
+                    exit();
+                }
+                else{
+                    echo json_encode(pg_result_error($pgq));
+                }
+            }else{
+                $q="INSERT INTO public.tbl_area_b_poly(
+                    fid, areaupdt, area, shape_leng, shape_area, geom)
+                    VALUES";
+                while ($Geometry = $Shapefile->fetchRecord()) {
+                        // Skip the record if marked as "deleted"
+                        if ($Geometry->isDeleted()) {
+                            continue;
+                        }
+                        $geom=$Geometry->getWKT();
+                        $data=$Geometry->getDataArray();
+                        // print_r($data);
+                        // exit();
+                        $q.="(";
+                         $q.="'".(integer)$data['FID']."'" .", "."'".(integer)$data['AREAUPDT']."'".", "."'".(integer)$data['AREA']."'".", "."'".(integer)$data['SHAPE_LENG']."'".", "."'".(integer)$data['SHAPE_AREA']."'".", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                        $q.="), ";
+                }
+                // $fq = rtrim($q, ',');
+                $qf= rtrim($q, " ,");
+                // echo $qf;
+                // exit();
+                $pgq=DB::insert($qf);
+                if($pgq){
+                    echo json_encode(true);
+                    exit();
+                }
+                else{
+                    echo json_encode(pg_result_error($pgq));
+                }
             }
         }elseif($tbl_name == 'area_b_training'){
             $q="INSERT INTO public.tbl_area_b_training(
@@ -2225,64 +2416,130 @@ public  function update_tbl_area_b_violations(Request $request){
                 echo json_encode(pg_result_error($pgq));
             }
         }elseif($tbl_name == 'demolitions_orders'){
-            $q="INSERT INTO public.tbl_demolition_orders(
-                fid, objectid, id, geom)
-                VALUES";
-            while ($Geometry = $Shapefile->fetchRecord()) {
-                    // Skip the record if marked as "deleted"
-                    if ($Geometry->isDeleted()) {
-                        continue;
-                    }
-                    $geom=$Geometry->getWKT();
-                    $data=$Geometry->getDataArray();
-                    // print_r($data);
-                    // exit();
-                    $q.="(";
-                    $q.="'".(integer)$data['OBJECTID']."'" .", "."'".(integer)$data['ID']."'".", ".\DB::raw("ST_GeomFromText('$geom',4326)");
-                    $q.="), ";
-            }
-            // $fq = rtrim($q, ',');
-            $qf= rtrim($q, " ,");
-            // echo $qf;
-            // exit();
-            $pgq=DB::insert($qf);
-            if($pgq){
-                echo json_encode(true);
-                exit();
-            }
-            else{
-                echo json_encode(pg_result_error($pgq));
+            if($tbl_chkbox_val=="delete_insert"){
+                DB::table('tbl_demolition_orders')->truncate();
+                $q="INSERT INTO public.tbl_demolition_orders(
+                    fid, objectid, id, geom)
+                    VALUES";
+                while ($Geometry = $Shapefile->fetchRecord()) {
+                        // Skip the record if marked as "deleted"
+                        if ($Geometry->isDeleted()) {
+                            continue;
+                        }
+                        $geom=$Geometry->getWKT();
+                        $data=$Geometry->getDataArray();
+                        // print_r($data);
+                        // exit();
+                        $q.="(";
+                        $q.="'".(integer)$data['OBJECTID']."'" .", "."'".(integer)$data['ID']."'".", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                        $q.="), ";
+                }
+                // $fq = rtrim($q, ',');
+                $qf= rtrim($q, " ,");
+                // echo $qf;
+                // exit();
+                $pgq=DB::insert($qf);
+                if($pgq){
+                    echo json_encode(true);
+                    exit();
+                }
+                else{
+                    echo json_encode(pg_result_error($pgq));
+                }
+            }else{
+                $q="INSERT INTO public.tbl_demolition_orders(
+                    fid, objectid, id, geom)
+                    VALUES";
+                while ($Geometry = $Shapefile->fetchRecord()) {
+                        // Skip the record if marked as "deleted"
+                        if ($Geometry->isDeleted()) {
+                            continue;
+                        }
+                        $geom=$Geometry->getWKT();
+                        $data=$Geometry->getDataArray();
+                        // print_r($data);
+                        // exit();
+                        $q.="(";
+                        $q.="'".(integer)$data['OBJECTID']."'" .", "."'".(integer)$data['ID']."'".", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                        $q.="), ";
+                }
+                // $fq = rtrim($q, ',');
+                $qf= rtrim($q, " ,");
+                // echo $qf;
+                // exit();
+                $pgq=DB::insert($qf);
+                if($pgq){
+                    echo json_encode(true);
+                    exit();
+                }
+                else{
+                    echo json_encode(pg_result_error($pgq));
+                }
             }
         }elseif($tbl_name == 'expropriation_orders'){
-            $q="INSERT INTO public.tbl_expropriation_orders(
-                id, reason, title, sign_date, district, remark, created_us, created_da, last_edite, last_edi_1, shape_leng, shape_area, d_reason, d_district, geom)
-                VALUES";
-            while ($Geometry = $Shapefile->fetchRecord()) {
-                    // Skip the record if marked as "deleted"
-                    if ($Geometry->isDeleted()) {
-                        continue;
-                    }
-                    $geom=$Geometry->getWKT();
-                    $data=$Geometry->getDataArray();
-                    // print_r($data);
-                    // exit();
-                    $q.="(";
-                    $q.="'".(integer)$data['REASON']."'" .", '".str_replace("'","''",$data['TITLE'])."', '".str_replace("'","''",$data['SIGN_DATE'])."', "."'".(integer)$data['DISTRICT']."'".", '".str_replace("'","''",$data['REMARK'])."', '".str_replace("'","''",$data['CREATED_US'])."', '".str_replace("'","''",$data['CREATED_DA'])."', '".str_replace("'","''",$data['LAST_EDITE'])."', '".str_replace("'","''",$data['LAST_EDI_1'])."', ".(integer)$data['SHAPE_LENG'].", "."'".(integer)$data['SHAPE_LENG']."'".", ".(integer)$data['SHAPE_AREA'].", '".str_replace("'","''",$data['D_REASON'])."', '".str_replace("'","''",$data['D_DISTRICT'])."', ".\DB::raw("ST_GeomFromText('$geom',4326)");
-                    $q.="), ";
-            }
-            // $fq = rtrim($q, ',');
-            $qf= rtrim($q, " ,");
-            // echo $qf;
-            // exit();
-            $pgq=DB::insert($qf);
-            if($pgq){
-                echo json_encode(true);
-                exit();
-            }
-            else{
-                echo json_encode(pg_result_error($pgq));
+            if($tbl_chkbox_val=="delete_insert"){
+                DB::table('tbl_expropriation_orders')->truncate();
+                $q="INSERT INTO public.tbl_expropriation_orders(
+                    id, reason, title, sign_date, district, remark, created_us, created_da, last_edite, last_edi_1, shape_leng, shape_area, d_reason, d_district, geom)
+                    VALUES";
+                while ($Geometry = $Shapefile->fetchRecord()) {
+                        // Skip the record if marked as "deleted"
+                        if ($Geometry->isDeleted()) {
+                            continue;
+                        }
+                        $geom=$Geometry->getWKT();
+                        $data=$Geometry->getDataArray();
+                        // print_r($data);
+                        // exit();
+                        $q.="(";
+                        $q.="'".(integer)$data['REASON']."'" .", '".str_replace("'","''",$data['TITLE'])."', '".str_replace("'","''",$data['SIGN_DATE'])."', "."'".(integer)$data['DISTRICT']."'".", '".str_replace("'","''",$data['REMARK'])."', '".str_replace("'","''",$data['CREATED_US'])."', '".str_replace("'","''",$data['CREATED_DA'])."', '".str_replace("'","''",$data['LAST_EDITE'])."', '".str_replace("'","''",$data['LAST_EDI_1'])."', ".(integer)$data['SHAPE_LENG'].", "."'".(integer)$data['SHAPE_LENG']."'".", ".(integer)$data['SHAPE_AREA'].", '".str_replace("'","''",$data['D_REASON'])."', '".str_replace("'","''",$data['D_DISTRICT'])."', ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                        $q.="), ";
+                }
+                // $fq = rtrim($q, ',');
+                $qf= rtrim($q, " ,");
+                // echo $qf;
+                // exit();
+                $pgq=DB::insert($qf);
+                if($pgq){
+                    echo json_encode(true);
+                    exit();
+                }
+                else{
+                    echo json_encode(pg_result_error($pgq));
+                }
+            }else{
+                $q="INSERT INTO public.tbl_expropriation_orders(
+                    id, reason, title, sign_date, district, remark, created_us, created_da, last_edite, last_edi_1, shape_leng, shape_area, d_reason, d_district, geom)
+                    VALUES";
+                while ($Geometry = $Shapefile->fetchRecord()) {
+                        // Skip the record if marked as "deleted"
+                        if ($Geometry->isDeleted()) {
+                            continue;
+                        }
+                        $geom=$Geometry->getWKT();
+                        $data=$Geometry->getDataArray();
+                        // print_r($data);
+                        // exit();
+                        $q.="(";
+                        $q.="'".(integer)$data['REASON']."'" .", '".str_replace("'","''",$data['TITLE'])."', '".str_replace("'","''",$data['SIGN_DATE'])."', "."'".(integer)$data['DISTRICT']."'".", '".str_replace("'","''",$data['REMARK'])."', '".str_replace("'","''",$data['CREATED_US'])."', '".str_replace("'","''",$data['CREATED_DA'])."', '".str_replace("'","''",$data['LAST_EDITE'])."', '".str_replace("'","''",$data['LAST_EDI_1'])."', ".(integer)$data['SHAPE_LENG'].", "."'".(integer)$data['SHAPE_LENG']."'".", ".(integer)$data['SHAPE_AREA'].", '".str_replace("'","''",$data['D_REASON'])."', '".str_replace("'","''",$data['D_DISTRICT'])."', ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                        $q.="), ";
+                }
+                // $fq = rtrim($q, ',');
+                $qf= rtrim($q, " ,");
+                // echo $qf;
+                // exit();
+                $pgq=DB::insert($qf);
+                if($pgq){
+                    echo json_encode(true);
+                    exit();
+                }
+                else{
+                    echo json_encode(pg_result_error($pgq));
+                }
             }
         }elseif($tbl_name == 'expropriation_orders_AB'){
+            if($tbl_chkbox_val=="delete_insert"){
+                DB::table('tbl_expropriation_orders_ab')->truncate();
             $q="INSERT INTO public.tbl_expropriation_orders_ab(
                 id, objectid, shape_leng, shape_area, geom)
                 VALUES";
@@ -2311,9 +2568,9 @@ public  function update_tbl_area_b_violations(Request $request){
             else{
                 echo json_encode(pg_result_error($pgq));
             }
-        }elseif($tbl_name == 'expropriation_orders_not_AB'){
-            $q="INSERT INTO public.tbl_expropriation_orders_not_ab(
-                fid, geom)
+        }else{
+            $q="INSERT INTO public.tbl_expropriation_orders_ab(
+                id, objectid, shape_leng, shape_area, geom)
                 VALUES";
             while ($Geometry = $Shapefile->fetchRecord()) {
                     // Skip the record if marked as "deleted"
@@ -2325,7 +2582,7 @@ public  function update_tbl_area_b_violations(Request $request){
                     // print_r($data);
                     // exit();
                     $q.="(";
-                    $q.="'".(integer)$data['ID']."'" .", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                    $q.="'".(integer)$data['OBJECTID']."'" .", "."'".(integer)$data['SHAPE_LENG']."'".", "."'".(integer)$data['SHAPE_AREA']."'".", ".\DB::raw("ST_GeomFromText('$geom',4326)");
                     $q.="), ";
             }
             // $fq = rtrim($q, ',');
@@ -2339,166 +2596,402 @@ public  function update_tbl_area_b_violations(Request $request){
             }
             else{
                 echo json_encode(pg_result_error($pgq));
+            }
+        }
+        }elseif($tbl_name == 'expropriation_orders_not_AB'){
+            if($tbl_chkbox_val=="delete_insert"){
+                DB::table('tbl_expropriation_orders_not_ab')->truncate();
+                $q="INSERT INTO public.tbl_expropriation_orders_not_ab(
+                    fid, geom)
+                    VALUES";
+                while ($Geometry = $Shapefile->fetchRecord()) {
+                        // Skip the record if marked as "deleted"
+                        if ($Geometry->isDeleted()) {
+                            continue;
+                        }
+                        $geom=$Geometry->getWKT();
+                        $data=$Geometry->getDataArray();
+                        // print_r($data);
+                        // exit();
+                        $q.="(";
+                        $q.="'".(integer)$data['ID']."'" .", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                        $q.="), ";
+                }
+                // $fq = rtrim($q, ',');
+                $qf= rtrim($q, " ,");
+                // echo $qf;
+                // exit();
+                $pgq=DB::insert($qf);
+                if($pgq){
+                    echo json_encode(true);
+                    exit();
+                }
+                else{
+                    echo json_encode(pg_result_error($pgq));
+                }
+            }else{
+                $q="INSERT INTO public.tbl_expropriation_orders_not_ab(
+                    fid, geom)
+                    VALUES";
+                while ($Geometry = $Shapefile->fetchRecord()) {
+                        // Skip the record if marked as "deleted"
+                        if ($Geometry->isDeleted()) {
+                            continue;
+                        }
+                        $geom=$Geometry->getWKT();
+                        $data=$Geometry->getDataArray();
+                        // print_r($data);
+                        // exit();
+                        $q.="(";
+                        $q.="'".(integer)$data['ID']."'" .", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                        $q.="), ";
+                }
+                // $fq = rtrim($q, ',');
+                $qf= rtrim($q, " ,");
+                // echo $qf;
+                // exit();
+                $pgq=DB::insert($qf);
+                if($pgq){
+                    echo json_encode(true);
+                    exit();
+                }
+                else{
+                    echo json_encode(pg_result_error($pgq));
+                }
             }
         }elseif($tbl_name == 'security_orders'){
-            $q="INSERT INTO public.tbl_security_orders(
-                fid, id, geom)
-                VALUES";
-            while ($Geometry = $Shapefile->fetchRecord()) {
-                    // Skip the record if marked as "deleted"
-                    if ($Geometry->isDeleted()) {
-                        continue;
-                    }
-                    $geom=$Geometry->getWKT();
-                    $data=$Geometry->getDataArray();
-                    // print_r($data);
-                    // exit();
-                    $q.="(";
-                    $q.="'".(integer)$data['ID']."'" .", ".\DB::raw("ST_GeomFromText('$geom',4326)");
-                    $q.="), ";
-            }
-            // $fq = rtrim($q, ',');
-            $qf= rtrim($q, " ,");
-            // echo $qf;
-            // exit();
-            $pgq=DB::insert($qf);
-            if($pgq){
-                echo json_encode(true);
-                exit();
-            }
-            else{
-                echo json_encode(pg_result_error($pgq));
+            if($tbl_chkbox_val=="delete_insert"){
+                DB::table('tbl_security_orders')->truncate();
+                $q="INSERT INTO public.tbl_security_orders(
+                    fid, id, geom)
+                    VALUES";
+                while ($Geometry = $Shapefile->fetchRecord()) {
+                        // Skip the record if marked as "deleted"
+                        if ($Geometry->isDeleted()) {
+                            continue;
+                        }
+                        $geom=$Geometry->getWKT();
+                        $data=$Geometry->getDataArray();
+                        // print_r($data);
+                        // exit();
+                        $q.="(";
+                        $q.="'".(integer)$data['ID']."'" .", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                        $q.="), ";
+                }
+                // $fq = rtrim($q, ',');
+                $qf= rtrim($q, " ,");
+                // echo $qf;
+                // exit();
+                $pgq=DB::insert($qf);
+                if($pgq){
+                    echo json_encode(true);
+                    exit();
+                }
+                else{
+                    echo json_encode(pg_result_error($pgq));
+                }
+            }else{
+                $q="INSERT INTO public.tbl_security_orders(
+                    fid, id, geom)
+                    VALUES";
+                while ($Geometry = $Shapefile->fetchRecord()) {
+                        // Skip the record if marked as "deleted"
+                        if ($Geometry->isDeleted()) {
+                            continue;
+                        }
+                        $geom=$Geometry->getWKT();
+                        $data=$Geometry->getDataArray();
+                        // print_r($data);
+                        // exit();
+                        $q.="(";
+                        $q.="'".(integer)$data['ID']."'" .", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                        $q.="), ";
+                }
+                // $fq = rtrim($q, ',');
+                $qf= rtrim($q, " ,");
+                // echo $qf;
+                // exit();
+                $pgq=DB::insert($qf);
+                if($pgq){
+                    echo json_encode(true);
+                    exit();
+                }
+                else{
+                    echo json_encode(pg_result_error($pgq));
+                }
             }
         }elseif($tbl_name == 'Seizure_AB'){
-            $q="INSERT INTO public.tbl_seizure_ab(
-                fid, geom)
-                VALUES";
-            while ($Geometry = $Shapefile->fetchRecord()) {
-                    // Skip the record if marked as "deleted"
-                    if ($Geometry->isDeleted()) {
-                        continue;
-                    }
-                    $geom=$Geometry->getWKT();
-                    $data=$Geometry->getDataArray();
-                    // print_r($data);
-                    // exit();
-                    $q.="(";
-                    $q.="'".(integer)$data['ID']."'" .", ".\DB::raw("ST_GeomFromText('$geom',4326)");
-                    $q.="), ";
-            }
-            // $fq = rtrim($q, ',');
-            $qf= rtrim($q, " ,");
-            // echo $qf;
-            // exit();
-            $pgq=DB::insert($qf);
-            if($pgq){
-                echo json_encode(true);
-                exit();
-            }
-            else{
-                echo json_encode(pg_result_error($pgq));
+            if($tbl_chkbox_val=="delete_insert"){
+                DB::table('tbl_seizure_ab')->truncate();
+                $q="INSERT INTO public.tbl_seizure_ab(
+                    fid, geom)
+                    VALUES";
+                while ($Geometry = $Shapefile->fetchRecord()) {
+                        // Skip the record if marked as "deleted"
+                        if ($Geometry->isDeleted()) {
+                            continue;
+                        }
+                        $geom=$Geometry->getWKT();
+                        $data=$Geometry->getDataArray();
+                        // print_r($data);
+                        // exit();
+                        $q.="(";
+                        $q.="'".(integer)$data['ID']."'" .", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                        $q.="), ";
+                }
+                // $fq = rtrim($q, ',');
+                $qf= rtrim($q, " ,");
+                // echo $qf;
+                // exit();
+                $pgq=DB::insert($qf);
+                if($pgq){
+                    echo json_encode(true);
+                    exit();
+                }
+                else{
+                    echo json_encode(pg_result_error($pgq));
+                }
+            }else{
+                $q="INSERT INTO public.tbl_seizure_ab(
+                    fid, geom)
+                    VALUES";
+                while ($Geometry = $Shapefile->fetchRecord()) {
+                        // Skip the record if marked as "deleted"
+                        if ($Geometry->isDeleted()) {
+                            continue;
+                        }
+                        $geom=$Geometry->getWKT();
+                        $data=$Geometry->getDataArray();
+                        // print_r($data);
+                        // exit();
+                        $q.="(";
+                        $q.="'".(integer)$data['ID']."'" .", ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                        $q.="), ";
+                }
+                // $fq = rtrim($q, ',');
+                $qf= rtrim($q, " ,");
+                // echo $qf;
+                // exit();
+                $pgq=DB::insert($qf);
+                if($pgq){
+                    echo json_encode(true);
+                    exit();
+                }
+                else{
+                    echo json_encode(pg_result_error($pgq));
+                }
             }
         }elseif($tbl_name == 'Seizure_All'){
-            $q="INSERT INTO public.tbl_seizure_all(
-               fid, from_date, to_date, ar_num, area, 'הערות', 'הערו_1', 'פונקצ', 'שימוש', 'תקף', geom)
-                VALUES";
-            while ($Geometry = $Shapefile->fetchRecord()) {
-                    // Skip the record if marked as "deleted"
-                    if ($Geometry->isDeleted()) {
-                        continue;
-                    }
-                    $geom=$Geometry->getWKT();
-                    $data=$Geometry->getDataArray();
-                    // print_r($data);
-                    // exit();
-                    $q.="(";
-                    $q.="'".str_replace("'","''",$data['FORM_DATE'])."', '".str_replace("'","''",$data['TO_DATE'])."', '".str_replace("'","''",$data['AR_NUM'])."', ".(integer)$data['AREA'].", "."'".(integer)$data['תקף']."'".", '".str_replace("'","''",$data['שימוש'])."', '".str_replace("'","''",$data['פונקצ'])."', '".str_replace("'","''",$data['הערו_1'])."', '".str_replace("'","''",$data['הערות'])."', ".\DB::raw("ST_GeomFromText('$geom',4326)");
-                    $q.="), ";
-            }
-            // $fq = rtrim($q, ',');
-            $qf= rtrim($q, " ,");
-            // echo $qf;
-            // exit();
-            $pgq=DB::insert($qf);
-            if($pgq){
-                echo json_encode(true);
-                exit();
-            }
-            else{
-                echo json_encode(pg_result_error($pgq));
-            }
+            if($tbl_chkbox_val=="delete_insert"){
+                DB::table('tbl_seizure_all')->truncate();
+                $q="INSERT INTO public.tbl_seizure_all(
+                fid, from_date, to_date, ar_num, area, 'הערות', 'הערו_1', 'פונקצ', 'שימוש', 'תקף', geom)
+                    VALUES";
+                while ($Geometry = $Shapefile->fetchRecord()) {
+                        // Skip the record if marked as "deleted"
+                        if ($Geometry->isDeleted()) {
+                            continue;
+                        }
+                        $geom=$Geometry->getWKT();
+                        $data=$Geometry->getDataArray();
+                        // print_r($data);
+                        // exit();
+                        $q.="(";
+                        $q.="'".str_replace("'","''",$data['FORM_DATE'])."', '".str_replace("'","''",$data['TO_DATE'])."', '".str_replace("'","''",$data['AR_NUM'])."', ".(integer)$data['AREA'].", "."'".(integer)$data['תקף']."'".", '".str_replace("'","''",$data['שימוש'])."', '".str_replace("'","''",$data['פונקצ'])."', '".str_replace("'","''",$data['הערו_1'])."', '".str_replace("'","''",$data['הערות'])."', ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                        $q.="), ";
+                }
+                // $fq = rtrim($q, ',');
+                $qf= rtrim($q, " ,");
+                // echo $qf;
+                // exit();
+                $pgq=DB::insert($qf);
+                if($pgq){
+                    echo json_encode(true);
+                    exit();
+                }
+                else{
+                    echo json_encode(pg_result_error($pgq));
+                }
+            }else{
+                $q="INSERT INTO public.tbl_seizure_all(
+                    fid, from_date, to_date, ar_num, area, 'הערות', 'הערו_1', 'פונקצ', 'שימוש', 'תקף', geom)
+                     VALUES";
+                 while ($Geometry = $Shapefile->fetchRecord()) {
+                         // Skip the record if marked as "deleted"
+                         if ($Geometry->isDeleted()) {
+                             continue;
+                         }
+                         $geom=$Geometry->getWKT();
+                         $data=$Geometry->getDataArray();
+                         // print_r($data);
+                         // exit();
+                         $q.="(";
+                         $q.="'".str_replace("'","''",$data['FORM_DATE'])."', '".str_replace("'","''",$data['TO_DATE'])."', '".str_replace("'","''",$data['AR_NUM'])."', ".(integer)$data['AREA'].", "."'".(integer)$data['תקף']."'".", '".str_replace("'","''",$data['שימוש'])."', '".str_replace("'","''",$data['פונקצ'])."', '".str_replace("'","''",$data['הערו_1'])."', '".str_replace("'","''",$data['הערות'])."', ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                         $q.="), ";
+                 }
+                 // $fq = rtrim($q, ',');
+                 $qf= rtrim($q, " ,");
+                 // echo $qf;
+                 // exit();
+                 $pgq=DB::insert($qf);
+                 if($pgq){
+                     echo json_encode(true);
+                     exit();
+                 }
+                 else{
+                     echo json_encode(pg_result_error($pgq));
+                 }
+            }    
         }elseif($tbl_name == 'settlements'){
-            $q="INSERT INTO public.tbl_settlements(
-               fid, objectid, id, name_hebrew, name_english, et_id, shape_leng, shape_area, gis_id, type, area, name_arabic, geom)
-                VALUES";
-            while ($Geometry = $Shapefile->fetchRecord()) {
-                    // Skip the record if marked as "deleted"
-                    if ($Geometry->isDeleted()) {
-                        continue;
-                    }
-                    $geom=$Geometry->getWKT();
-                    $data=$Geometry->getDataArray();
-                    // print_r($data);
-                    // exit();
-                    $q.="(";
-                    $q.="'".(integer)$data['OBJECTID']."'" .", "."'".(integer)$data['ID']."'".", '".str_replace("'","''",$data['NAME_HEBREW'])."', '".str_replace("'","''",$data['NAME_ENGLISH'])."', ".(integer)$data['ET_ID'].", "."'".(integer)$data['SHAPE_LENG']."'".", ".(integer)$data['SHAPE_AREA'].", ".(integer)$data['GIS_ID'].", '".str_replace("'","''",$data['TYPE'])."', ".(integer)$data['AREA'].", '".str_replace("'","''",$data['NAME_ARABIC'])."', ".\DB::raw("ST_GeomFromText('$geom',4326)");
-                    $q.="), ";
-            }
-            // $fq = rtrim($q, ',');
-            $qf= rtrim($q, " ,");
-            // echo $qf;
-            // exit();
-            $pgq=DB::insert($qf);
-            if($pgq){
-                echo json_encode(true);
-                exit();
-            }
-            else{
-                echo json_encode(pg_result_error($pgq));
-            }
+            if($tbl_chkbox_val=="delete_insert"){
+                DB::table('tbl_settlements')->truncate();
+
+                $q="INSERT INTO public.tbl_settlements(
+                fid, objectid, id, name_hebrew, name_english, et_id, shape_leng, shape_area, gis_id, type, area, name_arabic, geom)
+                    VALUES";
+                while ($Geometry = $Shapefile->fetchRecord()) {
+                        // Skip the record if marked as "deleted"
+                        if ($Geometry->isDeleted()) {
+                            continue;
+                        }
+                        $geom=$Geometry->getWKT();
+                        $data=$Geometry->getDataArray();
+                        // print_r($data);
+                        // exit();
+                        $q.="(";
+                        $q.="'".(integer)$data['OBJECTID']."'" .", "."'".(integer)$data['ID']."'".", '".str_replace("'","''",$data['NAME_HEBREW'])."', '".str_replace("'","''",$data['NAME_ENGLISH'])."', ".(integer)$data['ET_ID'].", "."'".(integer)$data['SHAPE_LENG']."'".", ".(integer)$data['SHAPE_AREA'].", ".(integer)$data['GIS_ID'].", '".str_replace("'","''",$data['TYPE'])."', ".(integer)$data['AREA'].", '".str_replace("'","''",$data['NAME_ARABIC'])."', ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                        $q.="), ";
+                }
+                // $fq = rtrim($q, ',');
+                $qf= rtrim($q, " ,");
+                // echo $qf;
+                // exit();
+                $pgq=DB::insert($qf);
+                if($pgq){
+                    echo json_encode(true);
+                    exit();
+                }
+                else{
+                    echo json_encode(pg_result_error($pgq));
+                }
+            }else{
+                $q="INSERT INTO public.tbl_settlements(
+                    fid, objectid, id, name_hebrew, name_english, et_id, shape_leng, shape_area, gis_id, type, area, name_arabic, geom)
+                     VALUES";
+                 while ($Geometry = $Shapefile->fetchRecord()) {
+                         // Skip the record if marked as "deleted"
+                         if ($Geometry->isDeleted()) {
+                             continue;
+                         }
+                         $geom=$Geometry->getWKT();
+                         $data=$Geometry->getDataArray();
+                         // print_r($data);
+                         // exit();
+                         $q.="(";
+                         $q.="'".(integer)$data['OBJECTID']."'" .", "."'".(integer)$data['ID']."'".", '".str_replace("'","''",$data['NAME_HEBREW'])."', '".str_replace("'","''",$data['NAME_ENGLISH'])."', ".(integer)$data['ET_ID'].", "."'".(integer)$data['SHAPE_LENG']."'".", ".(integer)$data['SHAPE_AREA'].", ".(integer)$data['GIS_ID'].", '".str_replace("'","''",$data['TYPE'])."', ".(integer)$data['AREA'].", '".str_replace("'","''",$data['NAME_ARABIC'])."', ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                         $q.="), ";
+                 }
+                 // $fq = rtrim($q, ',');
+                 $qf= rtrim($q, " ,");
+                 // echo $qf;
+                 // exit();
+                 $pgq=DB::insert($qf);
+                 if($pgq){
+                     echo json_encode(true);
+                     exit();
+                 }
+                 else{
+                     echo json_encode(pg_result_error($pgq));
+                 }
+            }    
         }elseif($tbl_name == 'area_b_violations'){
-            
-          
-            $q="INSERT INTO public.tbl_area_b_violations(
-                fid_, x, y, picture_id, categoryid, cat_eng, desc_arb, desc_eng, desc_heb, set_heb, set_arb, set_eng, pal_heb, pal_arb, pal_eng, art_heb, art_eng, art_arb, titt_heb, titt_eng, titt_arb, artheb1, arteng1, artarb1, tittheb1, titteng1, tittarb1, geom)
-                VALUES";
-            while ($Geometry = $Shapefile->fetchRecord()) {
-                    // Skip the record if marked as "deleted"
-                    if ($Geometry->isDeleted()) {
-                        continue;
-                    }
-                    $geom=$Geometry->getWKT();
-                    $data=$Geometry->getDataArray();
-                    // print_r($data);
-                    // exit();
-                    $q.="(";
-                     $q.="'".(integer)$data['FID_']."'" .", "."'".(integer)$data['X']."'".", ".(integer)$data['Y'].", "."'".(integer)$data['PICTURE_ID']."'".", ".(integer)$data['CATEGORYID'].", '".str_replace("'","''",$data['CAT_ENG'])."', 
-                    '".str_replace("'","''",$data['DESC_ARB'])."', '".str_replace("'","''",$data['DESC_ENG'])."', 
-                    '".str_replace("'","''",$data['DESC_HEB'])."', '".str_replace("'","''",$data['SET_HEB'])."',
-                    '".str_replace("'","''",$data['SET_ARB'])."','".str_replace("'","''",$data['SET_ENG'])."',
-                    '".str_replace("'","''",$data['PAL_HEB'])."','".str_replace("'","''",$data['PAL_ARB'])."',
-                    '".str_replace("'","''",$data['PAL_ENG'])."','".str_replace("'","''",$data['ART_HEB'])."',
-                    '".str_replace("'","''",$data['ART_ENG'])."','".str_replace("'","''",$data['ART_ARB'])."',
-                    '".str_replace("'","''",$data['TITT_HEB'])."','".str_replace("'","''",$data['TITT_ENG'])."',
-                    '".str_replace("'","''",$data['TITT_ARB'])."','".str_replace("'","''",$data['ARTHEB1'])."',
-                    '".str_replace("'","''",$data['ARTENG1'])."','".str_replace("'","''",$data['ARTARB1'])."',
-                    '".str_replace("'","''",$data['TITTHEB1'])."','".str_replace("'","''",$data['TITTENG1'])."',
-                    '".str_replace("'","''",$data['TITTARB1'])."', ".\DB::raw("ST_GeomFromText('$geom',4326)");
-                    $q.="), ";
-                    // echo $q;
-                    // exit();
-            }
-            // $fq = rtrim($q, ',');
-            $qf= rtrim($q, " ,");
-            // echo $qf;
-            // exit();
-            $pgq=DB::insert($qf);
-            if($pgq){
-                echo json_encode(true);
-                exit();
-            }
-            else{
-                echo json_encode(pg_result_error($pgq));
+            if($tbl_chkbox_val=="delete_insert"){
+                DB::table('tbl_area_b_violations')->truncate();
+
+                $q="INSERT INTO public.tbl_area_b_violations(
+                    fid_, x, y, picture_id, categoryid, cat_eng, desc_arb, desc_eng, desc_heb, set_heb, set_arb, set_eng, pal_heb, pal_arb, pal_eng, art_heb, art_eng, art_arb, titt_heb, titt_eng, titt_arb, artheb1, arteng1, artarb1, tittheb1, titteng1, tittarb1, geom)
+                    VALUES";
+                while ($Geometry = $Shapefile->fetchRecord()) {
+                        // Skip the record if marked as "deleted"
+                        if ($Geometry->isDeleted()) {
+                            continue;
+                        }
+                        $geom=$Geometry->getWKT();
+                        $data=$Geometry->getDataArray();
+                        // print_r($data);
+                        // exit();
+                        $q.="(";
+                         $q.="'".(integer)$data['FID_']."'" .", "."'".(integer)$data['X']."'".", ".(integer)$data['Y'].", "."'".(integer)$data['PICTURE_ID']."'".", ".(integer)$data['CATEGORYID'].", '".str_replace("'","''",$data['CAT_ENG'])."', 
+                        '".str_replace("'","''",$data['DESC_ARB'])."', '".str_replace("'","''",$data['DESC_ENG'])."', 
+                        '".str_replace("'","''",$data['DESC_HEB'])."', '".str_replace("'","''",$data['SET_HEB'])."',
+                        '".str_replace("'","''",$data['SET_ARB'])."','".str_replace("'","''",$data['SET_ENG'])."',
+                        '".str_replace("'","''",$data['PAL_HEB'])."','".str_replace("'","''",$data['PAL_ARB'])."',
+                        '".str_replace("'","''",$data['PAL_ENG'])."','".str_replace("'","''",$data['ART_HEB'])."',
+                        '".str_replace("'","''",$data['ART_ENG'])."','".str_replace("'","''",$data['ART_ARB'])."',
+                        '".str_replace("'","''",$data['TITT_HEB'])."','".str_replace("'","''",$data['TITT_ENG'])."',
+                        '".str_replace("'","''",$data['TITT_ARB'])."','".str_replace("'","''",$data['ARTHEB1'])."',
+                        '".str_replace("'","''",$data['ARTENG1'])."','".str_replace("'","''",$data['ARTARB1'])."',
+                        '".str_replace("'","''",$data['TITTHEB1'])."','".str_replace("'","''",$data['TITTENG1'])."',
+                        '".str_replace("'","''",$data['TITTARB1'])."', ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                        $q.="), ";
+                        // echo $q;
+                        // exit();
+                }
+                // $fq = rtrim($q, ',');
+                $qf= rtrim($q, " ,");
+                // echo $qf;
+                // exit();
+                $pgq=DB::insert($qf);
+                if($pgq){
+                    echo json_encode(true);
+                    exit();
+                }
+                else{
+                    echo json_encode(pg_result_error($pgq));
+                }
+
+            }else{
+                $q="INSERT INTO public.tbl_area_b_violations(
+                    fid_, x, y, picture_id, categoryid, cat_eng, desc_arb, desc_eng, desc_heb, set_heb, set_arb, set_eng, pal_heb, pal_arb, pal_eng, art_heb, art_eng, art_arb, titt_heb, titt_eng, titt_arb, artheb1, arteng1, artarb1, tittheb1, titteng1, tittarb1, geom)
+                    VALUES";
+                while ($Geometry = $Shapefile->fetchRecord()) {
+                        // Skip the record if marked as "deleted"
+                        if ($Geometry->isDeleted()) {
+                            continue;
+                        }
+                        $geom=$Geometry->getWKT();
+                        $data=$Geometry->getDataArray();
+                        // print_r($data);
+                        // exit();
+                        $q.="(";
+                        $q.="'".(integer)$data['FID_']."'" .", "."'".(integer)$data['X']."'".", ".(integer)$data['Y'].", "."'".(integer)$data['PICTURE_ID']."'".", ".(integer)$data['CATEGORYID'].", '".str_replace("'","''",$data['CAT_ENG'])."', 
+                        '".str_replace("'","''",$data['DESC_ARB'])."', '".str_replace("'","''",$data['DESC_ENG'])."', 
+                        '".str_replace("'","''",$data['DESC_HEB'])."', '".str_replace("'","''",$data['SET_HEB'])."',
+                        '".str_replace("'","''",$data['SET_ARB'])."','".str_replace("'","''",$data['SET_ENG'])."',
+                        '".str_replace("'","''",$data['PAL_HEB'])."','".str_replace("'","''",$data['PAL_ARB'])."',
+                        '".str_replace("'","''",$data['PAL_ENG'])."','".str_replace("'","''",$data['ART_HEB'])."',
+                        '".str_replace("'","''",$data['ART_ENG'])."','".str_replace("'","''",$data['ART_ARB'])."',
+                        '".str_replace("'","''",$data['TITT_HEB'])."','".str_replace("'","''",$data['TITT_ENG'])."',
+                        '".str_replace("'","''",$data['TITT_ARB'])."','".str_replace("'","''",$data['ARTHEB1'])."',
+                        '".str_replace("'","''",$data['ARTENG1'])."','".str_replace("'","''",$data['ARTARB1'])."',
+                        '".str_replace("'","''",$data['TITTHEB1'])."','".str_replace("'","''",$data['TITTENG1'])."',
+                        '".str_replace("'","''",$data['TITTARB1'])."', ".\DB::raw("ST_GeomFromText('$geom',4326)");
+                        $q.="), ";
+                        // echo $q;
+                        // exit();
+                }
+                // $fq = rtrim($q, ',');
+                $qf= rtrim($q, " ,");
+                // echo $qf;
+                // exit();
+                $pgq=DB::insert($qf);
+                if($pgq){
+                    echo json_encode(true);
+                    exit();
+                }
+                else{
+                    echo json_encode(pg_result_error($pgq));
+                }
             }
         }
         else{
